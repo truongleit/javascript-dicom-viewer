@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.2/dat.gui.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+    <link type='text/css' rel='stylesheet' href='/css/style.css' />
+    <link type='text/css' rel='stylesheet' href='/css/slick.css' />
+    <script type="text/javascript" src="/js/slick.min.js"></script>
+    <script type="text/javascript" src="/js/xtk.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <title>DICOM Viewer</title>
+</head>
+
+<body>
+    <div class="navigation-bar">
+        <div class="container">
+            <div class="logo-container">
+                <a class="logo" href="#">
+                    <img src="/asset/logo.svg" alt="logo">
+                </a>
+            </div>
+            <div class="menu-items">
+                <div class="item"><a href="#"><span>Osirix</span></a></div>
+                <div class="item"><a href="#"><span>Support</span></a></div>
+                <div class="item"><a href="#"><span>Resources</span></a></div>
+                <div class="item"><a href="#"><span>About</span></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="main-site">
+        <div class="introduction">
+            <div class="brand-title">
+                <div class="title">ORISIX DICOM Viewer</div>
+                <div class="description">The world famous medical images viewer</div>
+                <img class="brand-devices" src="/asset/devices.png" alt="devices">
+            </div>
+            <div class="brand-content">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam felis quam, porttitor a tincidunt ut, consequat nec ex. Proin nec posuere elit. Curabitur pellentesque, nunc ac lobortis lobortis, erat tellus venenatis quam, nec pretium ligula nibh quis
+                mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur rhoncus arcu in ante lobortis feugiat. Proin a quam volutpat, vestibulum nisi ut, finibus neque.
+            </div>
+            <div class="browser">
+                <div class="title">Cross-browser compatibility</div>
+                <div class="browsers-container">
+                    <img class="logo" src="/asset/chrome.svg" alt="chrome">
+                    <img class="logo" src="/asset/mozilla.svg" alt="firefox">
+                    <img class="logo" src="/asset/explorer.svg" alt="ie">
+                    <img class="logo" src="/asset/safari.svg" alt="safari">
+                </div>
+            </div>
+        </div>
+        <div class="slider-container">
+            <div class="upload-container">
+                <div class="title">Try it now</div>
+                <div class="upload-button">Upload</div>
+                <input id="file_inp" type="file" webkitdirectory/>
+            </div>
+            <div class="slider-overlay"></div>
+            <div class="slider">
+                <div class="slider-item" style="background-image:url('/asset/slider-1.jpg')">
+                </div>
+                <div class="slider-item" style="background-image:url('/asset/slider-2.jpg')">
+                </div>
+                <div class="slider-item" style="background-image:url('/asset/slider-3.png')">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="viewer close">
+        <div class="viewer-container">
+            <div class="interact-container">
+                <div class="logo">
+                    <img src="/asset/logo.svg" alt="logo">
+                </div>
+                <div class="brand">
+                    <div class="title">ORISIX</div>
+                    <div class="description">WEB DICOM viewer</div>
+                </div>
+            </div>
+            <div class="control-buttons">
+                <div class="minimize">
+                    <img src="/asset/minus.svg">
+                </div>
+                <div class="cancel">
+                    <img src="/asset/delete.svg">
+                </div>
+            </div>
+            <div class="render-container">
+                <div class="files-bar">
+                    <div class="file">
+                        <canvas id="canvas1" style="width:100%;height:100%"></canvas>
+                    </div>
+                </div>
+                <div id="3d" class="three-dimemsion"></div>
+                <div class="two-dimemsion-container">
+                    <div id="sliceX" class="two-dimemsion"></div>
+                    <div id="sliceY" class="two-dimemsion"></div>
+                    <div id="sliceZ" class="two-dimemsion"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

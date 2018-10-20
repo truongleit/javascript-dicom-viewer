@@ -1,0 +1,390 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900');
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    width: 1280px;
+    margin: 0 auto;
+}
+
+
+/* Menu Bar */
+
+.navigation-bar {
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    background-color: #374a61;
+    color: white;
+    z-index: 99;
+}
+
+.navigation-bar {
+    display: flex;
+    align-items: center;
+}
+
+.navigation-bar .container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+.logo img {
+    width: 60px;
+}
+
+.menu-items {
+    display: flex;
+    height: 100%;
+    text-transform: uppercase;
+    margin-left: 20px;
+}
+
+.item {
+    display: flex;
+    height: 100%;
+}
+
+.item {
+    -webkit-transition: background-color .3s ease;
+    -moz-transition: background-color .3s ease;
+    -o-transition: background-color .3s ease;
+    transition: background-color .3s ease;
+}
+
+.item:hover {
+    color: #374a61;
+    background-color: #ffffff;
+}
+
+.item:hover a {
+    color: #374a61;
+}
+
+.item a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff;
+    padding: 0 20px;
+}
+
+.item a {
+    -webkit-transition: color .3s ease;
+    -moz-transition: color .3s ease;
+    -o-transition: color .3s ease;
+    transition: color .3s ease;
+}
+
+.item a {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+
+/* Main Site */
+
+.slider-container {
+    width: 50%;
+    height: 100vh;
+    position: relative;
+    float: left;
+}
+
+.upload-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 11;
+}
+
+.upload-container .title {
+    color: #46bd79;
+    font-size: 55px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.upload-button {
+    width: 100px;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    background-color: transparent;
+    padding: 10px 40px;
+    margin: 10px auto 0;
+    cursor: pointer;
+}
+
+.upload-button {
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+
+.upload-button:hover {
+    color: #292c30;
+    background-color: #fff;
+}
+
+.upload-button {
+    font-size: 25px;
+    font-weight: 500;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#file_inp {
+    display: none;
+}
+
+.slider-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .75);
+    z-index: 10;
+}
+
+.slider-item {
+    width: 100%;
+    height: 100vh !important;
+    background-size: cover;
+}
+
+.introduction {
+    width: 50%;
+    height: 100vh;
+    position: relative;
+    float: right;
+}
+
+.brand-title {
+    position: relative;
+    width: 100%;
+    height: 50%;
+    background-image: url('../asset/doctor.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.brand-title .title {
+    width: 70%;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+}
+
+.brand-title .title {
+    text-align: center;
+    font-size: 55px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.brand-title .description {
+    width: 70%;
+    position: absolute;
+    left: 50%;
+    top: 42%;
+    transform: translate(-50%, -50%);
+}
+
+.brand-title .description {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 300;
+    color: #ffffff;
+}
+
+.brand-content {
+    width: 80%;
+    margin: 17% auto 2%;
+    color: #292c30;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.browser .title {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    color: #46bd79;
+}
+
+img.brand-devices {
+    position: absolute;
+    width: 72%;
+    bottom: -30%;
+    right: 3%;
+}
+
+.browsers-container {
+    display: flex;
+    justify-content: center;
+}
+
+.browsers-container .logo {
+    display: flex;
+    align-self: center;
+    width: 8%;
+    padding-top: 20px;
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+.viewer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #292c30;
+    z-index: 100;
+}
+
+.viewer {
+    transform-origin: bottom left;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+
+.viewer.open {
+    transform: scale(1);
+}
+
+.viewer.close {
+    transform: scale(0);
+}
+
+.viewer-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.control-buttons {
+    display: flex;
+    width: -moz-fit-content;
+    width: -webkit-fit-content;
+    width: fit-content;
+    position: absolute;
+    right: 10px;
+    top: 11px;
+    z-index: 30;
+}
+
+.control-buttons img {
+    width: 30px;
+    cursor: pointer;
+}
+
+.interact-container {
+    width: 100%;
+    height: 70px;
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    border-bottom: 1px solid #fff;
+    background-color: #222427;
+    z-index: 20;
+}
+
+.interact-container .logo {
+    margin-left: 15px;
+}
+
+.interact-container .brand {
+    margin-left: 20px;
+}
+
+.interact-container .title {
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 30px;
+    letter-spacing: 11px;
+}
+
+.interact-container .description {
+    color: #ffffff;
+    font-weight: 300;
+    font-size: 18px;
+}
+
+.minimize,
+.cancel {
+    padding: 10px;
+}
+
+.render-container {
+    padding-top: 71px;
+    width: 100%;
+    height: 100%;
+}
+
+.files-bar {
+    width: 19%;
+    height: 100%;
+    border-right: 1px solid #fff;
+    float: left;
+    /* display: flex;
+    flex-wrap: wrap; */
+    overflow-y: scroll;
+}
+
+.three-dimemsion {
+    float: left;
+    width: calc(81% - 1px);
+    height: 60%;
+    border-bottom: 1px solid #fff;
+}
+
+.two-dimemsion-container {
+    display: flex;
+    float: left;
+    width: calc(81% - 1px);
+    height: calc(40% - 1px);
+}
+
+.two-dimemsion {
+    width: 33.33%;
+    border-right: 1px solid #fff;
+}
+
+.two-dimemsion:last-child {
+    border-right: none;
+}
+
+.dg.main {
+    position: absolute;
+    right: 0;
+}
+
+.file {
+    width: 150px;
+    height: 150px;
+    margin: 2px;
+    border: 1px solid #fff;
+    float: left;
+}
