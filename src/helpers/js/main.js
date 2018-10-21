@@ -10,6 +10,12 @@ var threeD;
 
 $(document).ready(function() {
 
+    // var element1 = $('#dicomImage1').get(0);
+    // cornerstone.enable(element1);
+
+    // var element2 = $('#dicomImage2').get(0);
+    // cornerstone.enable(element2);
+
     $('.slider').slick({
         infinite: true,
         slidesToShow: 1,
@@ -20,6 +26,7 @@ $(document).ready(function() {
         $('#file_inp').trigger('click');
     });
     $('.minimize').click(function() {
+        $('.viewer').removeClass('open');
         $('.viewer').addClass('close');
     });
 
@@ -30,7 +37,28 @@ $(document).ready(function() {
 
 
         files = document.getElementById("file_inp").files;
-
+        //
+        // render list of DICOM thumbnails
+        //
+        var total = files.length;
+        var divData = [];
+        // This loop for creating div-s works fine
+        for (let i = 0; i < total; i++) {
+            $('.files-bar').append('<div id="dicomImage' + (i + 1) + '" class="file"></div>'); // creating containers for canvas sequentially
+            var divName = '#dicomImage' + (i + 1);
+            var element = $(divName).get(0);
+            cornerstone.enable(element);
+            divData.push(element);
+        }
+        for (let i = 0; i < total; i++) {
+            let file = files[i];
+            var index = cornerstoneFileImageLoader.addFile(file);
+            var imageId = "dicomfile://" + index;
+            cornerstone.loadImage(imageId).then(function(image) {
+                cornerstone.displayImage(divData[i], image);
+            });
+        }
+        //
         //
         // try to create the 3D renderer
         //
@@ -88,7 +116,6 @@ function recursiveLoading(idx) {
             //_filenames.push(file.name + ".DCM");
             //_dataArray.push(arrayBuffer);
             counter--;
-            // $('.files-bar').append('<div id="each' + idx + '" class="file"></div>');
             recursiveLoading(idx + 1);
         };
         reader.readAsArrayBuffer(files[idx]);
@@ -125,12 +152,7 @@ function recursiveLoading(idx) {
         // just before the first rendering attempt
         sliceX.onShowtime = function() {
 
-            console.log(volume.image);
-            // var data = new Uint8Array(volume.image[0].arrayBuffer);
-            // var imageCanvas = document.getElementById('canvas1');
-            // var ctx = imageCanvas.getContext('2d');
-            // var imageData = ctx.getImageData(0, 0, 150, 150);
-            // ctx.putImageData(imageData, 150, 150);
+            // renderThumbnails(volume.image);
 
             //
             // add the volume to the other 3 renderers
@@ -146,8 +168,8 @@ function recursiveLoading(idx) {
                 volume.lowerThreshold = 80;
                 volume.windowLower = 115;
                 volume.windowHigh = 360;
-                volume.minColor = [0, 0.06666666666666667, 1];
-                volume.maxColor = [0.5843137254901961, 1, 0];
+                // volume.minColor = [0, 0.06666666666666667, 1];
+                // volume.maxColor = [0.5843137254901961, 1, 0];
                 volume.opacity = 0.2;
                 // 3d render
                 threeD.add(volume);
@@ -184,8 +206,36 @@ function recursiveLoading(idx) {
                 volume.dimensions[2] - 1);
             volumegui.open();
 
-
-
         };
     }
 };
+
+function renderThumbnails(input) {
+    for (var z = 0; z < input.length; z++) {
+        var array = input[z];
+        var u16 = array[0];
+        for (var i = 1; i < array.length; i++) {
+            u16 = concatenate(Uint16Array, u16, array[i]);
+        }
+        var c = document.getElementById('each' + z);
+        var ctx = c.getContext("2d");
+        var data = u16;
+        var u8 = new Uint8ClampedArray(data.buffer);
+        var img = new ImageData(u8, 256, 512);
+        ctx.putImageData(img, 0, 0);
+    }
+}
+
+function concatenate(resultConstructor, ...arrays) {
+    let totalLength = 0;
+    for (let arr of arrays) {
+        totalLength += arr.length;
+    }
+    let result = new resultConstructor(totalLength);
+    let offset = 0;
+    for (let arr of arrays) {
+        result.set(arr, offset);
+        offset += arr.length;
+    }
+    return result;
+}
