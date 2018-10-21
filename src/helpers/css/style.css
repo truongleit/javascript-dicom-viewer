@@ -348,8 +348,8 @@ img.brand-devices {
     height: 100%;
     border-right: 1px solid #fff;
     float: left;
-    /* display: flex;
-    flex-wrap: wrap; */
+    display: flex;
+    flex-wrap: wrap;
     overflow-y: scroll;
 }
 
@@ -399,9 +399,20 @@ img.brand-devices {
 }
 
 .file {
-    width: 150px;
-    height: 150px;
+    width: calc(33.33% - 6px);
+    height: 0px;
+    padding-bottom: 31%;
     margin: 2px;
     border: 1px solid #fff;
     float: left;
+    position: relative;
+}
+
+.slice-number {
+    position: absolute;
+    color: #fff;
+    font-weight: 500;
+    font-size: 20px;
+    left: 4px;
+    top: 1px;
 }

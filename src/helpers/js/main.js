@@ -7,7 +7,6 @@ var v;
 var sliceX, sliceY, sliceZ;
 var threeD;
 
-
 $(document).ready(function() {
 
     $('.slider').slick({
@@ -29,7 +28,7 @@ $(document).ready(function() {
         $('.viewer').removeClass('close');
         $('.viewer').addClass('open');
 
-
+        // Get input files 
         files = document.getElementById("file_inp").files;
         //
         // render list of DICOM thumbnails
@@ -38,9 +37,10 @@ $(document).ready(function() {
         var divData = [];
         // This loop for creating div-s works fine
         for (let i = 0; i < total; i++) {
-            $('.files-bar').append('<div id="dicomImage' + (i + 1) + '" class="file"></div>'); // creating containers for canvas sequentially
+            $('.files-bar').append('<div id="dicomImage' + (i + 1) + '" class="file"></div>');
             var divName = '#dicomImage' + (i + 1);
             var element = $(divName).get(0);
+            $(divName).append('<div class="slice-number">' + (i + 1) + '</div>')
             cornerstone.enable(element);
             divData.push(element);
         }
