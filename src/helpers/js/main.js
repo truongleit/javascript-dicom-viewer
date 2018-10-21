@@ -9,6 +9,25 @@ var threeD;
 
 $(document).ready(function() {
 
+
+    $(".z-change").bind('keyup mousemove', function() {
+        var value = $(this).val();
+        var slideValue = value + " %";
+        volume.indexZ = parseInt(value);
+    });
+
+    $(".x-change").bind('keyup mousemove', function() {
+        var value = $(this).val();
+        var slideValue = value + " %";
+        volume.indexY = parseInt(value);
+    });
+
+    $(".y-change").bind('keyup mousemove', function() {
+        var value = $(this).val();
+        var slideValue = value + " %";
+        volume.indexX = parseInt(value);
+    });
+
     $('.slider').slick({
         infinite: true,
         slidesToShow: 1,
@@ -198,6 +217,18 @@ function recursiveLoading(idx) {
                 volume.dimensions[1] - 1);
             var sliceZController = volumegui.add(volume, 'indexZ', 0,
                 volume.dimensions[2] - 1);
+            $('.z-change').attr({
+                'max': (volume.dimensions[2] - 1),
+                'value': volume.indexZ
+            });
+            $('.y-change').attr({
+                'max': (volume.dimensions[1] - 1),
+                'value': volume.indexY
+            });
+            $('.x-change').attr({
+                'max': (volume.dimensions[0] - 1),
+                'value': volume.indexX
+            });
             volumegui.open();
 
         };
