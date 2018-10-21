@@ -10,12 +10,6 @@ var threeD;
 
 $(document).ready(function() {
 
-    // var element1 = $('#dicomImage1').get(0);
-    // cornerstone.enable(element1);
-
-    // var element2 = $('#dicomImage2').get(0);
-    // cornerstone.enable(element2);
-
     $('.slider').slick({
         infinite: true,
         slidesToShow: 1,
