@@ -64,7 +64,7 @@ $(document).ready(function() {
             divData.push(element);
         }
         for (let i = 0; i < total; i++) {
-            let file = files[i];
+            var file = files[i];
             var index = cornerstoneFileImageLoader.addFile(file);
             var imageId = "dicomfile://" + index;
             cornerstone.loadImage(imageId).then(function(image) {
