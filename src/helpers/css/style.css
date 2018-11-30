@@ -273,7 +273,7 @@ img.brand-devices {
 }
 
 .viewer.close {
-    transform: scale(0);
+    transform: scale(.2);
 }
 
 .viewer-container {
