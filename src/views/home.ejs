@@ -9,6 +9,8 @@
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
     <link type='text/css' rel='stylesheet' href='/css/style.css' />
     <link type='text/css' rel='stylesheet' href='/css/slick.css' />
+    <script type="text/javascript" src="/js/three.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/stats.js/master/build/stats.min.js"></script>
     <script type="text/javascript" src="/js/slick.min.js"></script>
     <script type="text/javascript" src="/js/xtk.js"></script>
     <script type="text/javascript" src="/js/main.js"></script>
@@ -17,7 +19,16 @@
     <script type="text/javascript" src="/js/cornerstoneWADOImageLoader.min.js"></script>
     <script type="text/javascript" src="/js/dicomParser.min.js"></script>
     <script type="text/javascript" src="/js/jpx.min.js"></script>
+    <script type="text/javascript" src="/js/ami.min.js"></script>
     <title>DICOM Viewer</title>
+    <style>
+        #my-gui-container {
+            position: fixed;
+            top: 30px;
+            right: 20px;
+            z-index: 1;
+        }
+    </style>
 </head>
 
 <body>
@@ -94,6 +105,7 @@
                 </div>
             </div>
             <div class="render-container">
+                <div id="my-gui-container"></div>
                 <div class="files-bar">
                 </div>
                 <div id="3d" class="three-dimemsion">
@@ -101,7 +113,7 @@
                 </div>
                 <div class="two-dimemsion-container">
                     <div id="sliceX" class="two-dimemsion">
-                        <input type="range" max="100" min="0" class="z-change">
+                        <input type="range" max="100" min="0" class="x-change">
                         <div class="title">X-axis</div>
                     </div>
                     <div id="sliceY" class="two-dimemsion">
@@ -109,7 +121,7 @@
                         <div class="title">Y-axis</div>
                     </div>
                     <div id="sliceZ" class="two-dimemsion">
-                        <input type="range" max="100" min="0" class="x-change">
+                        <input type="range" max="100" min="0" class="z-change">
                         <div class="title">Z-axis</div>
                     </div>
                 </div>
