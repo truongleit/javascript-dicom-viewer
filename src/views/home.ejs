@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/png" href="/asset/favicon.png" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.2/dat.gui.js"></script>
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
     <link type='text/css' rel='stylesheet' href='/css/style.css' />
     <link type='text/css' rel='stylesheet' href='/css/slick.css' />
     <script type="text/javascript" src="/js/three.js"></script>
+    <script type="text/javascript" src="/js/ami.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/stats.js/master/build/stats.min.js"></script>
     <script type="text/javascript" src="/js/slick.min.js"></script>
     <script type="text/javascript" src="/js/xtk.js"></script>
@@ -19,16 +21,8 @@
     <script type="text/javascript" src="/js/cornerstoneWADOImageLoader.min.js"></script>
     <script type="text/javascript" src="/js/dicomParser.min.js"></script>
     <script type="text/javascript" src="/js/jpx.min.js"></script>
-    <script type="text/javascript" src="/js/ami.min.js"></script>
-    <title>DICOM Viewer</title>
-    <style>
-        #my-gui-container {
-            position: fixed;
-            top: 30px;
-            right: 20px;
-            z-index: 1;
-        }
-    </style>
+    <script type="text/javascript" src="/js/raycasting.js"></script>
+    <title>DiRea - Medical Tool</title>
 </head>
 
 <body>
@@ -85,15 +79,15 @@
             </div>
         </div>
     </div>
-    <div class="viewer" style="transform:scale(0);">
+    <div class="viewer">
         <div class="viewer-container">
             <div class="interact-container">
                 <div class="logo">
                     <img src="/asset/logo.svg" alt="logo">
                 </div>
                 <div class="brand">
-                    <div class="title">LOREM</div>
-                    <div class="description">WEB DICOM viewer</div>
+                    <div class="title">DIREA</div>
+                    <div class="description">DICOM Viewer</div>
                 </div>
             </div>
             <div class="control-buttons">
@@ -106,10 +100,16 @@
             </div>
             <div class="render-container">
                 <div id="my-gui-container"></div>
+                <a href="#" id="screenshot" download="VJS.png">Take screenshot</a>
                 <div class="files-bar">
                 </div>
                 <div id="3d" class="three-dimemsion">
                     <div class="title">3D</div>
+                    <div id="my-lut-container">
+                        <div id="my-lut-min">0.0</div>
+                        <div id="my-lut-canvases"></div>
+                        <div id="my-lut-max">1.0</div>
+                    </div>
                 </div>
                 <div class="two-dimemsion-container">
                     <div id="sliceX" class="two-dimemsion">
