@@ -10,6 +10,7 @@
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
     <link type='text/css' rel='stylesheet' href='/css/style.css' />
     <link type='text/css' rel='stylesheet' href='/css/slick.css' />
+    <link type='text/css' rel='stylesheet' href='/css/animate.css' />
     <script type="text/javascript" src="/js/three.js"></script>
     <script type="text/javascript" src="/js/ami.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/stats.js/master/build/stats.min.js"></script>
@@ -26,6 +27,47 @@
 </head>
 
 <body>
+    <div class="upload-area">
+        <div class="files-container">
+            <div class="wrong-noti"></div>
+            <div class="files-list">
+                <div class="handle-buttons">
+                    <div class="choose-files">Select your files</div>
+                    <div class="algorithm-choices">
+                        <select class="algorithm-select" name="algorithm">
+                            <option style="display:none;" value="" selected disabled>Select algorithm</option>
+                            <option value="marchingCube">Marching Cube</option>
+                            <option value="rayCasting">Ray Casting</option>
+                            <option value="textureBased">Texture-based</option>
+                        </select>
+                    </div>
+                </div>
+                <table class="files-table">
+                    <thead>
+                        <tr>
+                            <th colspan="8">Your files will be listed here</th>
+                        </tr>
+                        <tr>
+                            <th colspan="1">#</th>
+                            <th colspan="6">Name</th>
+                            <th colspan="1" style="text-align:center;">Format</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="upload-title">
+                <div class="upload-cancel">Cancel</div>
+                <div class="upload-execute">Execute</div>
+            </div>
+            <div class="user-options">
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <div class="upload-overlay"></div>
     <div class="navigation-bar">
         <div class="container">
             <div class="logo-container">
@@ -66,7 +108,7 @@
             <div class="upload-container">
                 <div class="title">Try it now</div>
                 <div class="upload-button">Upload</div>
-                <input id="file_inp" type="file" webkitdirectory/>
+                <input id="file_inp" type="file" multiple/>
             </div>
             <div class="slider-overlay"></div>
             <div class="slider">
@@ -79,7 +121,7 @@
             </div>
         </div>
     </div>
-    <div class="viewer">
+    <div class="viewer" style="transform:scale(0);">
         <div class="viewer-container">
             <div class="interact-container">
                 <div class="logo">
@@ -92,18 +134,18 @@
             </div>
             <div class="control-buttons">
                 <div class="minimize">
-                    <img src="/asset/minus.svg">
+                    <img src="/asset/minus.svg ">
                 </div>
                 <div class="cancel">
-                    <img src="/asset/delete.svg">
+                    <img src="/asset/delete.svg ">
                 </div>
             </div>
             <div class="render-container">
                 <div id="my-gui-container"></div>
-                <a href="#" id="screenshot" download="VJS.png">Take screenshot</a>
+                <a href="# " id="screenshot" download="VJS.png">Take screenshot</a>
                 <div class="files-bar">
                 </div>
-                <div id="3d" class="three-dimemsion">
+                <div id="3d" class="three-dimemsion ">
                     <div class="title">3D</div>
                     <div id="my-lut-container">
                         <div id="my-lut-min">0.0</div>
@@ -118,10 +160,10 @@
                     </div>
                     <div id="sliceY" class="two-dimemsion">
                         <input type="range" max="100" min="0" class="y-change">
-                        <div class="title">Y-axis</div>
+                        <div class="title ">Y-axis</div>
                     </div>
                     <div id="sliceZ" class="two-dimemsion">
-                        <input type="range" max="100" min="0" class="z-change">
+                        <input type="range" max="100 " min="0" class="z-change">
                         <div class="title">Z-axis</div>
                     </div>
                 </div>

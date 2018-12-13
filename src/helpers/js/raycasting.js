@@ -13,6 +13,8 @@ let ready = false;
 let modified = false;
 let wheel = null;
 let wheelTO = null;
+let seriesContainer = [];
+let loader = new AMI.VolumeLoader(threeD);
 
 let myStack = {
     algorithm: 'ray marching',
@@ -24,6 +26,122 @@ let myStack = {
     amplitude: 0,
     interpolation: 1,
 };
+
+function readMultipleFiles(files) {
+    /**
+     * Load sequence
+     */
+    function loadSequence(index, files) {
+        return (
+            Promise.resolve()
+            // load the file
+            .then(function() {
+                return new Promise(function(resolve, reject) {
+                    let myReader = new FileReader();
+                    // should handle errors too...
+                    myReader.addEventListener('load', function(e) {
+                        resolve(e.target.result);
+                    });
+                    myReader.readAsArrayBuffer(files[index]);
+                });
+            })
+            .then(function(buffer) {
+                return loader.parse({ url: files[index].name, buffer });
+            })
+            .then(function(series) {
+                seriesContainer.push(series);
+            })
+            .catch(function(error) {
+                window.console.log('oops... something went wrong...');
+                window.console.log(error);
+            })
+        );
+    }
+
+    /**
+     * Load group sequence
+     */
+    function loadSequenceGroup(files) {
+        const fetchSequence = [];
+
+        for (let i = 0; i < files.length; i++) {
+            fetchSequence.push(
+                new Promise((resolve, reject) => {
+                    const myReader = new FileReader();
+                    // should handle errors too...
+                    myReader.addEventListener('load', function(e) {
+                        resolve(e.target.result);
+                    });
+                    myReader.readAsArrayBuffer(files[i].file);
+                }).then(function(buffer) {
+                    return { url: files[i].file.name, buffer };
+                })
+            );
+        }
+
+        return Promise.all(fetchSequence)
+            .then(rawdata => {
+                return loader.parse(rawdata);
+            })
+            .then(function(series) {
+                seriesContainer.push(series);
+            })
+            .catch(function(error) {
+                window.console.log('oops... something went wrong...');
+                window.console.log(error);
+            });
+    }
+
+    const loadSequenceContainer = [];
+
+    const data = [];
+    const dataGroups = [];
+    // convert object into array
+    for (let i = 0; i < files.length; i++) {
+        let dataUrl = new AMI.UtilsCore.parseUrl(files[i].name);
+        if (
+            dataUrl.extension.toUpperCase() === 'MHD' ||
+            dataUrl.extension.toUpperCase() === 'RAW' ||
+            dataUrl.extension.toUpperCase() === 'ZRAW'
+        ) {
+            dataGroups.push({
+                file: files[i],
+                extension: dataUrl.extension.toUpperCase(),
+            });
+        } else {
+            data.push(files[i]);
+        }
+    }
+
+    // check if some files must be loaded together
+    if (dataGroups.length === 2) {
+        // if raw/mhd pair
+        const mhdFile = dataGroups.filter(_filterByExtension.bind(null, 'MHD'));
+        const rawFile = dataGroups.filter(_filterByExtension.bind(null, 'RAW'));
+        const zrawFile = dataGroups.filter(_filterByExtension.bind(null, 'ZRAW'));
+        if (mhdFile.length === 1 && (rawFile.length === 1 || zrawFile.length === 1)) {
+            loadSequenceContainer.push(loadSequenceGroup(dataGroups));
+        }
+    }
+
+    // load the rest of the files
+    for (let i = 0; i < data.length; i++) {
+        loadSequenceContainer.push(loadSequence(i, data));
+    }
+
+    // run the load sequence
+    // load sequence for all files
+    Promise.all(loadSequenceContainer)
+        .then(function() {
+            setTimeout(function() {
+                rayCasting(seriesContainer);
+            }, 1000);
+        })
+        .catch(function(error) {
+            window.console.log('oops... something went wrong...');
+            window.console.log(error);
+        });
+}
 
 function onStart(event) {
     if (vrHelper && vrHelper.uniforms && !wheel) {
@@ -224,164 +342,63 @@ function init() {
     animate();
 }
 
-window.onload = function() {
+// window.onload = function() {
+function rayCasting(files) {
     // init threeJS
-    init();
-    let t1 = ['53320924', '53321068', '53322843', '53322987', '53323131',
-        '53323275', '53323419', '53323563', '53323707', '53323851',
-        '53323995', '53324139', '53324283', '53325471', '53325615',
-        '53325759', '53325903', '53320940', '53321084', '53322859',
-        '53323003', '53323147', '53323291', '53323435', '53323579',
-        '53323723', '53323867', '53324011', '53324155', '53324299',
-        '53325487', '53325631', '53325775', '53325919', '53320956',
-        '53322731', '53322875', '53323019', '53323163', '53323307',
-        '53323451', '53323595', '53323739', '53323883', '53324027',
-        '53324171', '53324315', '53325503', '53325647', '53325791',
-        '53325935', '53320972', '53322747', '53322891', '53323035',
-        '53323179', '53323323', '53323467', '53323611', '53323755',
-        '53323899', '53324043', '53324187', '53325375', '53325519',
-        '53325663', '53325807', '53325951', '53320988', '53322763',
-        '53322907', '53323051', '53323195', '53323339', '53323483',
-        '53323627', '53323771', '53323915', '53324059', '53324203',
-        '53325391', '53325535', '53325679', '53325823', '53321004',
-        '53322779', '53322923', '53323067', '53323211', '53323355',
-        '53323499', '53323643', '53323787', '53323931', '53324075',
-        '53324219', '53325407', '53325551', '53325695', '53325839',
-        '53321020', '53322795', '53322939', '53323083', '53323227',
-        '53323371', '53323515', '53323659', '53323803', '53323947',
-        '53324091', '53324235', '53325423', '53325567', '53325711',
-        '53325855', '53321036', '53322811', '53322955', '53323099',
-        '53323243', '53323387', '53323531', '53323675', '53323819',
-        '53323963', '53324107', '53324251', '53325439', '53325583',
-        '53325727', '53325871', '53321052', '53322827', '53322971',
-        '53323115', '53323259', '53323403', '53323547', '53323691',
-        '53323835', '53323979', '53324123', '53324267', '53325455',
-        '53325599', '53325743', '53325887'
-    ];
-    let t2 = [
-        '36444280',
-        '36444294',
-        '36444308',
-        '36444322',
-        '36444336',
-        '36444350',
-        '36444364',
-        '36444378',
-        '36444392',
-        '36444406',
-        '36748256',
-        '36444434',
-        '36444448',
-        '36444462',
-        '36444476',
-        '36444490',
-        '36444504',
-        '36444518',
-        '36444532',
-        '36746856',
-        '36746870',
-        '36746884',
-        '36746898',
-        '36746912',
-        '36746926',
-        '36746940',
-        '36746954',
-        '36746968',
-        '36746982',
-        '36746996',
-        '36747010',
-        '36747024',
-        '36748200',
-        '36748214',
-        '36748228',
-        '36748270',
-        '36748284',
-        '36748298',
-        '36748312',
-        '36748326',
-        '36748340',
-        '36748354',
-        '36748368',
-        '36748382',
-        '36748396',
-        '36748410',
-        '36748424',
-        '36748438',
-        '36748452',
-        '36748466',
-        '36748480',
-        '36748494',
-        '36748508',
-        '36748522',
-        '36748242',
-    ];
-
-    let files = t2.map(function(v) {
-        return 'https://cdn.rawgit.com/FNNDSC/data/master/dicom/adi_brain/' + v;
-    });
-
-    // let files = t1.map(function(v) {
-    //     return 'http://x.babymri.org/?' + v;
-    // });
-
+    // init();
     // load sequence for each file
     // instantiate the loader
-    let loader = new AMI.VolumeLoader(threeD);
-    loader
-        .load(files)
-        .then(() => {
-            let series = loader.data[0].mergeSeries(loader.data)[0];
-            loader.free();
-            loader = null;
-            // get first stack from series
-            let stack = series.stack[0];
 
-            vrHelper = new AMI.VolumeRenderingHelper(stack);
-            // scene
-            scene.add(vrHelper);
+    // let series = loader.data[0].mergeSeries(loader.data)[0];
+    // // get first stack from series
+    // let stack = series.stack[0];
 
-            // CREATE LUT
-            lut = new AMI.LutHelper('my-lut-canvases');
-            lut.luts = AMI.LutHelper.presetLuts();
-            lut.lutsO = AMI.LutHelper.presetLutsO();
-            // update related uniforms
-            vrHelper.uniforms.uTextureLUT.value = lut.texture;
-            vrHelper.uniforms.uLut.value = 1;
+    let stack = seriesContainer[0].mergeSeries(seriesContainer)[0].stack[0];
+    vrHelper = new AMI.VolumeRenderingHelper(stack);
+    // scene
+    scene.add(vrHelper);
 
-            // update camrea's and interactor's target
-            let centerLPS = stack.worldCenter();
-            camera.lookAt(centerLPS.x, centerLPS.y, centerLPS.z);
-            camera.updateProjectionMatrix();
-            controls.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
+    // CREATE LUT
+    lut = new AMI.LutHelper('my-lut-canvases');
+    lut.luts = AMI.LutHelper.presetLuts();
+    lut.lutsO = AMI.LutHelper.presetLutsO();
+    // update related uniforms
+    vrHelper.uniforms.uTextureLUT.value = lut.texture;
+    vrHelper.uniforms.uLut.value = 1;
 
-            console.log(vrHelper);
-            // create GUI
-            buildGUI();
+    // update camrea's and interactor's target
+    let centerLPS = stack.worldCenter();
+    camera.lookAt(centerLPS.x, centerLPS.y, centerLPS.z);
+    camera.updateProjectionMatrix();
+    controls.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
 
-            // screenshot experiment
-            let screenshotElt = document.getElementById('screenshot');
-            screenshotElt.addEventListener('click', function() {
-                controls.update();
+    console.log(vrHelper);
+    // create GUI
+    buildGUI();
 
-                if (ready) {
-                    renderer.render(scene, camera);
-                }
+    // screenshot experiment
+    let screenshotElt = document.getElementById('screenshot');
+    screenshotElt.addEventListener('click', function() {
+        controls.update();
 
-                let screenshot = renderer.domElement.toDataURL();
-                screenshotElt.download = 'AMI-' + Date.now() + '.png';
-                screenshotElt.href = screenshot;
-            });
+        if (ready) {
+            renderer.render(scene, camera);
+        }
 
-            // good to go
-            ready = true;
-            modified = true;
+        let screenshot = renderer.domElement.toDataURL();
+        screenshotElt.download = 'AMI-' + Date.now() + '.png';
+        screenshotElt.href = screenshot;
+    });
 
-            // force first render
-            render();
-            // notify puppeteer to take screenshot
-            const puppetDiv = document.createElement('div');
-            puppetDiv.setAttribute('id', 'puppeteer');
-            document.body.appendChild(puppetDiv);
-        })
-        .catch(error => window.console.log(error));
+    // good to go
+    ready = true;
+    modified = true;
+
+    // force first render
+    render();
+    // notify puppeteer to take screenshot
+    const puppetDiv = document.createElement('div');
+    puppetDiv.setAttribute('id', 'puppeteer');
+    document.body.appendChild(puppetDiv);
+
 };
