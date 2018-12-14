@@ -129,7 +129,6 @@ $(document).ready(function() {
                         renderAlgorithm = 'rayCasting';
                         $('.viewer').css('transform', 'scale(1)');
                         $('.viewer').addClass('opened');
-                        init();
                         readMultipleFiles(files);
                         break;
                     case 'textureBased':

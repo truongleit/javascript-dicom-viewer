@@ -345,14 +345,8 @@ function init() {
 // window.onload = function() {
 function rayCasting(files) {
     // init threeJS
-    // init();
+    init();
     // load sequence for each file
-    // instantiate the loader
-
-    // let series = loader.data[0].mergeSeries(loader.data)[0];
-    // // get first stack from series
-    // let stack = series.stack[0];
-
     let stack = seriesContainer[0].mergeSeries(seriesContainer)[0].stack[0];
     vrHelper = new AMI.VolumeRenderingHelper(stack);
     // scene
