@@ -366,7 +366,6 @@ function rayCasting(files) {
     camera.updateProjectionMatrix();
     controls.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
 
-    console.log(vrHelper);
     // create GUI
     buildGUI();
 
@@ -390,6 +389,9 @@ function rayCasting(files) {
 
     // force first render
     render();
+    ray2D('sliceX', stack, 'sagittal');
+    ray2D('sliceY', stack, 'coronal');
+    ray2D('sliceZ', stack, 'axial');
     // notify puppeteer to take screenshot
     const puppetDiv = document.createElement('div');
     puppetDiv.setAttribute('id', 'puppeteer');
