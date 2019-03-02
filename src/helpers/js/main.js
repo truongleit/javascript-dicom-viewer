@@ -12,6 +12,18 @@ var renderAlgorithm = '';
 
 $(document).ready(function() {
 
+    $('.tab').click(function() {
+        if ($(this).hasClass('datasets')) {
+            console.log('true')
+            $('.tab-title .line').removeClass('right');
+            $('.settings').removeClass('moved');
+        } else {
+            console.log('false')
+            $('.tab-title .line').addClass('right');
+            $('.settings').addClass('moved');
+        }
+    });
+
     $(".z-change").bind('keyup mousemove', function() {
         if (renderAlgorithm == 'textureBased') {
             var value = $(this).val();
@@ -157,7 +169,9 @@ $(document).ready(function() {
 function naturalSort(a, b) {
     var aPriority = /[a-z]/i.test(a) * 3 + /\d+/i.test(a) * 2;
     var bPriority = /[a-z]/i.test(b) * 3 + /\d+/i.test(b) * 2;
-    if (aPriority === bPriority) return a.localeCompare(b, 'en', { numeric: true });
+    if (aPriority === bPriority) return a.localeCompare(b, 'en', {
+        numeric: true
+    });
     return aPriority < bPriority ? 1 : -1;
 }
 
@@ -265,7 +279,9 @@ function texturebasedRendering(volume) {
         sliceZ.render();
         //
         // now the real GUI
-        var gui = new dat.GUI({ autoPlace: false });
+        var gui = new dat.GUI({
+            autoPlace: false
+        });
         $('.render-container').append(gui.domElement);
         // the following configures the gui for interacting with the X.volume
         var volumegui = gui.addFolder('Volume');
