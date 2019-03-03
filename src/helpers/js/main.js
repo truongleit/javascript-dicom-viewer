@@ -12,48 +12,55 @@ var renderAlgorithm = '';
 
 $(document).ready(function() {
 
+    // Change viewer's background color //
+    $('.color').click(function() {
+        var color = $(this).attr('color');
+        $('.viewer').css('background', '#' + color);
+        $('.color i').removeClass('block');
+        $(this).find('i').addClass('block');
+    });
+
+    // Change slice's index (new UI) //
+    $(".slice-change").bind('keyup mousemove', function() {
+        var value = $(this).val();
+        if ($(this).hasClass('index-x')) {
+            $(this).next().html(value);
+            if (renderAlgorithm == 'textureBased') {
+                volume.indexX = parseInt(value);
+            }
+        } else if ($(this).hasClass('index-y')) {
+            $(this).next().html(value);
+            if (renderAlgorithm == 'textureBased') {
+                volume.indexY = parseInt(value);
+            }
+        } else {
+            $(this).next().html(value);
+            if (renderAlgorithm == 'textureBased') {
+                volume.indexZ = parseInt(value);
+            }
+        }
+    });
+
+    // Move below line between 2 tab buttons //
     $('.tab').click(function() {
         if ($(this).hasClass('datasets')) {
-            console.log('true')
             $('.tab-title .line').removeClass('right');
             $('.settings').removeClass('moved');
         } else {
-            console.log('false')
             $('.tab-title .line').addClass('right');
             $('.settings').addClass('moved');
         }
     });
 
-    $(".z-change").bind('keyup mousemove', function() {
-        if (renderAlgorithm == 'textureBased') {
-            var value = $(this).val();
-            var slideValue = value + " %";
-            volume.indexZ = parseInt(value);
-        }
-    });
-
-    $(".x-change").bind('keyup mousemove', function() {
-        if (renderAlgorithm == 'textureBased') {
-            var value = $(this).val();
-            var slideValue = value + " %";
-            volume.indexX = parseInt(value);
-        }
-    });
-
-    $(".y-change").bind('keyup mousemove', function() {
-        if (renderAlgorithm == 'textureBased') {
-            var value = $(this).val();
-            var slideValue = value + " %";
-            volume.indexY = parseInt(value);
-        }
-    });
-
+    // Initialize and run the slideshow on homepage //
     $('.slider').slick({
         infinite: true,
         slidesToShow: 1,
         autoplay: true,
         autoplaySpeed: 5000
     });
+
+    // Create animation for upload modal //
     $('.upload-button').click(function() {
         $('.upload-overlay').addClass('block');
         $('.upload-area').addClass('block').addClass('animation');
@@ -72,6 +79,7 @@ $(document).ready(function() {
         }, 800);
     });
 
+    // Handle input files //
     $('.choose-files').click(function() {
         $('#file_inp').trigger('click');
     });
@@ -307,17 +315,17 @@ function texturebasedRendering(volume) {
             volume.dimensions[1] - 1);
         var sliceZController = volumegui.add(volume, 'indexZ', 0,
             volume.dimensions[2] - 1);
-        $('.z-change').attr({
-            'max': (volume.dimensions[2] - 1),
-            'value': volume.indexZ
+        $('.index-x').attr({
+            'max': (volume.dimensions[0] - 1),
+            'value': volume.indexX
         });
-        $('.y-change').attr({
+        $('.index-y').attr({
             'max': (volume.dimensions[1] - 1),
             'value': volume.indexY
         });
-        $('.x-change').attr({
-            'max': (volume.dimensions[0] - 1),
-            'value': volume.indexX
+        $('.index-z').attr({
+            'max': (volume.dimensions[2] - 1),
+            'value': volume.indexZ
         });
         volumegui.open();
     };

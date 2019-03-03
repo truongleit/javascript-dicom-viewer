@@ -596,6 +596,7 @@ img.brand-devices {
     background: -moz-linear-gradient(#9e9e9e, #607d8b);
     background: linear-gradient(#9e9e9e, #607d8b);
     z-index: 100;
+    transition: background ease-in .4s;
 }
 
 .viewer {
@@ -713,10 +714,31 @@ img.brand-devices {
     width: 50%;
     text-align: center;
     text-transform: uppercase;
-    font-weight: 500;
     padding: 12px 0px;
-    letter-spacing: 1px;
     cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.tab-title .tab {
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.ripple {
+    background-position: center;
+    transition: background 0.3s;
+}
+
+.ripple:hover {
+    background: #dbdbdb radial-gradient(circle, transparent 1%, #dbdbdb 1%) center/15000%;
+}
+
+.ripple:active {
+    background-color: #efefef;
+    background-size: 100%;
+    transition: background 0s;
 }
 
 .line {
@@ -869,6 +891,34 @@ span.file-name,
     transform: scale(1.4);
 }
 
+.attribute-config input[type=range]::-moz-range-thumb,
+.opacity input[type=range]::-moz-range-thumb {
+    display: block;
+    -webkit-appearance: none;
+    background-color: #66a6f9;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.attribute-config input[type="range"]::-moz-range-thumb:active,
+.opacity input[type="range"]::-moz-range-thumb:active {
+    transform: scale(1.4);
+}
+
+.attribute-config input[type=range]:-moz-focusring,
+.opacity input[type=range]:-moz-focusring {
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+.attribute-config input[type=range]:focus::-moz-range-track,
+.opacity input[type=range]:focus::-moz-range-track {
+    background: #ccc;
+}
+
 .delete-render {
     position: absolute;
     right: 10px;
@@ -922,8 +972,13 @@ span.file-name,
 }
 
 .color i {
-    color: #43ef99;
+    opacity: 0;
+    color: #26d67e;
     transition: opacity ease .3s;
+}
+
+.color i.block {
+    opacity: 1;
 }
 
 .color:hover {
@@ -931,35 +986,35 @@ span.file-name,
 }
 
 .color.black {
-    background: rgb(0, 0, 0);
+    background: #35373a;
 }
 
 .color.white {
-    background: rgb(255, 255, 255);
+    background: #eff2f7;
 }
 
 .color.bordeuax {
-    background: rgb(158, 1, 66);
+    background: #9e0142;
 }
 
 .color.red {
-    background: rgb(213, 62, 79);
+    background: #d53e4f;
 }
 
 .color.orange {
-    background: rgb(244, 109, 67);
+    background: #f46d43;
 }
 
 .color.yellow {
-    background: rgb(254, 224, 139);
+    background: #fee08b;
 }
 
 .color.green {
-    background: rgb(171, 221, 164);
+    background: #abdda4;
 }
 
 .color.blue {
-    background: rgb(50, 136, 189);
+    background: #3288bd;
 }
 
 .opacity {

@@ -149,8 +149,10 @@
                 <div class="files-bar">
                     <div class="tab-container">
                         <div class="tab-title">
-                            <div class="tab datasets">Datasets</div>
-                            <div class="tab global">Global</div>
+                            <!-- <div class="tab datasets">Datasets</div>
+                            <div class="tab global">Global</div> -->
+                            <button class="tab datasets ripple">Datasets</button>
+                            <button class="tab global ripple">Global</button>
                             <div class="line left"></div>
                         </div>
                         <div class="settings">
@@ -174,14 +176,14 @@
                                             <div class="attribute">Sample Distance</div>
                                             <input type="range" min="0" max="100" step="1" value="0">
                                             <div class="value">
-                                                200
+                                                0
                                             </div>
                                         </div>
                                         <div class="attribute-config">
                                             <div class="attribute">Edge Gradient</div>
                                             <input type="range" min="0" max="100" step="1" value="0">
                                             <div class="value">
-                                                200
+                                                0
                                             </div>
                                         </div>
                                     </div>
@@ -205,12 +207,12 @@
                                     <div class="attribute-config">
                                         <div class="attribute">Window</div>
                                         <input type="range" min="0" max="100" step="1" value="0">
-                                        <div class="value">200</div>
+                                        <div class="value">0</div>
                                     </div>
                                     <div class="attribute-config">
                                         <div class="attribute">Level</div>
                                         <input type="range" min="0" max="100" step="1" value="0">
-                                        <div class="value">200</div>
+                                        <div class="value">0</div>
                                     </div>
                                     <div class="attribute-title">
                                         Slices
@@ -219,22 +221,22 @@
                                         <div class="attribute circle">
                                             <div>X</div>
                                         </div>
-                                        <input type="range" min="0" max="100" step="1" value="0">
-                                        <div class="value">200</div>
+                                        <input class="slice-change index-x" type="range" min="0" max="100" step="1" value="0">
+                                        <div class="value">0</div>
                                     </div>
                                     <div class="attribute-config">
                                         <div class="attribute circle">
                                             <div>Y</div>
                                         </div>
-                                        <input type="range" min="0" max="100" step="1" value="0">
-                                        <div class="value">200</div>
+                                        <input class="slice-change index-y" type="range" min="0" max="100" step="1" value="0">
+                                        <div class="value">0</div>
                                     </div>
                                     <div class="attribute-config">
                                         <div class="attribute circle">
                                             <div>Z</div>
                                         </div>
-                                        <input type="range" min="0" max="100" step="1" value="0">
-                                        <div class="value">200</div>
+                                        <input class="slice-change index-z" type="range" min="0" max="100" step="1" value="0">
+                                        <div class="value">0</div>
                                     </div>
                                 </div>
                                 <div class="render-info setting">
@@ -256,14 +258,14 @@
                                         <span class="name">Background</span>
                                     </div>
                                     <div class="color-picker">
-                                        <div class="color black"><i class="material-icons">check</i></div>
-                                        <div class="color white"></div>
-                                        <div class="color bordeuax"></div>
-                                        <div class="color red"></div>
-                                        <div class="color orange"></div>
-                                        <div class="color yellow"></div>
-                                        <div class="color green"></div>
-                                        <div class="color blue"></div>
+                                        <div class="color black" color="35373a"><i class="material-icons">check</i></div>
+                                        <div class="color white" color="eff2f7"><i class="material-icons">check</i></div>
+                                        <div class="color bordeuax" color="9e0142"><i class="material-icons">check</i></div>
+                                        <div class="color red" color="d53e4f"><i class="material-icons">check</i></div>
+                                        <div class="color orange" color="f46d43"><i class="material-icons">check</i></div>
+                                        <div class="color yellow" color="fee08b"><i class="material-icons">check</i></div>
+                                        <div class="color green" color="abdda4"><i class="material-icons">check</i></div>
+                                        <div class="color blue" color="3288bd"><i class="material-icons">check</i></div>
                                     </div>
                                 </div>
                                 <div class="colors setting">
