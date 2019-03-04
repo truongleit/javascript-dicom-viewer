@@ -139,11 +139,9 @@ $(document).ready(function() {
                 if ($('.wrong-noti').hasClass('block')) {
                     $('.wrong-noti').removeClass('block');
                 }
-                console.log('true');
                 switch (algorithm) {
                     case 'marchingCube':
                         renderAlgorithm = 'marchingCube';
-                        console.log('marchingCube');
                         break;
                     case 'rayCasting':
                         renderAlgorithm = 'rayCasting';
@@ -206,9 +204,7 @@ function recursiveLoading(idx) {
     } else {
         volume = new X.volume();
         volume.file = _filenames;
-        console.log(volume.file);
         volume.filedata = _dataArray;
-        console.log(volume.filedata);
         texturebasedRendering(volume);
     }
 };
@@ -318,15 +314,15 @@ function texturebasedRendering(volume) {
         $('.index-x').attr({
             'max': (volume.dimensions[0] - 1),
             'value': volume.indexX
-        });
+        }).next().html(volume.indexX);
         $('.index-y').attr({
             'max': (volume.dimensions[1] - 1),
             'value': volume.indexY
-        });
+        }).next().html(volume.indexY);
         $('.index-z').attr({
             'max': (volume.dimensions[2] - 1),
             'value': volume.indexZ
-        });
+        }).next().html(volume.indexZ);
         volumegui.open();
     };
 }
