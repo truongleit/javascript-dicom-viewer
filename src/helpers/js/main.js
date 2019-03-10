@@ -12,6 +12,21 @@ var renderAlgorithm = '';
 
 $(document).ready(function() {
 
+    // Slide-down menu //
+    $('.setting').click(function() {
+        if (!$(this).hasClass('render-info')) {
+            if (!$(this).find('.config').hasClass('opened')) {
+                console.log('true')
+                $(this).find('.drop-down').html('keyboard_arrow_up');
+                $(this).addClass('opened').find('.config').addClass('opened');
+            } else {
+                console.log('false')
+                $(this).find('.drop-down').html('keyboard_arrow_down');
+                $(this).removeClass('opened').find('.config').removeClass('opened');
+            }
+        }
+    });
+
     // Change viewer's background color //
     $('.color').click(function() {
         var color = $(this).attr('color');

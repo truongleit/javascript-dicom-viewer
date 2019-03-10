@@ -803,6 +803,20 @@ img.brand-devices {
     box-shadow: none;
 }
 
+.setting {
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.config {
+    max-height: 0;
+    transition: max-height ease .8s;
+}
+
+.config.opened {
+    max-height: 500px;
+}
+
 .drop-down {
     position: absolute;
     right: 10px;
