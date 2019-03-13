@@ -410,16 +410,16 @@ tbody tr {
     padding: 13px 0;
     text-transform: uppercase;
     margin-left: 10px;
-    color: #FFFFFF;
+    color: #333333;
     background-color: #cecece;
     transition: all 0.25s ease;
     user-select: none;
     cursor: pointer;
-    opacity: .8;
+    opacity: 1;
 }
 
 .upload-cancel:hover {
-    opacity: 1;
+    opacity: .7;
 }
 
 .upload-execute,
