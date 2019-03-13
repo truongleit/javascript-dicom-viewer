@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900');
-
 body {
     width: 100vw;
     height: 100vh;
@@ -16,7 +15,9 @@ body {
     margin: 0 auto;
 }
 
+
 /* Menu Bar */
+
 .navigation-bar {
     position: fixed;
     width: 100%;
@@ -89,7 +90,9 @@ body {
     font-weight: 500;
 }
 
+
 /* Main Site */
+
 .upload-overlay {
     display: none;
     width: 100%;
@@ -111,29 +114,24 @@ body {
         height: 50px;
         border-radius: 100%;
     }
-
     20% {
         opacity: .5;
     }
-
     30% {
         top: 50%;
         opacity: 1;
         width: 50px;
         height: 50px;
     }
-
     40% {
         width: 40px;
         height: 40px;
         border-radius: 100%;
     }
-
     70% {
         border-radius: 10%;
         box-shadow: none;
     }
-
     100% {
         width: 650px;
         height: 530px;
@@ -149,29 +147,24 @@ body {
         border-radius: 0;
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     }
-
     20% {
         border-radius: 10%;
         box-shadow: none;
     }
-
     30% {
         width: 40px;
         height: 40px;
         border-radius: 100%;
     }
-
     40% {
         top: 50%;
         opacity: 1;
         width: 50px;
         height: 50px;
     }
-
     70% {
         opacity: .5;
     }
-
     100% {
         top: 85%;
         opacity: 0;
@@ -365,6 +358,20 @@ tbody tr {
 }
 
 .upload-title {
+    display: none !important;
+}
+
+.rendering-algorithm {
+    opacity: 0;
+    transition: opacity ease-in 1s;
+}
+
+.rendering-algorithm.block {
+    opacity: 1;
+}
+
+.upload-title,
+.rendering-algorithm {
     position: absolute;
     left: 50%;
     bottom: 0;
@@ -379,7 +386,8 @@ tbody tr {
     align-items: center;
 }
 
-.upload-cancel {
+
+/* .upload-cancel {
     border-radius: 40px;
     background-color: #cecece;
     padding: 10px 30px;
@@ -390,9 +398,32 @@ tbody tr {
     border: 2px solid #cecece;
     color: #FFFFFF;
     margin-right: 15px;
+} */
+
+.upload-cancel {
+    width: 45%;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-align: center;
+    border: 2px solid #cecece;
+    padding: 13px 0;
+    text-transform: uppercase;
+    margin-left: 10px;
+    color: #FFFFFF;
+    background-color: #cecece;
+    transition: all 0.25s ease;
+    user-select: none;
+    cursor: pointer;
+    opacity: .8;
 }
 
-.upload-execute {
+.upload-cancel:hover {
+    opacity: 1;
+}
+
+.upload-execute,
+.marching-cube {
     border-radius: 40px;
     background-color: #ffffff;
     padding: 10px 30px;
@@ -404,7 +435,8 @@ tbody tr {
     color: #1ECD97;
 }
 
-.upload-execute:hover {
+.upload-execute:hover,
+.marching-cube:hover {
     color: #ffffff;
     background-color: #1ECD97;
 }
@@ -718,6 +750,7 @@ img.brand-devices {
     cursor: pointer;
     border: none;
     outline: none;
+    background-color: #FFF;
 }
 
 .tab-title .tab {
@@ -1116,6 +1149,7 @@ span.file-name,
     top: 1px;
 }
 
+
 /* input[type=range] {
     -webkit-appearance: none;
     position: absolute;
@@ -1222,7 +1256,10 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
     background: #f7f9fc;
 } */
+
+
 /* TEST */
+
 #stats {
     position: absolute;
     top: 0;

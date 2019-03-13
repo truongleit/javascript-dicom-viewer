@@ -135,6 +135,7 @@ $(document).ready(function() {
                     '<td colspan="1">' + format.toUpperCase() + '</td>' +
                     '</tr>';
                 $('.files-table tbody').append(html);
+                $('.rendering-algorithm').addClass('block');
             }
         } else {
             filesLoaded = false;

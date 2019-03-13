@@ -29,20 +29,21 @@
 </head>
 
 <body>
-    <div class="upload-area">
-        <div class="files-container">
+    <div class="upload-area block">
+        <div class="files-container block">
             <div class="wrong-noti"></div>
             <div class="files-list">
                 <div class="handle-buttons">
                     <div class="choose-files">Select your files</div>
-                    <div class="algorithm-choices">
+                    <div class="upload-cancel">Cancel</div>
+                    <!-- <div class="algorithm-choices">
                         <select class="algorithm-select" name="algorithm">
                             <option style="display:none;" value="" selected disabled>Select algorithm</option>
                             <option value="marchingCube">Marching Cube</option>
                             <option value="rayCasting">Ray Casting</option>
                             <option value="textureBased">Texture-based</option>
                         </select>
-                    </div>
+                    </div> -->
                 </div>
                 <table class="files-table">
                     <thead>
@@ -60,9 +61,12 @@
                     </tbody>
                 </table>
             </div>
-            <div class="upload-title">
+            <!-- <div class="upload-title">
                 <div class="upload-cancel">Cancel</div>
                 <div class="upload-execute">Execute</div>
+            </div> -->
+            <div class="rendering-algorithm">
+                <div class="marching-cube">Marching Cube</div>
             </div>
             <div class="user-options">
                 <div></div>
@@ -93,8 +97,7 @@
                 <img class="brand-devices" src="/asset/devices.png" alt="devices">
             </div>
             <div class="brand-content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam felis quam, porttitor a tincidunt ut, consequat nec ex. Proin nec posuere elit. Curabitur pellentesque, nunc ac lobortis lobortis, erat tellus venenatis quam, nec pretium
-                ligula nibh quis
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam felis quam, porttitor a tincidunt ut, consequat nec ex. Proin nec posuere elit. Curabitur pellentesque, nunc ac lobortis lobortis, erat tellus venenatis quam, nec pretium ligula nibh quis
                 mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur rhoncus arcu in ante lobortis feugiat. Proin a quam volutpat, vestibulum nisi ut, finibus neque.
             </div>
             <div class="browser">
@@ -124,7 +127,7 @@
             </div>
         </div>
     </div>
-    <div class="viewer" style="transform:scale(1);">
+    <div class="viewer" style="transform:scale(0);">
         <div class="viewer-container">
             <div class="interact-container">
                 <div class="logo">
@@ -149,8 +152,6 @@
                 <div class="files-bar">
                     <div class="tab-container">
                         <div class="tab-title">
-                            <!-- <div class="tab datasets">Datasets</div>
-                            <div class="tab global">Global</div> -->
                             <button class="tab datasets ripple">Datasets</button>
                             <button class="tab global ripple">Global</button>
                             <div class="line left"></div>
@@ -249,11 +250,8 @@
                                         <!-- <i class="material-icons drop-down">keyboard_arrow_up</i> -->
                                     </div>
                                     <div class="content">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                        aliquip ex
-                                        ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                                        deserunt
-                                        mollit anim id est laborum.
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                                        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                     </div>
                                 </div>
                             </div>
