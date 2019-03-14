@@ -125,18 +125,24 @@ $(document).ready(function() {
             }
             filesLoaded = true;
             fileNames.sort(naturalSort);
-            for (var i = 0; i < fileNames.length; i++) {
-                var length = fileNames[i].length;
-                var name = fileNames[i].slice(0, length - 4);
-                var format = fileNames[i].substr(-3);
-                var html = '<tr>' +
-                    '<td colspan="1">' + (i + 1) + '</td>' +
-                    '<td colspan="6">' + name + '</td>' +
-                    '<td colspan="1">' + format.toUpperCase() + '</td>' +
-                    '</tr>';
-                $('.files-table tbody').append(html);
-                $('.rendering-algorithm').addClass('block');
-            }
+            $('.lds-hourglass').addClass('block');
+            setTimeout(function() {
+                $('.lds-hourglass').removeClass('block');
+                for (var i = 0; i < fileNames.length; i++) {
+                    var length = fileNames[i].length;
+                    var name = fileNames[i].slice(0, length - 4);
+                    var format = fileNames[i].substr(-3);
+                    var html = '<tr>' +
+                        '<td colspan="1">' + (i + 1) + '</td>' +
+                        '<td colspan="6">' + name + '</td>' +
+                        '<td colspan="1">' + format.toUpperCase() + '</td>' +
+                        '</tr>';
+                    $('.files-table tbody').append(html);
+                    $('.rendering-algorithm').addClass('block');
+                }
+                $('.button-overlay').addClass('hidden');
+                $('.algorithm-button').addClass('clickable');
+            }, 3000);
         } else {
             filesLoaded = false;
             var text = 'Some selected files are in the wrong format';
@@ -145,46 +151,66 @@ $(document).ready(function() {
 
     });
 
-    $('.upload-execute').click(function() {
-        var algorithm = $('.algorithm-select').val();
-        if (algorithm != null) {
-            if ($('.wrong-noti').hasClass('block')) {
-                $('.wrong-noti').removeClass('block');
-            }
-            if (filesLoaded) {
-                if ($('.wrong-noti').hasClass('block')) {
-                    $('.wrong-noti').removeClass('block');
-                }
-                switch (algorithm) {
-                    case 'marchingCube':
-                        renderAlgorithm = 'marchingCube';
-                        break;
-                    case 'rayCasting':
-                        renderAlgorithm = 'rayCasting';
-                        $('.viewer').css('transform', 'scale(1)');
-                        $('.viewer').addClass('opened');
-                        readMultipleFiles(files);
-                        break;
-                    case 'textureBased':
-                        renderAlgorithm = 'textureBased';
-                        initTexturebasedRendering();
-                        $('.viewer').css('transform', 'scale(1)');
-                        $('.viewer').addClass('opened');
-                        counter = files.length;
-                        reader = new FileReader();
-                        recursiveLoading(0);
-                        break;
-                }
-
-            } else {
-                var text = 'No files have been loaded';
-                $('.wrong-noti').text(text).addClass('block');
-            }
-        } else {
-            var text = 'Please choose an algorithm';
-            $('.wrong-noti').text(text).addClass('block');
-        }
+    // Execute Ray-cating rendering algorithm //
+    $('.ray-casting').click(function() {
+        renderAlgorithm = 'rayCasting';
+        $('.viewer').css('transform', 'scale(1)');
+        $('.viewer').addClass('opened');
+        readMultipleFiles(files);
     });
+
+    // Execute Texture-based rendering algorithm //
+    $('.texture-based').click(function() {
+        console.log('true');
+        renderAlgorithm = 'textureBased';
+        initTexturebasedRendering();
+        $('.viewer').css('transform', 'scale(1)');
+        $('.viewer').addClass('opened');
+        counter = files.length;
+        reader = new FileReader();
+        recursiveLoading(0);
+    });
+
+    // $('.upload-execute').click(function() {
+    //     var algorithm = $('.algorithm-select').val();
+    //     if (algorithm != null) {
+    //         if ($('.wrong-noti').hasClass('block')) {
+    //             $('.wrong-noti').removeClass('block');
+    //         }
+    //         if (filesLoaded) {
+    //             if ($('.wrong-noti').hasClass('block')) {
+    //                 $('.wrong-noti').removeClass('block');
+    //             }
+    //             switch (algorithm) {
+    //                 case 'marchingCube':
+    //                     renderAlgorithm = 'marchingCube';
+    //                     break;
+    //                 case 'rayCasting':
+    //                     renderAlgorithm = 'rayCasting';
+    //                     $('.viewer').css('transform', 'scale(1)');
+    //                     $('.viewer').addClass('opened');
+    //                     readMultipleFiles(files);
+    //                     break;
+    //                 case 'textureBased':
+    //                     renderAlgorithm = 'textureBased';
+    //                     initTexturebasedRendering();
+    //                     $('.viewer').css('transform', 'scale(1)');
+    //                     $('.viewer').addClass('opened');
+    //                     counter = files.length;
+    //                     reader = new FileReader();
+    //                     recursiveLoading(0);
+    //                     break;
+    //             }
+
+    //         } else {
+    //             var text = 'No files have been loaded';
+    //             $('.wrong-noti').text(text).addClass('block');
+    //         }
+    //     } else {
+    //         var text = 'Please choose an algorithm';
+    //         $('.wrong-noti').text(text).addClass('block');
+    //     }
+    // });
 
 });
 

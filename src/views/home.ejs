@@ -25,14 +25,16 @@
     <script type="text/javascript" src="/js/jpx.min.js"></script>
     <script type="text/javascript" src="/js/raycasting.js"></script>
     <script type="text/javascript" src="/js/ray2D.js"></script>
+    <script type="text/javascript" src="/js/marchingCube.bundle.js"></script>
     <title>DiRea - Medical Tool</title>
 </head>
 
 <body>
-    <div class="upload-area block">
-        <div class="files-container block">
+    <div class="upload-area">
+        <div class="files-container">
             <div class="wrong-noti"></div>
             <div class="files-list">
+                <div class="lds-hourglass"></div>
                 <div class="handle-buttons">
                     <div class="choose-files">Select your files</div>
                     <div class="upload-cancel">Cancel</div>
@@ -66,7 +68,10 @@
                 <div class="upload-execute">Execute</div>
             </div> -->
             <div class="rendering-algorithm">
-                <div class="marching-cube">Marching Cube</div>
+                <div class="button-overlay"></div>
+                <div class="algorithm-button marching-cube">Marching Cube</div>
+                <div class="algorithm-button ray-casting">Ray Casting</div>
+                <div class="algorithm-button texture-based">Texture-based</div>
             </div>
             <div class="user-options">
                 <div></div>
