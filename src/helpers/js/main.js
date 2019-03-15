@@ -13,19 +13,19 @@ var renderAlgorithm = '';
 $(document).ready(function() {
 
     // Slide-down menu //
-    $('.setting').click(function() {
-        if (!$(this).hasClass('render-info')) {
-            if (!$(this).find('.config').hasClass('opened')) {
-                console.log('true')
-                $(this).find('.drop-down').html('keyboard_arrow_up');
-                $(this).addClass('opened').find('.config').addClass('opened');
-            } else {
-                console.log('false')
-                $(this).find('.drop-down').html('keyboard_arrow_down');
-                $(this).removeClass('opened').find('.config').removeClass('opened');
-            }
-        }
-    });
+    // $('.setting').click(function() {
+    //     if (!$(this).hasClass('render-info')) {
+    //         if (!$(this).find('.config').hasClass('opened')) {
+    //             console.log('true')
+    //             $(this).find('.drop-down').html('keyboard_arrow_up');
+    //             $(this).addClass('opened').find('.config').addClass('opened');
+    //         } else {
+    //             console.log('false')
+    //             $(this).find('.drop-down').html('keyboard_arrow_down');
+    //             $(this).removeClass('opened').find('.config').removeClass('opened');
+    //         }
+    //     }
+    // });
 
     // Change viewer's background color //
     $('.color').click(function() {
@@ -156,14 +156,15 @@ $(document).ready(function() {
         renderAlgorithm = 'rayCasting';
         $('.viewer').css('transform', 'scale(1)');
         $('.viewer').addClass('opened');
+        $('.lds-hourglass').addClass('block');
         readMultipleFiles(files);
     });
 
     // Execute Texture-based rendering algorithm //
     $('.texture-based').click(function() {
-        console.log('true');
         renderAlgorithm = 'textureBased';
         initTexturebasedRendering();
+        $('.lds-hourglass').addClass('block');
         $('.viewer').css('transform', 'scale(1)');
         $('.viewer').addClass('opened');
         counter = files.length;
@@ -323,6 +324,10 @@ function texturebasedRendering(volume) {
         sliceY.render();
         sliceZ.add(volume);
         sliceZ.render();
+
+        $('.rendering-layout').addClass('fade-out');
+        $('.lds-hourglass').removeClass('block');
+        $('.rendering-layout').addClass('hidden');
         //
         // now the real GUI
         var gui = new dat.GUI({

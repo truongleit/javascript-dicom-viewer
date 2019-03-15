@@ -274,6 +274,9 @@ function buildGUI() {
     });
 
     stackFolder.open();
+    $('.rendering-layout').addClass('fade-out');
+    $('.lds-hourglass').removeClass('block');
+    $('.rendering-layout').addClass('hidden');
 }
 
 function render() {

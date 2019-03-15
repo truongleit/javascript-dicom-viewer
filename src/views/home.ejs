@@ -34,18 +34,10 @@
         <div class="files-container">
             <div class="wrong-noti"></div>
             <div class="files-list">
-                <div class="lds-hourglass"></div>
+                <div class="lds-hourglass in-files-container"></div>
                 <div class="handle-buttons">
                     <div class="choose-files">Select your files</div>
                     <div class="upload-cancel">Cancel</div>
-                    <!-- <div class="algorithm-choices">
-                        <select class="algorithm-select" name="algorithm">
-                            <option style="display:none;" value="" selected disabled>Select algorithm</option>
-                            <option value="marchingCube">Marching Cube</option>
-                            <option value="rayCasting">Ray Casting</option>
-                            <option value="textureBased">Texture-based</option>
-                        </select>
-                    </div> -->
                 </div>
                 <table class="files-table">
                     <thead>
@@ -252,7 +244,6 @@
                                     <div class="title">
                                         <i class="material-icons">info</i>
                                         <span class="name">Information</span>
-                                        <!-- <i class="material-icons drop-down">keyboard_arrow_up</i> -->
                                     </div>
                                     <div class="content">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
@@ -304,6 +295,8 @@
                     </div>
                 </div>
                 <div id="3d" class="three-dimemsion ">
+                    <div class="lds-hourglass loading-canvas"></div>
+                    <div class="rendering-layout"></div>
                     <div class="title">3D</div>
                     <div id="my-lut-container">
                         <div id="my-lut-min">0.0</div>
@@ -313,15 +306,12 @@
                 </div>
                 <div class="two-dimemsion-container">
                     <div id="sliceX" class="two-dimemsion">
-                        <!-- <input type="range" max="100" min="0" class="x-change"> -->
                         <div class="title">X-axis</div>
                     </div>
                     <div id="sliceY" class="two-dimemsion">
-                        <!-- <input type="range" max="100" min="0" class="y-change"> -->
                         <div class="title ">Y-axis</div>
                     </div>
                     <div id="sliceZ" class="two-dimemsion">
-                        <!-- <input type="range" max="100 " min="0" class="z-change"> -->
                         <div class="title">Z-axis</div>
                     </div>
                 </div>
