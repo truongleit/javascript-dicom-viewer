@@ -359,19 +359,17 @@ function rayCasting(files) {
     lut = new AMI.LutHelper('my-lut-canvases');
     lut.luts = AMI.LutHelper.presetLuts();
     lut.lutsO = AMI.LutHelper.presetLutsO();
+
     // update related uniforms
     vrHelper.uniforms.uTextureLUT.value = lut.texture;
     vrHelper.uniforms.uLut.value = 1;
-
     // update camrea's and interactor's target
     let centerLPS = stack.worldCenter();
     camera.lookAt(centerLPS.x, centerLPS.y, centerLPS.z);
     camera.updateProjectionMatrix();
     controls.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
-
     // create GUI
     buildGUI();
-
     // screenshot experiment
     let screenshotElt = document.getElementById('screenshot');
     screenshotElt.addEventListener('click', function() {

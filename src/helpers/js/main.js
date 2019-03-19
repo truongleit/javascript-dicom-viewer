@@ -27,6 +27,47 @@ $(document).ready(function() {
     //     }
     // });
 
+    // Switch between 3D and 2D //
+    $('.switch-view').click(function() {
+        if (!$('.dropdown-view').hasClass('block')) {
+            $(this).find('i').addClass('rotated');
+            $('.dropdown-view').addClass('block');
+        } else {
+            $(this).find('i').removeClass('rotated');
+            $('.dropdown-view').removeClass('block');
+        }
+    });
+
+    $('.dimension-option').click(function() {
+        $('.switch-view span').html($(this).text());
+        if ($(this).text() == '3D') {
+            if (renderAlgorithm == 'textureBased') {
+                volume.volumeRendering = true;
+            }
+        } else {
+            if (renderAlgorithm == 'textureBased') {
+                volume.volumeRendering = false;
+            }
+        }
+    });
+
+    // Reset dimension //
+    $('.reset-dimension').click(function() {
+        if ($(this).hasClass('reset-to-X')) {
+            if (renderAlgorithm == 'textureBased') {
+                threeD.camera.position = [500, 0, 0];
+            }
+        } else if ($(this).hasClass('reset-to-Y')) {
+            if (renderAlgorithm == 'textureBased') {
+                threeD.camera.position = [0, 500, 0];
+            }
+        } else {
+            if (renderAlgorithm == 'textureBased') {
+                threeD.camera.position = [0, 0, 500];
+            }
+        }
+    });
+
     // Change viewer's background color //
     $('.color').click(function() {
         var color = $(this).attr('color');
@@ -215,6 +256,20 @@ $(document).ready(function() {
 
 });
 
+function texturebasedUpdateMinColor(picker) {
+    var rgb = [Math.round(picker.rgb[0]), Math.round(picker.rgb[1]), Math.round(picker.rgb[2])];
+    if (renderAlgorithm == 'textureBased') {
+        volume.minColor = [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255];
+    }
+}
+
+function texturebasedUpdateMaxColor(picker) {
+    var rgb = [Math.round(picker.rgb[0]), Math.round(picker.rgb[1]), Math.round(picker.rgb[2])];
+    if (renderAlgorithm == 'textureBased') {
+        volume.maxColor = [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255];
+    }
+}
+
 function naturalSort(a, b) {
     var aPriority = /[a-z]/i.test(a) * 3 + /\d+/i.test(a) * 2;
     var bPriority = /[a-z]/i.test(b) * 3 + /\d+/i.test(b) * 2;
@@ -280,7 +335,7 @@ function initTexturebasedRendering() {
         threeD = new X.renderer3D();
         threeD.container = '3d';
         threeD.init();
-        threeD.camera.position = [0, 400, 0];
+        threeD.camera.position = [0, 500, 0];
     } catch (Exception) {
         // no webgl on this machine
         _webGLFriendly = false;
@@ -308,7 +363,7 @@ function initTexturebasedRendering() {
 function texturebasedRendering(volume) {
     if (_webGLFriendly) {
         volume.volumeRendering = true;
-        volume.opacity = 0.3;
+        volume.opacity = 1;
         volume.windowHigh = 1506;
         volume.lowerThreshold = 200;
         threeD.add(volume);

@@ -5,18 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" type="image/png" href="/asset/favicon.png" />
+    <link rel="shortcut icon" href="/asset/favicon-black.png" type="image/x-icon">
+    <link rel="icon" href="/asset/favicon-black.png" type="image/x-icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.2/dat.gui.js"></script>
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
     <link type='text/css' rel='stylesheet' href='/css/style.css' />
     <link type='text/css' rel='stylesheet' href='/css/slick.css' />
     <link type='text/css' rel='stylesheet' href='/css/animate.css' />
+    <!-- <link type='text/css' rel='stylesheet' href='/css/devices.min.css' /> -->
     <script type="text/javascript" src="/js/three.js"></script>
     <script type="text/javascript" src="/js/ami.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/stats.js/master/build/stats.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="text/javascript" src="/js/slick.min.js"></script>
     <script type="text/javascript" src="/js/xtk.js"></script>
+    <script type="text/javascript" src="/js/jscolor.js"></script>
     <script type="text/javascript" src="/js/main.js"></script>
     <script type="text/javascript" src="/js/cornerstone.min.js"></script>
     <script type="text/javascript" src="/js/cornerstoneFileImageLoader.js"></script>
@@ -26,7 +29,7 @@
     <script type="text/javascript" src="/js/raycasting.js"></script>
     <script type="text/javascript" src="/js/ray2D.js"></script>
     <script type="text/javascript" src="/js/marchingCube.bundle.js"></script>
-    <title>DiRea - Medical Tool</title>
+    <title>DiRea - Medical Image Processing Tool</title>
 </head>
 
 <body>
@@ -55,10 +58,6 @@
                     </tbody>
                 </table>
             </div>
-            <!-- <div class="upload-title">
-                <div class="upload-cancel">Cancel</div>
-                <div class="upload-execute">Execute</div>
-            </div> -->
             <div class="rendering-algorithm">
                 <div class="button-overlay"></div>
                 <div class="algorithm-button marching-cube">Marching Cube</div>
@@ -75,7 +74,7 @@
         <div class="container">
             <div class="logo-container">
                 <a class="logo" href="#">
-                    <img src="/asset/logo.svg" alt="logo">
+                    <img src="/asset/logo-white.svg" alt="logo">
                 </a>
             </div>
             <div class="menu-items">
@@ -132,20 +131,64 @@
                 </div>
                 <div class="brand">
                     <div class="title">DIREA</div>
-                    <div class="description">DICOM Viewer</div>
+                    <div class="description">DICOM Reader</div>
                 </div>
             </div>
             <div class="control-buttons">
-                <div class="minimize">
-                    <img src="/asset/minus.svg ">
-                </div>
-                <div class="cancel">
-                    <img src="/asset/delete.svg ">
-                </div>
+
             </div>
             <div class="render-container">
                 <div id="my-gui-container"></div>
                 <a href="# " id="screenshot" download="VJS.png">Take screenshot</a>
+                <div class="controller">
+                    <div class="switch-view">
+                        <span style="font-weight: 500;">3D</span><i class="material-icons">keyboard_arrow_down</i>
+                        <div class="dropdown-view">
+                            <div class="dimension-option">3D</div>
+                            <div class="dimension-option">2D</div>
+                        </div>
+                    </div>
+                    <div class="function-button">
+                        <i class="material-icons take-screenshot">camera_alt</i>
+                        <div class="function-info">Screenshot</div>
+                    </div>
+                    <div class="function-button">
+                        <i class="material-icons">flip</i>
+                        <div class="function-info">Split view</div>
+                    </div>
+                    <div class="function-button">
+                        <i class="material-icons">color_lens</i>
+                        <div class="function-info">Background color</div>
+                    </div>
+                    <div class="function-button">
+                        <i class="material-icons">filter_center_focus</i>
+                        <div class="function-info">Reset camera</div>
+                    </div>
+                    <div class="function-button">
+                        <i class="material-icons">crop</i>
+                        <div class="function-info">Crop</div>
+                    </div>
+                    <div class="function-button">
+                        <i class="material-icons">rotate_left</i>
+                        <div class="function-info">Rotate camera left 90&deg;</div>
+                    </div>
+                    <div class="function-button">
+                        <i class="material-icons">rotate_right</i>
+                        <div class="function-info">Rotate camera right 90&deg;</div>
+                    </div>
+                    <div class="function-button reset-dimension reset-to-X">
+                        <span>X</span>
+                        <div class="function-info reset-camera">Reset camera to orientation X</div>
+                    </div>
+                    <div class="function-button reset-dimension reset-to-Y">
+                        <span>Y</span>
+                        <div class="function-info reset-camera">Reset camera to orientation Y</div>
+                    </div>
+                    <div class="function-button reset-dimension reset-to-Z">
+                        <span>Z</span>
+                        <div class="function-info reset-camera">Reset camera to orientation Z</div>
+                    </div>
+                </div>
                 <div class="files-bar">
                     <div class="tab-container">
                         <div class="tab-title">
@@ -191,6 +234,20 @@
                                         <i class="material-icons">color_lens</i>
                                         <span class="name">Colors</span>
                                         <i class="material-icons drop-down">keyboard_arrow_up</i>
+                                    </div>
+                                    <div class="config opened">
+                                        <div class="attribute-config">
+                                            <div class="texture-min-color">
+                                                <span class="color-min-title">Min Color:</span>
+                                                <input class="min-color-picker jscolor {onFineChange:'texturebasedUpdateMinColor(this)'} ripple" value="ab2567">
+                                            </div>
+                                        </div>
+                                        <div class="attribute-config">
+                                            <div class="texture-max-color">
+                                                <span class="color-min-title">Max Color:</span>
+                                                <input class="max-color-picker jscolor {onFineChange:'texturebasedUpdateMaxColor(this)'} ripple" value="ab2567">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="slices setting">
@@ -294,26 +351,28 @@
                         </div>
                     </div>
                 </div>
-                <div id="3d" class="three-dimemsion ">
+                <div class="canvas-container">
                     <div class="lds-hourglass loading-canvas"></div>
-                    <div class="rendering-layout"></div>
-                    <div class="title">3D</div>
-                    <div id="my-lut-container">
-                        <div id="my-lut-min">0.0</div>
-                        <div id="my-lut-canvases"></div>
-                        <div id="my-lut-max">1.0</div>
+                    <div class="rendering-layout "></div>
+                    <div id="3d" class="three-dimemsion">
+                        <!-- <div class="title ">3D</div> -->
+                        <div id="my-lut-container ">
+                            <div id="my-lut-min">0.0</div>
+                            <div id="my-lut-canvases"></div>
+                            <div id="my-lut-max">1.0</div>
+                        </div>
                     </div>
-                </div>
-                <div class="two-dimemsion-container">
+
                     <div id="sliceX" class="two-dimemsion">
-                        <div class="title">X-axis</div>
+                        <div class="title ">X-axis</div>
                     </div>
                     <div id="sliceY" class="two-dimemsion">
                         <div class="title ">Y-axis</div>
                     </div>
                     <div id="sliceZ" class="two-dimemsion">
-                        <div class="title">Z-axis</div>
+                        <div class="title ">Z-axis</div>
                     </div>
+
                 </div>
             </div>
         </div>

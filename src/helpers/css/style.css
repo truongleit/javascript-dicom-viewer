@@ -787,8 +787,6 @@ img.brand-devices {
     display: flex;
     align-items: center;
     user-select: none;
-    /* border-bottom: 1px solid #fff; */
-    /* background-color: #222427; */
     background-color: #f5f5f5;
     z-index: 20;
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
@@ -822,9 +820,20 @@ img.brand-devices {
 }
 
 .render-container {
-    padding-top: 71px;
     width: 100%;
     height: 100%;
+    display: flex;
+    padding-top: 71px;
+    position: relative;
+}
+
+.canvas-container {
+    position: relative;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .files-bar {
@@ -947,13 +956,16 @@ img.brand-devices {
 }
 
 .setting {
-    cursor: pointer;
     overflow: hidden;
 }
 
 .config {
     max-height: 0;
     transition: max-height ease .8s;
+}
+
+.colors .config {
+    padding: 10px 0;
 }
 
 .config.opened {
@@ -1078,7 +1090,7 @@ span.file-name,
 
 .delete-render {
     position: absolute;
-    right: 10px;
+    right: 20px;
     cursor: pointer;
     padding: 5px 7px;
     opacity: 1;
@@ -1190,12 +1202,208 @@ span.file-name,
     width: 60% !important;
 }
 
-.three-dimemsion {
-    float: left;
-    width: calc(81% - 1px);
-    height: 60%;
-    border-bottom: 1px solid #fff;
+.texture-min-color,
+.texture-max-color {
+    display: flex;
+    align-items: center;
+}
+
+.min-color-picker,
+.max-color-picker {
+    padding: 10px 16px;
+    font-weight: 500;
+    border: none;
+    background-color: #2196F3;
+    color: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    outline: none;
+    transition: box-shadow 0.1s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.texture-min-color span,
+.texture-max-color span {
+    width: 22%;
+    font-size: 13px;
+    text-align: center;
+    margin-right: 8px;
+}
+
+.texture-min-color .jscolor,
+.texture-max-color .jscolor {
+    width: 36%;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.controller {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 90px;
+    right: 15px;
+    z-index: 10;
+    background-color: #FFFFFF;
+    padding: 7px 10px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.controller .function-button {
     position: relative;
+    display: flex;
+    align-items: center;
+    margin: 0 4px;
+    cursor: pointer;
+    border-radius: 100%;
+    background: #FFFFFF;
+    transition: all ease .3s;
+    overflow: hidden;
+}
+
+.controller .function-button:hover {
+    overflow: unset;
+    background: #dbdbdb radial-gradient(circle, transparent 1%, #dbdbdb 1%) center/15000%;
+}
+
+.controller .function-button i {
+    font-size: 25px;
+    padding: 4px;
+}
+
+.function-button span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 33px;
+    height: 33px;
+    font-size: 18px;
+}
+
+.function-button:hover .function-info {
+    opacity: 1;
+    top: -50px;
+}
+
+.function-info {
+    opacity: 0;
+    cursor: default;
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    font-size: 15px;
+    color: #FFFFFF;
+    white-space: nowrap;
+    background-color: #333333;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transform: translateX(-50%);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    transition: all ease .2s;
+}
+
+.function-info::before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 7px solid #333333;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+}
+
+.function-info.reset-camera {
+    left: unset;
+    right: -5px;
+    transform: none;
+}
+
+.function-info.reset-camera::before {
+    left: 90%;
+}
+
+.switch-view {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    padding: 4px 0 4px 6px;
+    border: 1.5px solid #333333;
+    cursor: pointer;
+    margin: 0 4px 0 8px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.switch-view i {
+    transition: all ease .2s;
+}
+
+.switch-view .rotated {
+    transform: rotate(180deg);
+}
+
+.dropdown-view {
+    position: absolute;
+    background-color: #FFFFFF;
+    top: -73px;
+    left: 18px;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    opacity: 0;
+    transition: all ease .3s;
+}
+
+.dropdown-view.block {
+    top: -85px;
+    opacity: 1;
+}
+
+.dropdown-view:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid #FFFFFF;
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+}
+
+.dropdown-view div {
+    padding: 5px 16px;
+    cursor: pointer;
+    transition: all ease .1s;
+    color: #333333;
+    background-color: #FFFFFF;
+}
+
+.dropdown-view div:hover {
+    color: #FFFFFF;
+    background-color: #46bd79;
+}
+
+.three-dimemsion {
+    position: relative;
+    outline: 1.5px solid #FFF;
+    width: 50%;
+    height: 50%;
 }
 
 .three-dimemsion .title {
@@ -1210,6 +1418,7 @@ span.file-name,
 
 .rendering-layout {
     display: block;
+    position: absolute;
     width: 100%;
     height: 100%;
     background-color: #333333;
@@ -1234,9 +1443,10 @@ span.file-name,
 }
 
 .two-dimemsion {
-    width: 33.33%;
-    border-right: 1px solid #fff;
     position: relative;
+    outline: 1.5px solid #FFF;
+    width: 50%;
+    height: 50%;
 }
 
 .two-dimemsion .title {
@@ -1504,6 +1714,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 #screenshot {
+    display: none !important;
     bottom: 20px;
     right: 20px;
     position: fixed;
@@ -1517,4 +1728,58 @@ input[type=range]:focus::-ms-fill-upper {
     text-decoration: none;
     background-color: #dedede;
     font-family: 'Roboto', sans-serif;
+}
+
+.imac {
+    width: 600px;
+    perspective: 250px;
+    position: relative;
+}
+
+.screen {
+    height: 360px;
+    background: no-repeat center url("http://cdn.osxdaily.com/wp-content/uploads/2017/06/macos-high-sierra-default-wallpaper-fall-mountain-scene-1.jpg");
+    background-size: cover;
+    box-sizing: border-box;
+    border: 24px solid black;
+    border-top: 32px solid black;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+}
+
+.facetime__camera {
+    background: #222;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-top: -21px;
+}
+
+.chin {
+    height: 64px;
+    background: #dadada;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+
+.logo {
+    width: 2em;
+    display: block;
+    margin: 0 auto;
+    transform: translatey(12px);
+}
+
+.stand {
+    margin: 0 auto;
+    width: 120px;
+    height: 100px;
+    background: linear-gradient(to bottom, #c1c1c1, #EFEFEF);
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    perspective-origin: 150% 150%;
+    transform-style: preserve-3d;
+    transform: rotatex(100deg);
+    margin-top: -26px;
+    box-shadow: 0 4px 0 0 #D5D5D5;
 }

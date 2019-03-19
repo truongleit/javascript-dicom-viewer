@@ -45,8 +45,8 @@ function updateIsoValue(e) {
 
 $(document).ready(function() {
     $('.marching-cube').on('click', function() {
-        console.log('true')
         var files = document.getElementById("file_inp").files;
+        $('.lds-hourglass').addClass('block');
         $('.viewer').css('transform', 'scale(1)');
         $('.viewer').addClass('opened');
         marchingCubeRender(files);
@@ -98,6 +98,9 @@ function marchingCubeRender(files) {
         });
         renderer.resetCamera();
         renderWindow.render();
+        $('.rendering-layout').addClass('fade-out');
+        $('.lds-hourglass').removeClass('block');
+        $('.rendering-layout').addClass('hidden');
     })
 }
 
