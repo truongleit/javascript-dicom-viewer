@@ -661,7 +661,6 @@ tbody tr {
     position: relative;
     width: 100%;
     height: 50%;
-    /* background-image: url('../asset/doctor.jpg'); */
     background-image: url('../asset/medical.jpg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -690,15 +689,25 @@ tbody tr {
     color: #ffffff;
     text-transform: uppercase;
     z-index: 10;
+    cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .brand-title .description {
     width: 70%;
     position: absolute;
     left: 50%;
-    top: 42%;
+    top: 40%;
     transform: translate(-50%, -50%);
     z-index: 10;
+    cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .brand-title .description {
@@ -792,7 +801,7 @@ img.brand-devices {
     background: -o-linear-gradient(#9e9e9e, #607d8b);
     background: -moz-linear-gradient(#9e9e9e, #607d8b);
     background: linear-gradient(#9e9e9e, #607d8b);
-    z-index: 100;
+    z-index: 10000;
     transition: background ease-in .4s;
 }
 

@@ -107,7 +107,7 @@ $(document).ready(function() {
         }
     });
 
-    // Initialize and run the slideshow on homepage //
+    // Initialize and run the slideshows on homepage //
     $('.slider').slick({
         infinite: true,
         slidesToShow: 1,
