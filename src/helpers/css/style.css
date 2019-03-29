@@ -98,7 +98,7 @@ body {
     width: 100%;
     height: 100%;
     position: absolute;
-    z-index: 50;
+    z-index: 999;
     background-color: rgba(22, 22, 22, .8);
 }
 
@@ -181,8 +181,9 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 51;
+    transform: translate3d(-50%, -50%, 0);
+    transform-origin: center center;
+    z-index: 10000;
     overflow-y: hidden;
     background-color: #fcfcfc;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -202,6 +203,9 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .lds-hourglass.in-files-container {
@@ -272,7 +276,7 @@ body {
 }
 
 .files-container {
-    display: none;
+    display: block;
     position: relative;
     width: 100%;
     height: 100%;
@@ -468,20 +472,6 @@ tbody tr {
     margin-bottom: 6px;
 }
 
-
-/* .upload-cancel {
-    border-radius: 40px;
-    background-color: #cecece;
-    padding: 10px 30px;
-    outline: none;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    border: 2px solid #cecece;
-    color: #FFFFFF;
-    margin-right: 15px;
-} */
-
 .upload-cancel {
     width: 48%;
     font-size: 20px;
@@ -556,9 +546,28 @@ tbody tr {
     height: 100vh;
     position: relative;
     float: left;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.copyright {
+    color: #FFF;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 300;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 52;
+    position: absolute;
+    cursor: default;
 }
 
 .upload-container {
+    width: max-content;
+    width: -webkit-max-content;
+    width: -moz-max-content;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -572,6 +581,7 @@ tbody tr {
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 2px;
+    cursor: default;
 }
 
 .upload-button {
@@ -651,10 +661,18 @@ tbody tr {
     position: relative;
     width: 100%;
     height: 50%;
-    background-image: url('../asset/doctor.jpg');
+    /* background-image: url('../asset/doctor.jpg'); */
+    background-image: url('../asset/medical.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+}
+
+.brand-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .8);
+    z-index: 1;
 }
 
 .brand-title .title {
@@ -671,6 +689,7 @@ tbody tr {
     font-weight: 700;
     color: #ffffff;
     text-transform: uppercase;
+    z-index: 10;
 }
 
 .brand-title .description {
@@ -679,6 +698,7 @@ tbody tr {
     left: 50%;
     top: 42%;
     transform: translate(-50%, -50%);
+    z-index: 10;
 }
 
 .brand-title .description {
@@ -688,12 +708,46 @@ tbody tr {
     color: #ffffff;
 }
 
+.brand-content .device.device-imac-pro {
+    transform: scale(.7);
+    position: absolute;
+    top: -440px;
+    right: -105px;
+    z-index: 98;
+}
+
+.brand-content .device.device-macbook-pro {
+    transform: scale(.5);
+    position: absolute;
+    top: -360px;
+    right: 10px;
+    z-index: 99;
+}
+
+.brand-content .device.device-ipad-pro {
+    transform: scale(.3) rotate(-90deg);
+    position: absolute;
+    top: -515px;
+    right: 270px;
+    z-index: 100;
+}
+
+.brand-content .device img {
+    object-fit: contain;
+}
+
+.brand-content .device.device-ipad-pro img {
+    transform: rotate(-270deg);
+}
+
 .brand-content {
+    position: relative;
     width: 80%;
     margin: 17% auto 2%;
     color: #292c30;
     font-size: 18px;
     font-weight: 300;
+    text-align: justify;
 }
 
 .browser .title {
@@ -725,6 +779,7 @@ img.brand-devices {
 }
 
 .viewer {
+    display: none;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -741,20 +796,9 @@ img.brand-devices {
     transition: background ease-in .4s;
 }
 
-.viewer {
-    transform-origin: bottom left;
-    -webkit-transition: all .5s ease;
-    -moz-transition: all .5s ease;
-    -o-transition: all .5s ease;
-    transition: all .5s ease;
-}
-
 .viewer.open {
-    transform: scale(1);
-}
-
-.viewer.close {
-    transform: scale(.2);
+    top: 0;
+    opacity: 1;
 }
 
 .viewer-container {
@@ -837,7 +881,7 @@ img.brand-devices {
 }
 
 .files-bar {
-    width: 19%;
+    width: 25%;
     height: 100%;
     float: left;
     display: flex;
@@ -953,28 +997,22 @@ img.brand-devices {
     text-transform: uppercase;
     border-bottom: 1.5px solid rgba(0, 0, 0, .12);
     box-shadow: none;
-}
-
-.setting {
-    overflow: hidden;
-}
-
-.config {
-    max-height: 0;
-    transition: max-height ease .8s;
+    cursor: pointer;
 }
 
 .colors .config {
     padding: 10px 0;
 }
 
-.config.opened {
-    max-height: 500px;
-}
-
 .drop-down {
     position: absolute;
+    font-size: 26px;
     right: 10px;
+    transition: all ease-out .21s;
+}
+
+.drop-down.rotated {
+    transform: rotate(180deg);
 }
 
 .visible {

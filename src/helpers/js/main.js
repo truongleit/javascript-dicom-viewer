@@ -13,19 +13,18 @@ var renderAlgorithm = '';
 $(document).ready(function() {
 
     // Slide-down menu //
-    // $('.setting').click(function() {
-    //     if (!$(this).hasClass('render-info')) {
-    //         if (!$(this).find('.config').hasClass('opened')) {
-    //             console.log('true')
-    //             $(this).find('.drop-down').html('keyboard_arrow_up');
-    //             $(this).addClass('opened').find('.config').addClass('opened');
-    //         } else {
-    //             console.log('false')
-    //             $(this).find('.drop-down').html('keyboard_arrow_down');
-    //             $(this).removeClass('opened').find('.config').removeClass('opened');
-    //         }
-    //     }
-    // });
+    $('.setting .title').click(function() {
+        var setting = $(this).parent();
+        if (!setting.hasClass('render-info')) {
+            if (!setting.find('.config').hasClass('opened')) {
+                setting.find('.drop-down').addClass('rotated');
+                setting.find('.config').addClass('opened').slideDown(380);
+            } else {
+                setting.find('.drop-down').removeClass('rotated');
+                setting.find('.config').removeClass('opened').slideUp(380);
+            }
+        }
+    });
 
     // Switch between 3D and 2D //
     $('.switch-view').click(function() {
@@ -113,26 +112,42 @@ $(document).ready(function() {
         infinite: true,
         slidesToShow: 1,
         autoplay: true,
-        autoplaySpeed: 5000
+        autoplaySpeed: 5000,
+        draggable: false
+    });
+
+    $('.device-imac-pro .device-frame, .device-macbook-pro .device-frame').slick({
+        infinite: true,
+        slidesToShow: 1,
+        autoplay: true,
+        autoplaySpeed: 2500,
+        dots: false,
+        arrows: false,
+        draggable: false
+    });
+
+    $('.device-ipad-pro .device-frame').slick({
+        infinite: true,
+        slidesToShow: 1,
+        autoplay: true,
+        autoplaySpeed: 2500,
+        dots: false,
+        arrows: false,
+        vertical: true,
+        draggable: false
     });
 
     // Create animation for upload modal //
     $('.upload-button').click(function() {
         $('.upload-overlay').addClass('block');
-        $('.upload-area').addClass('block').addClass('animation');
-        setTimeout(function() {
-            $('.files-container').addClass('block').addClass('animated slideInUp');
-        }, 800);
+        $('.upload-area').addClass('block').addClass('animated fast fadeInUp-custom');
     });
     $('.upload-cancel').click(function() {
-        $('.files-container').removeClass('slideInUp').addClass('fadeIn');
-        $('.files-container').removeClass('block').removeClass('animated fadeIn');
-        $('.upload-area').removeClass('animation').addClass('reversing');
+        $('.upload-area').removeClass('fadeInUp-custom').addClass('fadeOutDown-custom');
         setTimeout(function() {
-            $('.upload-area').removeClass('block');
+            $('.upload-area').removeClass('block').removeClass('animated fast fadeOutDown-custom');
             $('.upload-overlay').removeClass('block');
-            $('.upload-area').removeClass('reversing');
-        }, 800);
+        }, 500)
     });
 
     // Handle input files //
@@ -195,10 +210,12 @@ $(document).ready(function() {
     // Execute Ray-cating rendering algorithm //
     $('.ray-casting').click(function() {
         renderAlgorithm = 'rayCasting';
-        $('.viewer').css('transform', 'scale(1)');
+        showViewer();
         $('.viewer').addClass('opened');
         $('.lds-hourglass').addClass('block');
-        readMultipleFiles(files);
+        setTimeout(function() {
+            readMultipleFiles(files);
+        }, 1500)
     });
 
     // Execute Texture-based rendering algorithm //
@@ -206,11 +223,13 @@ $(document).ready(function() {
         renderAlgorithm = 'textureBased';
         initTexturebasedRendering();
         $('.lds-hourglass').addClass('block');
-        $('.viewer').css('transform', 'scale(1)');
+        showViewer();
         $('.viewer').addClass('opened');
         counter = files.length;
         reader = new FileReader();
-        recursiveLoading(0);
+        setTimeout(function() {
+            recursiveLoading(0);
+        }, 1500)
     });
 
     // $('.upload-execute').click(function() {
@@ -255,6 +274,10 @@ $(document).ready(function() {
     // });
 
 });
+
+function showViewer() {
+    $('.viewer').css('display', 'block').addClass('animated fadeInUp');
+}
 
 function texturebasedUpdateMinColor(picker) {
     var rgb = [Math.round(picker.rgb[0]), Math.round(picker.rgb[1]), Math.round(picker.rgb[2])];

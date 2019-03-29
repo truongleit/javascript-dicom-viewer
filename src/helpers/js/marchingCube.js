@@ -37,19 +37,15 @@ function updateIsoValue(e) {
     renderWindow.render();
 }
 
-// var fileInput = document.getElementById('file_inp');
-// fileInput.addEventListener('change', function(event) {
-//     var input = event.target;
-//     marchingCubeRender(input.files);
-// });
-
 $(document).ready(function() {
     $('.marching-cube').on('click', function() {
         var files = document.getElementById("file_inp").files;
         $('.lds-hourglass').addClass('block');
-        $('.viewer').css('transform', 'scale(1)');
+        showViewer();
         $('.viewer').addClass('opened');
-        marchingCubeRender(files);
+        setTimeout(function() {
+            marchingCubeRender(files);
+        }, 1500)
     })
 });
 

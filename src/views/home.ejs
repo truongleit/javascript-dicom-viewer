@@ -12,6 +12,7 @@
     <link type='text/css' rel='stylesheet' href='/css/style.css' />
     <link type='text/css' rel='stylesheet' href='/css/slick.css' />
     <link type='text/css' rel='stylesheet' href='/css/animate.css' />
+    <link type='text/css' rel='stylesheet' href='/css/devices.min.css' />
     <script type="text/javascript" src="/js/three.js"></script>
     <script type="text/javascript" src="/js/ami.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/stats.js/master/build/stats.min.js"></script>
@@ -77,7 +78,7 @@
                 </a>
             </div>
             <div class="menu-items">
-                <div class="item"><a href="#"><span>LOREM</span></a></div>
+                <div class="item"><a href="#"><span>DIREA</span></a></div>
                 <div class="item"><a href="#"><span>Support</span></a></div>
                 <div class="item"><a href="#"><span>Resources</span></a></div>
                 <div class="item"><a href="#"><span>About</span></a></div>
@@ -87,42 +88,78 @@
     <div class="main-site">
         <div class="introduction">
             <div class="brand-title">
-                <div class="title">LOREM IPSUM DOLOR</div>
+                <div class="brand-overlay"></div>
+                <div class="title">DICOM READER</div>
                 <div class="description">The world famous medical images viewer</div>
-                <img class="brand-devices" src="/asset/devices.png" alt="devices">
+                <!-- <img class="brand-devices" src="/asset/devices.png" alt="devices"> -->
             </div>
             <div class="brand-content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam felis quam, porttitor a tincidunt ut, consequat nec ex. Proin nec posuere elit. Curabitur pellentesque, nunc ac lobortis lobortis, erat tellus venenatis quam, nec pretium ligula nibh quis
-                mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur rhoncus arcu in ante lobortis feugiat. Proin a quam volutpat, vestibulum nisi ut, finibus neque.
+                <div class="device device-macbook-pro device-spacegray">
+                    <div class="device-frame">
+                        <img class="device-content" src="/asset/device-slider-1.png">
+                        <img class="device-content" src="/asset/device-slider-2.png">
+                    </div>
+                    <div class="device-stripe"></div>
+                    <div class="device-header"></div>
+                    <div class="device-sensors"></div>
+                    <div class="device-btns"></div>
+                    <div class="device-power"></div>
+                </div>
+                <div class="device device-imac-pro">
+                    <div class="device-frame">
+                        <img class="device-content" src="/asset/device-slider-1.png">
+                        <img class="device-content" src="/asset/device-slider-2.png">
+                    </div>
+                    <div class="device-stripe"></div>
+                    <div class="device-header"></div>
+                    <div class="device-sensors"></div>
+                    <div class="device-btns"></div>
+                    <div class="device-power"></div>
+                </div>
+                <div class="device device-ipad-pro device-spacegray">
+                    <div class="device-frame">
+                        <img class="device-content" src="/asset/device-slider-1.png">
+                        <img class="device-content" src="/asset/device-slider-2.png">
+                    </div>
+                    <div class="device-stripe"></div>
+                    <div class="device-header"></div>
+                    <div class="device-sensors"></div>
+                    <div class="device-btns"></div>
+                    <div class="device-power"></div>
+                </div>
+                With high performance and an intuitive interactive user interface, DiRea is the most widely used DICOM viewer in the world. It is the result of more than 15 years of research and development in digital imaging. It fully supports the DICOM standard for
+                an easy integration in your workflow environment and an open platform for development of processing tools. It offers advanced post-processing techniques in 2D and 3D, exclusive innovative technique for 3D and 4D navigation and a complete
+                integration with any PACS.
             </div>
             <div class="browser">
                 <div class="title">Cross-browser compatibility</div>
                 <div class="browsers-container">
                     <img class="logo" src="/asset/chrome.svg" alt="chrome">
                     <img class="logo" src="/asset/mozilla.svg" alt="firefox">
-                    <img class="logo" src="/asset/explorer.svg" alt="ie">
+                    <!-- <img class="logo" src="/asset/explorer.svg" alt="ie"> -->
                     <img class="logo" src="/asset/safari.svg" alt="safari">
                 </div>
             </div>
         </div>
         <div class="slider-container">
             <div class="upload-container">
-                <div class="title">Try it now</div>
+                <div class="title">Try DiRea now</div>
                 <div class="upload-button">Upload</div>
                 <input id="file_inp" type="file" multiple />
             </div>
+            <div class="copyright">2019 © Truong Le</div>
             <div class="slider-overlay"></div>
             <div class="slider">
-                <div class="slider-item" style="background-image:url('/asset/slider-1.jpg')">
+                <div class="slider-item" style="background-image:url('/asset/slider-4.jpg')">
                 </div>
-                <div class="slider-item" style="background-image:url('/asset/slider-2.jpg')">
+                <div class="slider-item" style="background-image:url('/asset/slider-5.jpg')">
                 </div>
-                <div class="slider-item" style="background-image:url('/asset/slider-3.png')">
+                <div class="slider-item" style="background-image:url('/asset/slider-6.jpg')">
                 </div>
             </div>
         </div>
     </div>
-    <div class="viewer" style="transform:scale(0);">
+    <div class="viewer">
         <div class="viewer-container">
             <div class="interact-container">
                 <div class="logo">
@@ -206,7 +243,7 @@
                                     <div class="title">
                                         <i class="material-icons">brightness_medium</i>
                                         <span class="name">Representation</span>
-                                        <i class="material-icons drop-down">keyboard_arrow_up</i>
+                                        <i class="material-icons drop-down rotated">keyboard_arrow_up</i>
                                     </div>
                                     <div class="config opened">
                                         <div class="attribute-title">
@@ -232,7 +269,7 @@
                                     <div class="title">
                                         <i class="material-icons">color_lens</i>
                                         <span class="name">Colors</span>
-                                        <i class="material-icons drop-down">keyboard_arrow_up</i>
+                                        <i class="material-icons drop-down rotated">keyboard_arrow_up</i>
                                     </div>
                                     <div class="config opened">
                                         <div class="attribute-config">
@@ -253,7 +290,7 @@
                                     <div class="title">
                                         <i class="material-icons">tune</i>
                                         <span class="name">Slices</span>
-                                        <i class="material-icons drop-down">keyboard_arrow_up</i>
+                                        <i class="material-icons drop-down rotated">keyboard_arrow_up</i>
                                     </div>
                                     <div class="config opened">
                                         <div class="attribute-title">
@@ -303,7 +340,6 @@
                                     </div>
                                     <div class="content">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                                        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                     </div>
                                 </div>
                             </div>
@@ -355,7 +391,7 @@
                     <div class="rendering-layout "></div>
                     <div id="3d" class="three-dimemsion">
                         <!-- <div class="title ">3D</div> -->
-                        <div id="my-lut-container ">
+                        <div id="my-lut-container" style="display:none;">
                             <div id="my-lut-min">0.0</div>
                             <div id="my-lut-canvases"></div>
                             <div id="my-lut-max">1.0</div>
