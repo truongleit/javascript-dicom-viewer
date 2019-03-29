@@ -522,8 +522,6 @@ tbody tr {
     color: #1ECD97;
 }
 
-.marching-cube {}
-
 .button-overlay {
     display: block;
     position: absolute;
@@ -717,38 +715,6 @@ tbody tr {
     color: #ffffff;
 }
 
-.brand-content .device.device-imac-pro {
-    transform: scale(.7);
-    position: absolute;
-    top: -440px;
-    right: -105px;
-    z-index: 98;
-}
-
-.brand-content .device.device-macbook-pro {
-    transform: scale(.5);
-    position: absolute;
-    top: -360px;
-    right: 10px;
-    z-index: 99;
-}
-
-.brand-content .device.device-ipad-pro {
-    transform: scale(.3) rotate(-90deg);
-    position: absolute;
-    top: -515px;
-    right: 270px;
-    z-index: 100;
-}
-
-.brand-content .device img {
-    object-fit: contain;
-}
-
-.brand-content .device.device-ipad-pro img {
-    transform: rotate(-270deg);
-}
-
 .brand-content {
     position: relative;
     width: 80%;
@@ -766,11 +732,29 @@ tbody tr {
     color: #46bd79;
 }
 
-img.brand-devices {
+img.brand-devices-ipad {
     position: absolute;
-    width: 72%;
-    bottom: -30%;
-    right: 3%;
+    width: 26%;
+    bottom: -28%;
+    left: 7%;
+    z-index: 21;
+}
+
+img.brand-devices-macbook {
+    position: absolute;
+    width: 40%;
+    bottom: -29%;
+    left: 47%;
+    transform: translateX(-50%);
+    z-index: 20;
+}
+
+img.brand-devices-imac {
+    position: absolute;
+    width: 45%;
+    bottom: -28%;
+    right: 7%;
+    z-index: 19;
 }
 
 .browsers-container {

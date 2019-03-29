@@ -116,27 +116,6 @@ $(document).ready(function() {
         draggable: false
     });
 
-    $('.device-imac-pro .device-frame, .device-macbook-pro .device-frame').slick({
-        infinite: true,
-        slidesToShow: 1,
-        autoplay: true,
-        autoplaySpeed: 2500,
-        dots: false,
-        arrows: false,
-        draggable: false
-    });
-
-    $('.device-ipad-pro .device-frame').slick({
-        infinite: true,
-        slidesToShow: 1,
-        autoplay: true,
-        autoplaySpeed: 2500,
-        dots: false,
-        arrows: false,
-        vertical: true,
-        draggable: false
-    });
-
     // Create animation for upload modal //
     $('.upload-button').click(function() {
         $('.upload-overlay').addClass('block');
