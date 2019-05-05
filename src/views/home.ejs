@@ -9,7 +9,6 @@
     <link rel="icon" href="/asset/favicon-black.png" type="image/x-icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.2/dat.gui.js"></script>
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
-    <link type='text/css' rel='stylesheet' href='/css/style.css' />
     <link type='text/css' rel='stylesheet' href='/css/slick.css' />
     <link type='text/css' rel='stylesheet' href='/css/animate.css' />
     <script type="text/javascript" src="/js/three.js"></script>
@@ -28,6 +27,9 @@
     <script type="text/javascript" src="/js/raycasting.js"></script>
     <script type="text/javascript" src="/js/ray2D.js"></script>
     <script type="text/javascript" src="/js/marchingCube.bundle.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link type='text/css' rel='stylesheet' href='/css/style.css' />
     <title>DiRea - Medical Image Processing Tool</title>
 </head>
 
@@ -90,7 +92,7 @@
                 <div class="brand-overlay"></div>
                 <div class="title">DICOM READER</div>
                 <div class="description">The world famous medical images viewer</div>
-                <img class="brand-devices" src="/asset/devices.png" alt="devices">
+                <img style="display: none;" class="brand-devices" src="/asset/devices.png" alt="devices">
             </div>
             <div class="brand-content">
                 With high performance and an intuitive interactive user interface, DiRea is the most widely used DICOM viewer in the world. It is the result of more than 15 years of research and development in digital imaging. It fully supports the DICOM standard for
@@ -237,7 +239,7 @@
                                         <i class="material-icons drop-down rotated">keyboard_arrow_up</i>
                                     </div>
                                     <div class="config opened">
-                                        <div class="attribute-config">
+                                        <!-- <div class="attribute-config">
                                             <div class="texture-min-color">
                                                 <span class="color-min-title">Min Color:</span>
                                                 <input class="min-color-picker jscolor {onFineChange:'texturebasedUpdateMinColor(this)'} ripple" value="ab2567">
@@ -247,6 +249,18 @@
                                             <div class="texture-max-color">
                                                 <span class="color-min-title">Max Color:</span>
                                                 <input class="max-color-picker jscolor {onFineChange:'texturebasedUpdateMaxColor(this)'} ripple" value="ab2567">
+                                            </div>
+                                        </div> -->
+                                        <div class="attribute-config">
+                                            <div class="ray-config">
+                                                <label>
+                                                    <input class="ray-interpolation" type="checkbox" />
+                                                    <span>Interpolation</span>
+                                                </label>
+                                                <label>
+                                                    <input class="ray-shading" type="checkbox" />
+                                                    <span>Shading</span>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>

@@ -6,11 +6,25 @@ var reader;
 var v;
 var sliceX, sliceY, sliceZ;
 var filesLoaded = false;
-// var threeD;
 var renderAlgorithm = '';
 
-
 $(document).ready(function() {
+
+    // Ray-casting config //
+    $('.ray-interpolation').change(function() {
+        if (renderAlgorithm == 'rayCasting') {
+            if (this.checked) {
+                console.log('checked');
+                vrHelper._interpolation = 1;
+            } else {
+                console.log('unchecked');
+                vrHelper._interpolation = 1;
+            }
+            if (vrHelper.uniforms) {
+                modified = true;
+            }
+        }
+    });
 
     // Slide-down menu //
     $('.setting .title').click(function() {
@@ -210,47 +224,6 @@ $(document).ready(function() {
             recursiveLoading(0);
         }, 1500)
     });
-
-    // $('.upload-execute').click(function() {
-    //     var algorithm = $('.algorithm-select').val();
-    //     if (algorithm != null) {
-    //         if ($('.wrong-noti').hasClass('block')) {
-    //             $('.wrong-noti').removeClass('block');
-    //         }
-    //         if (filesLoaded) {
-    //             if ($('.wrong-noti').hasClass('block')) {
-    //                 $('.wrong-noti').removeClass('block');
-    //             }
-    //             switch (algorithm) {
-    //                 case 'marchingCube':
-    //                     renderAlgorithm = 'marchingCube';
-    //                     break;
-    //                 case 'rayCasting':
-    //                     renderAlgorithm = 'rayCasting';
-    //                     $('.viewer').css('transform', 'scale(1)');
-    //                     $('.viewer').addClass('opened');
-    //                     readMultipleFiles(files);
-    //                     break;
-    //                 case 'textureBased':
-    //                     renderAlgorithm = 'textureBased';
-    //                     initTexturebasedRendering();
-    //                     $('.viewer').css('transform', 'scale(1)');
-    //                     $('.viewer').addClass('opened');
-    //                     counter = files.length;
-    //                     reader = new FileReader();
-    //                     recursiveLoading(0);
-    //                     break;
-    //             }
-
-    //         } else {
-    //             var text = 'No files have been loaded';
-    //             $('.wrong-noti').text(text).addClass('block');
-    //         }
-    //     } else {
-    //         var text = 'Please choose an algorithm';
-    //         $('.wrong-noti').text(text).addClass('block');
-    //     }
-    // });
 
 });
 

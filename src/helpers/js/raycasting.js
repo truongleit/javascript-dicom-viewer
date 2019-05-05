@@ -254,6 +254,7 @@ function buildGUI() {
 
     let interpolationUpdate = stackFolder.add(vrHelper, 'interpolation', 0, 1).step(1);
     interpolationUpdate.onChange(function(value) {
+        console.log(vrHelper);
         if (vrHelper.uniforms) {
             modified = true;
         }
