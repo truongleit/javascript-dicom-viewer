@@ -251,17 +251,61 @@
                                                 <input class="max-color-picker jscolor {onFineChange:'texturebasedUpdateMaxColor(this)'} ripple" value="ab2567">
                                             </div>
                                         </div> -->
-                                        <div class="attribute-config">
+                                        <div class="attribute-config ray-setting hidden">
+                                            <div class="input-field col s12 ray-algorithm">
+                                                <select>
+                                                  <option value="" disabled selected>Choose your option</option>
+                                                  <option value="0" selected>Ray Marching</option>
+                                                  <option value="1">MIP</option>
+                                                </select>
+                                                <label>Algorithm</label>
+                                            </div>
+                                        </div>
+                                        <div class="attribute-config ray-setting hidden">
+                                            <div class="input-field col s12 ray-lut">
+                                                <select>
+                                                  <option value="" disabled selected>Choose your option</option>
+                                                </select>
+                                                <label>LUT</label>
+                                            </div>
+                                        </div>
+                                        <div class="attribute-config ray-setting hidden">
+                                            <div class="input-field col s12 ray-opacity">
+                                                <select>
+                                                  <option value="" disabled selected>Choose your option</option>
+                                                </select>
+                                                <label>Opacity</label>
+                                            </div>
+                                        </div>
+                                        <div class="attribute-config ray-setting hidden">
                                             <div class="ray-config">
                                                 <label>
-                                                    <input class="ray-interpolation" type="checkbox" />
+                                                    <input checked type="checkbox" class="filled-in ray-interpolation"/>
                                                     <span>Interpolation</span>
                                                 </label>
                                                 <label>
-                                                    <input class="ray-shading" type="checkbox" />
+                                                    <input checked type="checkbox" class="filled-in ray-shading"/>
                                                     <span>Shading</span>
                                                 </label>
                                             </div>
+                                        </div>
+                                        <div class="attribute-title ray-setting hidden">
+                                            Steps/Alpha/Shininess
+                                        </div>
+                                        <div class="attribute-config ray-setting hidden">
+                                            <div class="attribute">Steps</div>
+                                            <input class="ray-steps" type="range" min="0" max="512" step="1" value="128">
+                                            <div class="value">128</div>
+                                        </div>
+                                        <div class="attribute-config ray-setting hidden">
+                                            <div class="attribute">Alpha Correction</div>
+                                            <input class="ray-alpha" type="range" min="0" max="1" step="0.01" value="0.5">
+                                            <div class="value">0.5</div>
+                                        </div>
+                                        <div class="attribute-config ray-setting hidden">
+                                            <div class="attribute">Shininess</div>
+                                            <input class="ray-shininess" type="range" min="0" max="20" step="0.1" value="10">
+                                            <div class="value">10</div>
                                         </div>
                                     </div>
                                 </div>

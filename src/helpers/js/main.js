@@ -11,19 +11,90 @@ var renderAlgorithm = '';
 $(document).ready(function() {
 
     // Ray-casting config //
+    //
+    // Interpolation
+    //
     $('.ray-interpolation').change(function() {
         if (renderAlgorithm == 'rayCasting') {
             if (this.checked) {
-                console.log('checked');
-                vrHelper._interpolation = 1;
+                vrHelper.interpolation = 1;
             } else {
-                console.log('unchecked');
-                vrHelper._interpolation = 1;
+                vrHelper.interpolation = 0;
             }
-            if (vrHelper.uniforms) {
-                modified = true;
-            }
+            if (vrHelper.uniforms) modified = true;
         }
+    });
+    //
+    // Shading
+    //
+    $('.ray-shading').change(function() {
+        if (renderAlgorithm == 'rayCasting') {
+            if (this.checked) {
+                vrHelper.shading = 1;
+            } else {
+                vrHelper.shading = 0;
+            }
+            if (vrHelper.uniforms) modified = true;
+        }
+    });
+
+    // Material select //
+    $('select').formSelect();
+
+    // Ray-casting algorithm //
+    $('.ray-algorithm select').change(function() {
+        var optionSelected = $(this).find("option:selected");
+        var valueSelected = optionSelected.val();
+        vrHelper.algorithm = valueSelected;
+        modified = true;
+    });
+
+    // Ray-casting LUT //
+    $('.ray-lut select').change(function() {
+        var optionSelected = $(this).find("option:selected");
+        var valueSelected = optionSelected.val();
+        lut.lut = valueSelected;
+        vrHelper.uniforms.uTextureLUT.value.dispose();
+        vrHelper.uniforms.uTextureLUT.value = lut.texture;
+        modified = true;
+    });
+
+    // Ray-casting Opacity //
+    $('.ray-opacity select').change(function() {
+        var optionSelected = $(this).find("option:selected");
+        var valueSelected = optionSelected.val();
+        lut.lutO = valueSelected;
+        vrHelper.uniforms.uTextureLUT.value.dispose();
+        vrHelper.uniforms.uTextureLUT.value = lut.texture;
+        modified = true;
+    });
+
+    // Ray-casting Steps //
+    $(".ray-steps").bind('keyup mousemove', function() {
+        var value = $(this).val();
+        $(this).next().html(value);
+        if (vrHelper.uniforms) {
+            vrHelper.uniforms.uSteps.value = value;
+            modified = true;
+        }
+    });
+
+    // Ray-casting Alpha Correction //
+    $(".ray-alpha").bind('keyup mousemove', function() {
+        var value = $(this).val();
+        $(this).next().html(value);
+        if (vrHelper.uniforms) {
+            vrHelper.uniforms.uAlphaCorrection.value = value;
+            modified = true;
+        }
+    });
+
+    // Ray-casting Shininess//
+    $(".ray-shininess").bind('keyup mousemove', function() {
+        var value = $(this).val();
+        $(this).next().html(value);
+        vrHelper.shininess = value;
+        if (vrHelper.uniforms) modified = true;
     });
 
     // Slide-down menu //
@@ -174,24 +245,22 @@ $(document).ready(function() {
             }
             filesLoaded = true;
             fileNames.sort(naturalSort);
-            $('.lds-hourglass').addClass('block');
-            setTimeout(function() {
-                $('.lds-hourglass').removeClass('block');
-                for (var i = 0; i < fileNames.length; i++) {
-                    var length = fileNames[i].length;
-                    var name = fileNames[i].slice(0, length - 4);
-                    var format = fileNames[i].substr(-3);
-                    var html = '<tr>' +
-                        '<td colspan="1">' + (i + 1) + '</td>' +
-                        '<td colspan="6">' + name + '</td>' +
-                        '<td colspan="1">' + format.toUpperCase() + '</td>' +
-                        '</tr>';
-                    $('.files-table tbody').append(html);
-                    $('.rendering-algorithm').addClass('block');
-                }
-                $('.button-overlay').addClass('hidden');
-                $('.algorithm-button').addClass('clickable');
-            }, 3000);
+
+            for (var i = 0; i < fileNames.length; i++) {
+                var length = fileNames[i].length;
+                var name = fileNames[i].slice(0, length - 4);
+                var format = fileNames[i].substr(-3);
+                var html = '<tr>' +
+                    '<td colspan="1">' + (i + 1) + '</td>' +
+                    '<td colspan="6">' + name + '</td>' +
+                    '<td colspan="1">' + format.toUpperCase() + '</td>' +
+                    '</tr>';
+                $('.files-table tbody').append(html);
+                $('.rendering-algorithm').addClass('block');
+            }
+            $('.button-overlay').addClass('hidden');
+            $('.algorithm-button').addClass('clickable');
+
         } else {
             filesLoaded = false;
             var text = 'Some selected files are in the wrong format';
@@ -226,6 +295,10 @@ $(document).ready(function() {
     });
 
 });
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
 function showViewer() {
     $('.viewer').css('display', 'block').addClass('animated fadeInUp');

@@ -201,85 +201,6 @@ function onWindowResize() {
     modified = true;
 }
 
-function buildGUI() {
-    let gui = new dat.GUI({
-        autoPlace: false,
-    });
-
-    let customContainer = document.getElementById('my-gui-container');
-    customContainer.appendChild(gui.domElement);
-
-    let stackFolder = gui.addFolder('Settings');
-    let algorithmUpdate = stackFolder.add(myStack, 'algorithm', ['ray marching', 'mip']);
-    algorithmUpdate.onChange(function(value) {
-        vrHelper.algorithm = value === 'mip' ? 1 : 0;
-        modified = true;
-    });
-
-    let lutUpdate = stackFolder.add(myStack, 'lut', lut.lutsAvailable());
-    lutUpdate.onChange(function(value) {
-        lut.lut = value;
-        vrHelper.uniforms.uTextureLUT.value.dispose();
-        vrHelper.uniforms.uTextureLUT.value = lut.texture;
-        modified = true;
-    });
-    // init LUT
-    lut.lut = myStack.lut;
-    vrHelper.uniforms.uTextureLUT.value.dispose();
-    vrHelper.uniforms.uTextureLUT.value = lut.texture;
-
-    let opacityUpdate = stackFolder.add(myStack, 'opacity', lut.lutsAvailable('opacity'));
-    opacityUpdate.onChange(function(value) {
-        lut.lutO = value;
-        vrHelper.uniforms.uTextureLUT.value.dispose();
-        vrHelper.uniforms.uTextureLUT.value = lut.texture;
-        modified = true;
-    });
-
-    let stepsUpdate = stackFolder.add(myStack, 'steps', 0, 512).step(1);
-    stepsUpdate.onChange(function(value) {
-        if (vrHelper.uniforms) {
-            vrHelper.uniforms.uSteps.value = value;
-            modified = true;
-        }
-    });
-
-    let alphaCorrrectionUpdate = stackFolder.add(myStack, 'alphaCorrection', 0, 1).step(0.01);
-    alphaCorrrectionUpdate.onChange(function(value) {
-        if (vrHelper.uniforms) {
-            vrHelper.uniforms.uAlphaCorrection.value = value;
-            modified = true;
-        }
-    });
-
-    let interpolationUpdate = stackFolder.add(vrHelper, 'interpolation', 0, 1).step(1);
-    interpolationUpdate.onChange(function(value) {
-        console.log(vrHelper);
-        if (vrHelper.uniforms) {
-            modified = true;
-        }
-    });
-
-    let shadingUpdate = stackFolder.add(vrHelper, 'shading', 0, 1).step(1);
-    shadingUpdate.onChange(function(value) {
-        if (vrHelper.uniforms) {
-            modified = true;
-        }
-    });
-
-    let shininessUpdate = stackFolder.add(vrHelper, 'shininess', 0, 20).step(0.1);
-    shininessUpdate.onChange(function(value) {
-        if (vrHelper.uniforms) {
-            modified = true;
-        }
-    });
-
-    stackFolder.open();
-    $('.rendering-layout').addClass('fade-out');
-    $('.lds-hourglass').removeClass('block');
-    $('.rendering-layout').addClass('hidden');
-}
-
 function render() {
     // render
     controls.update();
@@ -361,6 +282,20 @@ function rayCasting(files) {
     lut.luts = AMI.LutHelper.presetLuts();
     lut.lutsO = AMI.LutHelper.presetLutsO();
 
+    let lutList = lut.lutsAvailable().sort();
+    for (i = 0; i < lutList.length; i++) {
+        let lutTitle = lutList[i].replace(/_/g, ' ').capitalize();
+        let lutOption = lutList[i] == 'default' ? '<option selected value="' + lutList[i] + '">' + lutTitle + '</option>' : '<option value="' + lutList[i] + '">' + lutTitle + '</option>';
+        $('.ray-lut select').append(lutOption).formSelect();
+    }
+
+    let opacityList = lut.lutsAvailable('opacity');
+    for (i = 0; i < opacityList.length; i++) {
+        let opacityTitle = opacityList[i].replace(/_/g, ' ').capitalize();
+        let opacityOption = opacityList[i] == 'linear_full' ? '<option selected value="' + opacityList[i] + '">' + opacityTitle + '</option>' : '<option value="' + opacityList[i] + '">' + opacityTitle + '</option>';
+        $('.ray-opacity select').append(opacityOption).formSelect();
+    }
+
     // update related uniforms
     vrHelper.uniforms.uTextureLUT.value = lut.texture;
     vrHelper.uniforms.uLut.value = 1;
@@ -370,7 +305,11 @@ function rayCasting(files) {
     camera.updateProjectionMatrix();
     controls.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
     // create GUI
-    buildGUI();
+    // buildGUI();
+    $('.rendering-layout').addClass('fade-out');
+    $('.lds-hourglass').removeClass('block');
+    $('.rendering-layout').addClass('hidden');
+    $('.ray-setting').removeClass('hidden');
     // screenshot experiment
     let screenshotElt = document.getElementById('screenshot');
     screenshotElt.addEventListener('click', function() {
@@ -392,8 +331,8 @@ function rayCasting(files) {
     // force first render
     render();
     ray2D('sliceX', stack, 'sagittal');
-    ray2D('sliceY', stack, 'coronal');
-    ray2D('sliceZ', stack, 'axial');
+    // ray2D('sliceY', stack, 'coronal');
+    // ray2D('sliceZ', stack, 'axial');
     // notify puppeteer to take screenshot
     const puppetDiv = document.createElement('div');
     puppetDiv.setAttribute('id', 'puppeteer');

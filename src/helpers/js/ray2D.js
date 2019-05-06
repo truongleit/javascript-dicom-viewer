@@ -2,6 +2,7 @@ const colors = {
     red: 0xff0000,
     darkGrey: 0x353535,
 };
+let camera1;
 
 function ray2D(dom, stack, orientation) {
     // Setup renderer
@@ -16,7 +17,7 @@ function ray2D(dom, stack, orientation) {
 
     const scene = new THREE.Scene();
 
-    const camera = new AMI.OrthographicCamera(
+    camera1 = new AMI.OrthographicCamera(
         container.clientWidth / -2,
         container.clientWidth / 2,
         container.clientHeight / 2,
@@ -26,36 +27,30 @@ function ray2D(dom, stack, orientation) {
     );
 
     // Setup controls
-    const controls = new AMI.TrackballOrthoControl(camera, container);
+    const controls = new AMI.TrackballOrthoControl(camera1, container);
     controls.staticMoving = true;
     controls.noRotate = true;
-    camera.controls = controls;
+    camera1.controls = controls;
 
-    const onWindowResize = () => {
-        camera.canvas = {
+    function onWindowResize() {
+        camera1.canvas = {
             width: container.offsetWidth,
             height: container.offsetHeight,
         };
-        camera.fitBox(2);
+        camera1.fitBox(2);
 
         renderer.setSize(container.offsetWidth, container.offsetHeight);
     };
     window.addEventListener('resize', onWindowResize, false);
 
     const loader = new AMI.VolumeLoader(container);
-    // loader
-    //     .load(stack)
-    //     .then(() => {
-    // const series = loader.data[0].mergeSeries(loader.data);
-    // const stack = series[0].stack[0];
     loader.free();
 
     const stackHelper = new AMI.StackHelper(stack);
-    stackHelper.bbox.visible = false;
-    stackHelper.border.color = colors.red;
+    // stackHelper.bbox.visible = false;
+    // stackHelper.border.color = colors.red;
     scene.add(stackHelper);
-    console.log(stackHelper);
-    // gui(stackHelper);
+    gui();
 
     // center camera and interactor to center of bouding box
     // for nicer experience
@@ -78,16 +73,16 @@ function ray2D(dom, stack, orientation) {
         height: container.clientHeight,
     };
 
-    camera.directions = [stack.xCosine, stack.yCosine, stack.zCosine];
-    camera.box = box;
-    camera.canvas = canvas;
-    camera.orientation = orientation;
-    camera.invertRows = false;
-    camera.invertColumns = false;
-    camera.rotate45 = false;
-    camera.rotate = 0;
-    camera.update();
-    camera.fitBox(2);
+    camera1.directions = [stack.xCosine, stack.yCosine, stack.zCosine];
+    camera1.box = box;
+    camera1.canvas = canvas;
+    camera1.orientation = orientation;
+    camera1.invertRows = false;
+    camera1.invertColumns = false;
+    camera1.rotate45 = false;
+    camera1.rotate = 0;
+    camera1.update();
+    camera1.fitBox(2);
     stackHelper.orientation = camera.stackOrientation;
     // })
     // .catch(error => {
@@ -97,7 +92,7 @@ function ray2D(dom, stack, orientation) {
 
     const animate = () => {
         controls.update();
-        renderer.render(scene, camera);
+        renderer.render(scene, camera1);
 
         requestAnimationFrame(function() {
             animate();
@@ -106,7 +101,7 @@ function ray2D(dom, stack, orientation) {
 
     animate();
 
-    const gui = stackHelper => {
+    function gui() {
         const gui = new dat.GUI({
             autoPlace: false,
         });
@@ -126,21 +121,21 @@ function ray2D(dom, stack, orientation) {
         const cameraFolder = gui.addFolder('Camera');
         const invertRows = cameraFolder.add(camUtils, 'invertRows');
         invertRows.onChange(() => {
-            camera.invertRows();
+            camera1.invertRows();
         });
 
         const invertColumns = cameraFolder.add(camUtils, 'invertColumns');
         invertColumns.onChange(() => {
-            camera.invertColumns();
+            camera1.invertColumns();
         });
 
         const rotate45 = cameraFolder.add(camUtils, 'rotate45');
         rotate45.onChange(() => {
-            camera.rotate();
+            camera1.rotate();
         });
 
         cameraFolder
-            .add(camera, 'angle', 0, 360)
+            .add(camera1, 'angle', 0, 360)
             .step(1)
             .listen();
 
@@ -151,17 +146,17 @@ function ray2D(dom, stack, orientation) {
             'sagittal',
         ]);
         orientationUpdate.onChange(value => {
-            camera.orientation = value;
-            camera.update();
-            camera.fitBox(2);
+            camera1.orientation = value;
+            camera1.update();
+            camera1.fitBox(2);
             stackHelper.orientation = camera.stackOrientation;
         });
 
         const conventionUpdate = cameraFolder.add(camUtils, 'convention', ['radio', 'neuro']);
         conventionUpdate.onChange(value => {
-            camera.convention = value;
-            camera.update();
-            camera.fitBox(2);
+            camera1.convention = value;
+            camera1.update();
+            camera1.fitBox(2);
         });
 
         cameraFolder.open();
