@@ -127,6 +127,11 @@
         </div>
     </div>
     <div class="viewer">
+        <div id="modal1" class="modal temp-block">
+            <div class="modal-content list-files">
+                <div class="title">Slice list</div>
+            </div>
+        </div>
         <div class="viewer-container">
             <div class="interact-container">
                 <div class="logo">
@@ -204,7 +209,10 @@
                                 <div class="file-interact">
                                     <i class="material-icons visible">visibility</i>
                                     <span class="file-name">vhf1.dcm</span>
-                                    <div class="delete-render">Delete</div>
+                                    <div class="button-container">
+                                        <div class="slice-list modal-trigger" href="#modal1">List</div>
+                                        <div class="delete-render">Delete</div>
+                                    </div>
                                 </div>
                                 <div class="representation setting">
                                     <div class="title">
@@ -215,6 +223,13 @@
                                     <div class="config opened">
                                         <div class="attribute-title">
                                             Shadow & Edge
+                                        </div>
+                                        <div class="attribute-config">
+                                            <div class="attribute">ISO Value</div>
+                                            <input class="isoValue" type="range" min="0" max="100" step="0.05" value="0">
+                                            <div class="value">
+                                                0
+                                            </div>
                                         </div>
                                         <div class="attribute-config">
                                             <div class="attribute">Sample Distance</div>
@@ -239,7 +254,7 @@
                                         <i class="material-icons drop-down rotated">keyboard_arrow_up</i>
                                     </div>
                                     <div class="config opened">
-                                        <!-- <div class="attribute-config">
+                                        <div class="attribute-config">
                                             <div class="texture-min-color">
                                                 <span class="color-min-title">Min Color:</span>
                                                 <input class="min-color-picker jscolor {onFineChange:'texturebasedUpdateMinColor(this)'} ripple" value="ab2567">
@@ -250,7 +265,7 @@
                                                 <span class="color-min-title">Max Color:</span>
                                                 <input class="max-color-picker jscolor {onFineChange:'texturebasedUpdateMaxColor(this)'} ripple" value="ab2567">
                                             </div>
-                                        </div> -->
+                                        </div>
                                         <div class="attribute-config ray-setting hidden">
                                             <div class="input-field col s12 ray-algorithm">
                                                 <select>

@@ -9,7 +9,7 @@ var filesLoaded = false;
 var renderAlgorithm = '';
 
 $(document).ready(function() {
-
+    $('.modal').modal();
     // Ray-casting config //
     //
     // Interpolation
@@ -275,9 +275,13 @@ $(document).ready(function() {
         showViewer();
         $('.viewer').addClass('opened');
         $('.lds-hourglass').addClass('block');
+        var total = files.length;
+        renderThumbnails(total, files);
+        $('.modal').removeClass('temp-block');
         setTimeout(function() {
             readMultipleFiles(files);
-        }, 1500)
+        }, 1500);
+        $('.slider').slick('unslick');
     });
 
     // Execute Texture-based rendering algorithm //
@@ -287,6 +291,9 @@ $(document).ready(function() {
         $('.lds-hourglass').addClass('block');
         showViewer();
         $('.viewer').addClass('opened');
+        var total = files.length;
+        renderThumbnails(total, files);
+        $('.modal').removeClass('temp-block');
         counter = files.length;
         reader = new FileReader();
         setTimeout(function() {
@@ -358,17 +365,17 @@ function recursiveLoading(idx) {
 function renderThumbnails(amount, file) {
     var divData = [];
     for (let i = 0; i < amount; i++) {
-        $('.files-bar').append('<div id="dicomImage' + (i + 1) + '" class="file"></div>');
-        var divName = '#dicomImage' + (i + 1);
-        var element = $(divName).get(0);
+        $('.list-files').append('<div id="dicomImage' + (i + 1) + '" class="file"></div>');
+        let divName = '#dicomImage' + (i + 1);
+        let element = $(divName).get(0);
         $(divName).append('<div class="slice-number">' + (i + 1) + '</div>')
         cornerstone.enable(element);
         divData.push(element);
     }
     for (let i = 0; i < amount; i++) {
-        var file = files[i];
-        var index = cornerstoneFileImageLoader.addFile(file);
-        var imageId = "dicomfile://" + index;
+        let file = files[i];
+        let index = cornerstoneFileImageLoader.addFile(file);
+        let imageId = "dicomfile://" + index;
         cornerstone.loadImage(imageId).then(function(image) {
             cornerstone.displayImage(divData[i], image);
         });
