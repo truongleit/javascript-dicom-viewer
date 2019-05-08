@@ -27,8 +27,8 @@
     <script type="text/javascript" src="/js/raycasting.js"></script>
     <script type="text/javascript" src="/js/ray2D.js"></script>
     <script type="text/javascript" src="/js/marchingCube.bundle.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/js/materialize.js"></script>
+    <link type='text/css' rel='stylesheet' href='/css/materialize.min.css' />
     <link type='text/css' rel='stylesheet' href='/css/style.css' />
     <title>DiRea - Medical Image Processing Tool</title>
 </head>
@@ -221,26 +221,43 @@
                                         <i class="material-icons drop-down rotated">keyboard_arrow_up</i>
                                     </div>
                                     <div class="config opened">
-                                        <div class="attribute-title">
-                                            Shadow & Edge
-                                        </div>
-                                        <div class="attribute-config">
+                                        <div class="attribute-config marching-cube-setting hidden">
                                             <div class="attribute">ISO Value</div>
                                             <input class="isoValue" type="range" min="0" max="100" step="0.05" value="0">
                                             <div class="value">
                                                 0
                                             </div>
                                         </div>
-                                        <div class="attribute-config">
-                                            <div class="attribute">Sample Distance</div>
-                                            <input type="range" min="0" max="100" step="1" value="0">
+                                        <div class="attribute-config texture-setting hidden">
+                                            <div class="input-field col s12 texturebased-algorithm">
+                                                <select>
+                                                      <option value="" disabled selected>Choose your option</option>
+                                                      <option value="true" selected>3D Mode</option>
+                                                      <option value="false">2D Mode</option>
+                                                    </select>
+                                                <label>Mode</label>
+                                            </div>
+                                        </div>
+                                        <div class="attribute-title texture-setting hidden">
+                                            Opacity & Threshold
+                                        </div>
+                                        <div class="attribute-config texture-setting hidden">
+                                            <div class="attribute">Opacity</div>
+                                            <input class="texture-opacity" type="range" step="0.001" value="0">
                                             <div class="value">
                                                 0
                                             </div>
                                         </div>
-                                        <div class="attribute-config">
-                                            <div class="attribute">Edge Gradient</div>
-                                            <input type="range" min="0" max="100" step="1" value="0">
+                                        <div class="attribute-config texture-setting hidden">
+                                            <div class="attribute">Lower Threshold</div>
+                                            <input class="texture-lower-threshold" type="range" min="0" max="100" step="1" value="0">
+                                            <div class="value">
+                                                0
+                                            </div>
+                                        </div>
+                                        <div class="attribute-config texture-setting hidden">
+                                            <div class="attribute">Upper Threshold</div>
+                                            <input class="texture-upper-threshold" type="range" min="0" max="100" step="1" value="0">
                                             <div class="value">
                                                 0
                                             </div>
@@ -254,13 +271,13 @@
                                         <i class="material-icons drop-down rotated">keyboard_arrow_up</i>
                                     </div>
                                     <div class="config opened">
-                                        <div class="attribute-config">
+                                        <div class="attribute-config texture-setting hidden">
                                             <div class="texture-min-color">
                                                 <span class="color-min-title">Min Color:</span>
                                                 <input class="min-color-picker jscolor {onFineChange:'texturebasedUpdateMinColor(this)'} ripple" value="ab2567">
                                             </div>
                                         </div>
-                                        <div class="attribute-config">
+                                        <div class="attribute-config texture-setting hidden">
                                             <div class="texture-max-color">
                                                 <span class="color-min-title">Max Color:</span>
                                                 <input class="max-color-picker jscolor {onFineChange:'texturebasedUpdateMaxColor(this)'} ripple" value="ab2567">
@@ -305,7 +322,7 @@
                                             </div>
                                         </div>
                                         <div class="attribute-title ray-setting hidden">
-                                            Steps/Alpha/Shininess
+                                            Steps & Alpha & Shininess
                                         </div>
                                         <div class="attribute-config ray-setting hidden">
                                             <div class="attribute">Steps</div>
@@ -332,16 +349,16 @@
                                     </div>
                                     <div class="config opened">
                                         <div class="attribute-title">
-                                            Window/Level
+                                            Window
                                         </div>
-                                        <div class="attribute-config">
-                                            <div class="attribute">Window</div>
-                                            <input type="range" min="0" max="100" step="1" value="0">
+                                        <div class="attribute-config texture-setting hidden">
+                                            <div class="attribute">Window Low</div>
+                                            <input class="texture-window-low" type="range" min="0" max="100" step="1" value="0">
                                             <div class="value">0</div>
                                         </div>
-                                        <div class="attribute-config">
-                                            <div class="attribute">Level</div>
-                                            <input type="range" min="0" max="100" step="1" value="0">
+                                        <div class="attribute-config texture-setting hidden">
+                                            <div class="attribute">Window High</div>
+                                            <input class="texture-window-high" type="range" min="0" max="100" step="1" value="0">
                                             <div class="value">0</div>
                                         </div>
                                         <div class="attribute-title">

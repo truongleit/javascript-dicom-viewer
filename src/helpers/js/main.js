@@ -43,70 +43,162 @@ $(document).ready(function() {
 
     // Ray-casting algorithm //
     $('.ray-algorithm select').change(function() {
-        var optionSelected = $(this).find("option:selected");
-        var valueSelected = optionSelected.val();
-        vrHelper.algorithm = valueSelected;
-        modified = true;
+        if (renderAlgorithm == 'rayCasting') {
+            var optionSelected = $(this).find("option:selected");
+            var valueSelected = optionSelected.val();
+            vrHelper.algorithm = valueSelected;
+            modified = true;
+        }
     });
 
     // Ray-casting LUT //
     $('.ray-lut select').change(function() {
-        var optionSelected = $(this).find("option:selected");
-        var valueSelected = optionSelected.val();
-        lut.lut = valueSelected;
-        vrHelper.uniforms.uTextureLUT.value.dispose();
-        vrHelper.uniforms.uTextureLUT.value = lut.texture;
-        modified = true;
+        if (renderAlgorithm == 'rayCasting') {
+            var optionSelected = $(this).find("option:selected");
+            var valueSelected = optionSelected.val();
+            lut.lut = valueSelected;
+            vrHelper.uniforms.uTextureLUT.value.dispose();
+            vrHelper.uniforms.uTextureLUT.value = lut.texture;
+            modified = true;
+        }
     });
 
     // Ray-casting Opacity //
     $('.ray-opacity select').change(function() {
-        var optionSelected = $(this).find("option:selected");
-        var valueSelected = optionSelected.val();
-        lut.lutO = valueSelected;
-        vrHelper.uniforms.uTextureLUT.value.dispose();
-        vrHelper.uniforms.uTextureLUT.value = lut.texture;
-        modified = true;
+        if (renderAlgorithm == 'rayCasting') {
+            var optionSelected = $(this).find("option:selected");
+            var valueSelected = optionSelected.val();
+            lut.lutO = valueSelected;
+            vrHelper.uniforms.uTextureLUT.value.dispose();
+            vrHelper.uniforms.uTextureLUT.value = lut.texture;
+            modified = true;
+        }
     });
 
     // Ray-casting Steps //
     $(".ray-steps").bind('keyup mousemove', function() {
-        var value = $(this).val();
-        $(this).next().html(value);
-        if (vrHelper.uniforms) {
-            vrHelper.uniforms.uSteps.value = value;
-            modified = true;
+        if (renderAlgorithm == 'rayCasting') {
+            var value = $(this).val();
+            $(this).next().html(value);
+            if (vrHelper.uniforms) {
+                vrHelper.uniforms.uSteps.value = value;
+                modified = true;
+            }
         }
     });
 
     // Ray-casting Alpha Correction //
     $(".ray-alpha").bind('keyup mousemove', function() {
-        var value = $(this).val();
-        $(this).next().html(value);
-        if (vrHelper.uniforms) {
-            vrHelper.uniforms.uAlphaCorrection.value = value;
-            modified = true;
+        if (renderAlgorithm == 'rayCasting') {
+            var value = $(this).val();
+            $(this).next().html(value);
+            if (vrHelper.uniforms) {
+                vrHelper.uniforms.uAlphaCorrection.value = value;
+                modified = true;
+            }
         }
     });
 
     // Ray-casting Shininess//
     $(".ray-shininess").bind('keyup mousemove', function() {
-        var value = $(this).val();
-        $(this).next().html(value);
-        vrHelper.shininess = value;
-        if (vrHelper.uniforms) modified = true;
+        if (renderAlgorithm == 'rayCasting') {
+            var value = $(this).val();
+            $(this).next().html(value);
+            vrHelper.shininess = value;
+            if (vrHelper.uniforms) modified = true;
+        }
     });
 
-    // Slide-down menu //
-    $('.setting .title').click(function() {
-        var setting = $(this).parent();
-        if (!setting.hasClass('render-info')) {
-            if (!setting.find('.config').hasClass('opened')) {
-                setting.find('.drop-down').addClass('rotated');
-                setting.find('.config').addClass('opened').slideDown(380);
-            } else {
-                setting.find('.drop-down').removeClass('rotated');
-                setting.find('.config').removeClass('opened').slideUp(380);
+    //
+    // Texture-based configs //
+    //
+    $('.texture-opacity').on('input', function() {
+        var value = $(this).val();
+        $(this).next().html(value);
+        if (renderAlgorithm == 'textureBased') {
+            volume.opacity = parseFloat(value);
+        }
+    });
+
+    // Switch between 3D and 2D modes //
+    $('.texturebased-algorithm select').change(function() {
+        if (renderAlgorithm == 'textureBased') {
+            var optionSelected = $(this).find("option:selected");
+            var valueSelected = optionSelected.val();
+            volume.volumeRendering = valueSelected == 'true' ? true : false;
+        }
+    });
+
+    // Lower Threshold //
+    $('.texture-lower-threshold').bind('keyup mousemove', function() {
+        var value = $(this).val();
+        $(this).next().html(value);
+        if (renderAlgorithm == 'textureBased') {
+            volume.lowerThreshold = parseInt(value);
+        }
+    });
+
+    // Upper Threshold //
+    $('.texture-upper-threshold').bind('keyup mousemove', function() {
+        var value = $(this).val();
+        $(this).next().html(value);
+        if (renderAlgorithm == 'textureBased') {
+            volume.upperThreshold = parseInt(value);
+        }
+    });
+
+    // Window Low //
+    $('.texture-window-low').bind('keyup mousemove', function() {
+        var value = $(this).val();
+        $(this).next().html(value);
+        if (renderAlgorithm == 'textureBased') {
+            volume.windowLow = parseInt(value);
+        }
+    });
+
+    // Window High //
+    $('.texture-window-high').bind('keyup mousemove', function() {
+        var value = $(this).val();
+        $(this).next().html(value);
+        if (renderAlgorithm == 'textureBased') {
+            volume.windowHigh = parseInt(value);
+        }
+    });
+
+    // Change slice's index (new UI) //
+    $(".slice-change").bind('keyup mousemove', function() {
+        var value = $(this).val();
+        if ($(this).hasClass('index-x')) {
+            $(this).next().html(value);
+            if (renderAlgorithm == 'textureBased') {
+                volume.indexX = parseInt(value);
+            }
+        } else if ($(this).hasClass('index-y')) {
+            $(this).next().html(value);
+            if (renderAlgorithm == 'textureBased') {
+                volume.indexY = parseInt(value);
+            }
+        } else {
+            $(this).next().html(value);
+            if (renderAlgorithm == 'textureBased') {
+                volume.indexZ = parseInt(value);
+            }
+        }
+    });
+
+    // Reset dimension //
+    $('.reset-dimension').click(function() {
+        if ($(this).hasClass('reset-to-X')) {
+            if (renderAlgorithm == 'textureBased') {
+                threeD.camera.position = [500, 0, 0];
+            }
+        } else if ($(this).hasClass('reset-to-Y')) {
+            if (renderAlgorithm == 'textureBased') {
+                threeD.camera.position = [0, 500, 0];
+            }
+        } else {
+            if (renderAlgorithm == 'textureBased') {
+                threeD.camera.position = [0, 0, 500];
             }
         }
     });
@@ -135,52 +227,11 @@ $(document).ready(function() {
         }
     });
 
-    // Reset dimension //
-    $('.reset-dimension').click(function() {
-        if ($(this).hasClass('reset-to-X')) {
-            if (renderAlgorithm == 'textureBased') {
-                threeD.camera.position = [500, 0, 0];
-            }
-        } else if ($(this).hasClass('reset-to-Y')) {
-            if (renderAlgorithm == 'textureBased') {
-                threeD.camera.position = [0, 500, 0];
-            }
-        } else {
-            if (renderAlgorithm == 'textureBased') {
-                threeD.camera.position = [0, 0, 500];
-            }
-        }
-    });
+    // End Texture-based configs // 
 
-    // Change viewer's background color //
-    $('.color').click(function() {
-        var color = $(this).attr('color');
-        $('.viewer').css('background', '#' + color);
-        $('.color i').removeClass('block');
-        $(this).find('i').addClass('block');
-    });
-
-    // Change slice's index (new UI) //
-    $(".slice-change").bind('keyup mousemove', function() {
-        var value = $(this).val();
-        if ($(this).hasClass('index-x')) {
-            $(this).next().html(value);
-            if (renderAlgorithm == 'textureBased') {
-                volume.indexX = parseInt(value);
-            }
-        } else if ($(this).hasClass('index-y')) {
-            $(this).next().html(value);
-            if (renderAlgorithm == 'textureBased') {
-                volume.indexY = parseInt(value);
-            }
-        } else {
-            $(this).next().html(value);
-            if (renderAlgorithm == 'textureBased') {
-                volume.indexZ = parseInt(value);
-            }
-        }
-    });
-
+    //
+    // Front-end Handlings //
+    //
     // Move below line between 2 tab buttons //
     $('.tab').click(function() {
         if ($(this).hasClass('datasets')) {
@@ -192,6 +243,14 @@ $(document).ready(function() {
         }
     });
 
+    // Change viewer's background color //
+    $('.color').click(function() {
+        var color = $(this).attr('color');
+        $('.viewer').css('background', '#' + color);
+        $('.color i').removeClass('block');
+        $(this).find('i').addClass('block');
+    });
+
     // Initialize and run the slideshows on homepage //
     $('.slider').slick({
         infinite: true,
@@ -199,6 +258,20 @@ $(document).ready(function() {
         autoplay: true,
         autoplaySpeed: 5000,
         draggable: false
+    });
+
+    // Slide-down menu //
+    $('.setting .title').click(function() {
+        var setting = $(this).parent();
+        if (!setting.hasClass('render-info')) {
+            if (!setting.find('.config').hasClass('opened')) {
+                setting.find('.drop-down').addClass('rotated');
+                setting.find('.config').addClass('opened').slideDown(380);
+            } else {
+                setting.find('.drop-down').removeClass('rotated');
+                setting.find('.config').removeClass('opened').slideUp(380);
+            }
+        }
     });
 
     // Create animation for upload modal //
@@ -269,6 +342,8 @@ $(document).ready(function() {
 
     });
 
+    // End Front-end Handlings //
+
     // Execute Ray-cating rendering algorithm //
     $('.ray-casting').click(function() {
         renderAlgorithm = 'rayCasting';
@@ -303,21 +378,26 @@ $(document).ready(function() {
 
 });
 
+// Capitalize first letter in text //
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
+// Display viewer dom //
 function showViewer() {
     $('.viewer').css('display', 'block').addClass('animated fadeInUp');
 }
 
+// Update min color (Texture-based) //
 function texturebasedUpdateMinColor(picker) {
     var rgb = [Math.round(picker.rgb[0]), Math.round(picker.rgb[1]), Math.round(picker.rgb[2])];
     if (renderAlgorithm == 'textureBased') {
         volume.minColor = [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255];
+        console.log(volume.minColor);
     }
 }
 
+// Update max color (Texture-based) //
 function texturebasedUpdateMaxColor(picker) {
     var rgb = [Math.round(picker.rgb[0]), Math.round(picker.rgb[1]), Math.round(picker.rgb[2])];
     if (renderAlgorithm == 'textureBased') {
@@ -325,6 +405,7 @@ function texturebasedUpdateMaxColor(picker) {
     }
 }
 
+// Sorting for complex text //
 function naturalSort(a, b) {
     var aPriority = /[a-z]/i.test(a) * 3 + /\d+/i.test(a) * 2;
     var bPriority = /[a-z]/i.test(b) * 3 + /\d+/i.test(b) * 2;
@@ -334,6 +415,7 @@ function naturalSort(a, b) {
     return aPriority < bPriority ? 1 : -1;
 }
 
+// Check file format //
 function formatCheck(format) {
     return format === 'DCM';
 }
@@ -366,16 +448,16 @@ function renderThumbnails(amount, file) {
     var divData = [];
     for (let i = 0; i < amount; i++) {
         $('.list-files').append('<div id="dicomImage' + (i + 1) + '" class="file"></div>');
-        let divName = '#dicomImage' + (i + 1);
-        let element = $(divName).get(0);
+        var divName = '#dicomImage' + (i + 1);
+        var element = $(divName).get(0);
         $(divName).append('<div class="slice-number">' + (i + 1) + '</div>')
         cornerstone.enable(element);
         divData.push(element);
     }
     for (let i = 0; i < amount; i++) {
-        let file = files[i];
-        let index = cornerstoneFileImageLoader.addFile(file);
-        let imageId = "dicomfile://" + index;
+        var file = files[i];
+        var index = cornerstoneFileImageLoader.addFile(file);
+        var imageId = "dicomfile://" + index;
         cornerstone.loadImage(imageId).then(function(image) {
             cornerstone.displayImage(divData[i], image);
         });
@@ -418,9 +500,13 @@ function initTexturebasedRendering() {
 function texturebasedRendering(volume) {
     if (_webGLFriendly) {
         volume.volumeRendering = true;
-        volume.opacity = 1;
+        volume.opacity = 0.6;
         volume.windowHigh = 1506;
-        volume.lowerThreshold = 200;
+        volume.lowerThreshold = 308;
+        volume.upperThreshold = 2565;
+        volume.minColor = [0.16862745098039217, 0.17254901960784313, 0.17647058823529413];
+        volume.maxColor = [1, 1, 1];
+        volume.windowHigh = 2547;
         threeD.add(volume);
         threeD.render();
     }
@@ -438,6 +524,7 @@ function texturebasedRendering(volume) {
         $('.rendering-layout').addClass('fade-out');
         $('.lds-hourglass').removeClass('block');
         $('.rendering-layout').addClass('hidden');
+        $('.texture-setting').removeClass('hidden');
         //
         // now the real GUI
         var gui = new dat.GUI({
@@ -468,6 +555,27 @@ function texturebasedRendering(volume) {
             volume.dimensions[1] - 1);
         var sliceZController = volumegui.add(volume, 'indexZ', 0,
             volume.dimensions[2] - 1);
+        $('.min-color-picker').attr({
+            'value': '2b2c2d'
+        });
+        $('.max-color-picker').attr({
+            'value': 'ffffff'
+        });
+        $('.texture-opacity').attr({
+            'min': 0,
+            'max': 1,
+            'value': volume.opacity
+        }).next().html(volume.opacity);
+        $('.texture-lower-threshold').attr({
+            'min': volume.min,
+            'max': volume.max,
+            'value': volume.lowerThreshold
+        }).next().html(volume.lowerThreshold);
+        $('.texture-upper-threshold').attr({
+            'min': volume.min,
+            'max': volume.max,
+            'value': volume.upperThreshold
+        }).next().html(volume.upperThreshold);
         $('.index-x').attr({
             'max': (volume.dimensions[0] - 1),
             'value': volume.indexX
@@ -480,6 +588,16 @@ function texturebasedRendering(volume) {
             'max': (volume.dimensions[2] - 1),
             'value': volume.indexZ
         }).next().html(volume.indexZ);
+        $('.texture-window-low').attr({
+            'min': volume.min,
+            'max': volume.max,
+            'value': volume.windowLow
+        }).next().html(volume.windowLow);
+        $('.texture-window-high').attr({
+            'min': volume.min,
+            'max': volume.max,
+            'value': volume.windowHigh
+        }).next().html(volume.windowHigh);
         volumegui.open();
     };
 }

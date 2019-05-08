@@ -1308,6 +1308,10 @@ span.file-name,
     text-align: center;
 }
 
+.marching-cube-setting.hidden {
+    display: none;
+}
+
 .ray-setting.hidden {
     display: none;
 }
@@ -1338,6 +1342,18 @@ span.file-name,
 .ray-lut,
 .ray-opacity {
     width: 70%;
+}
+
+.texture-setting {
+    margin-top: 15px;
+}
+
+.texture-setting.hidden {
+    display: none;
+}
+
+.texturebased-algorithm.input-field.col label {
+    left: 0;
 }
 
 .controller {

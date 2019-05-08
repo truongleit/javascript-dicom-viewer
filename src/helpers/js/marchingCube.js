@@ -39,14 +39,17 @@ function updateIsoValue(e) {
 
 $(document).ready(function() {
     $(".isoValue").bind('keyup mousemove', function() {
-        var value = $(this).val();
-        $(this).next().html(value);
-        marchingCube.setContourValue(Number(value));
-        $('.lds-hourglass').addClass('block');
-        renderWindow.render();
-        $('.lds-hourglass').removeClass('block');
+        if (renderAlgorithm == 'marchingCube') {
+            var value = $(this).val();
+            $(this).next().html(value);
+            marchingCube.setContourValue(Number(value));
+            $('.lds-hourglass').addClass('block');
+            renderWindow.render();
+            $('.lds-hourglass').removeClass('block');
+        }
     });
     $('.marching-cube').on('click', function() {
+        renderAlgorithm = 'marchingCube';
         var files = document.getElementById("file_inp").files;
         $('.lds-hourglass').addClass('block');
         showViewer();
@@ -88,7 +91,6 @@ function marchingCubeRender(files) {
         el.setAttribute('min', dataRange[0]);
         el.setAttribute('max', dataRange[1]);
         el.setAttribute('value', firstIsoValue);
-        // el.addEventListener('input', updateIsoValue);
 
         const container = document.getElementById('3d');
         openglRenderWindow.setContainer(container);
@@ -114,6 +116,7 @@ function marchingCubeRender(files) {
         $('.rendering-layout').addClass('fade-out');
         $('.lds-hourglass').removeClass('block');
         $('.rendering-layout').addClass('hidden');
+        $('.marching-cube-setting').removeClass('hidden');
     })
 }
 
