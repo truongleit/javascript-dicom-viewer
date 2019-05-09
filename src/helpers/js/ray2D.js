@@ -1,64 +1,120 @@
-let container2D;
-let renderer2D;
-let camera2D;
-let controls2D;
-let scene2D;
 let loader2D;
 let lpsDims2D;
-let stackHelper2D;
 let worldbb2D;
 const colors = {
     red: 0xff0000,
     darkGrey: 0x353535,
 };
 
-function ray2D(dom, stack, orientation) {
+const r1 = {
+    domId: 'sliceX',
+    slider: '.index-x',
+    domElement: null,
+    renderer: null,
+    color: 0x121212,
+    sliceOrientation: 'sagittal',
+    sliceColor: 0xff1744,
+    targetID: 1,
+    camera: null,
+    controls: null,
+    scene: null,
+    light: null,
+    stackHelper: null,
+    localizerHelper: null,
+    localizerScene: null,
+};
+
+const r2 = {
+    domId: 'sliceY',
+    slider: '.index-y',
+    domElement: null,
+    renderer: null,
+    color: 0x121212,
+    sliceOrientation: 'coronal',
+    sliceColor: 0xff1744,
+    targetID: 1,
+    camera: null,
+    controls: null,
+    scene: null,
+    light: null,
+    stackHelper: null,
+    localizerHelper: null,
+    localizerScene: null,
+};
+
+const r3 = {
+    domId: 'sliceZ',
+    slider: '.index-z',
+    domElement: null,
+    renderer: null,
+    color: 0x121212,
+    sliceOrientation: 'axial',
+    sliceColor: 0xff1744,
+    targetID: 1,
+    camera: null,
+    controls: null,
+    scene: null,
+    light: null,
+    stackHelper: null,
+    localizerHelper: null,
+    localizerScene: null,
+};
+
+function init2D() {
+    /**
+     * Called on each animation frame
+     */
+    function animate() {
+        render2D();
+
+        // request new frame
+        requestAnimationFrame(function() {
+            animate();
+        });
+    }
+    // renderers
+    initRenderer2D(r1);
+    initRenderer2D(r2);
+    initRenderer2D(r3);
+
+    // start rendering loop
+    animate();
+}
+
+function initRenderer2D(object) {
     // Setup renderer2D
-    container2D = document.getElementById(dom);
-    renderer2D = new THREE.WebGLRenderer({
+    object.domElement = document.getElementById(object.domId);
+    object.renderer = new THREE.WebGLRenderer({
         antialias: true,
     });
-    renderer2D.setSize(container2D.offsetWidth, container2D.offsetHeight);
-    renderer2D.setClearColor(colors.darkGrey, 1);
-    renderer2D.setPixelRatio(window.devicePixelRatio);
-    container2D.appendChild(renderer2D.domElement);
+    object.renderer.setSize(object.domElement.clientWidth, object.domElement.clientHeight);
+    object.renderer.setClearColor(0x121212, 1);
+    object.renderer.setPixelRatio(window.devicePixelRatio);
+    object.domElement.appendChild(object.renderer.domElement);
 
-    scene2D = new THREE.Scene();
+    object.scene = new THREE.Scene();
 
-    camera2D = new AMI.OrthographicCamera(
-        container2D.clientWidth / -2,
-        container2D.clientWidth / 2,
-        container2D.clientHeight / 2,
-        container2D.clientHeight / -2,
-        0.1,
+    object.camera = new AMI.OrthographicCamera(
+        object.domElement.clientWidth / -2,
+        object.domElement.clientWidth / 2,
+        object.domElement.clientHeight / 2,
+        object.domElement.clientHeight / -2,
+        1,
         10000
     );
 
     // Setup controls2D
-    controls2D = new AMI.TrackballOrthoControl(camera2D, container2D);
-    controls2D.staticMoving = true;
-    controls2D.noRotate = true;
-    camera2D.controls = controls2D;
+    object.controls = new AMI.TrackballOrthoControl(object.camera, object.domElement);
+    object.controls.staticMoving = true;
+    object.controls.noRotate = true;
+    object.camera.controls = object.controls;
+}
 
-    const onWindowResize2D = () => {
-        camera2D.canvas2D = {
-            width: container2D.offsetWidth,
-            height: container2D.offsetHeight,
-        };
-        camera2D.fitBox(2);
-
-        renderer2D.setSize(container2D.offsetWidth, container2D.offsetHeight);
-    };
-    window.addEventListener('resize', onWindowResize2D, false);
-
-    loader2D = new AMI.VolumeLoader(container2D);
-
-    loader2D.free();
-
-    stackHelper2D = new AMI.StackHelper(stack);
-    stackHelper2D.bbox.visible = false;
-    stackHelper2D.border.color = colors.red;
-    scene2D.add(stackHelper2D);
+function initHelpersStack(object, stack) {
+    object.stackHelper = new AMI.StackHelper(stack);
+    object.stackHelper.bbox.visible = false;
+    object.stackHelper.border.color = object.sliceColor;
+    object.scene.add(object.stackHelper);
 
     // center camera2D and interactor to center of bouding box2D
     // for nicer experience
@@ -77,104 +133,95 @@ function ray2D(dom, stack, orientation) {
 
     // init and zoom
     const canvas2D = {
-        width: container2D.clientWidth,
-        height: container2D.clientHeight,
+        width: object.domElement.clientWidth,
+        height: object.domElement.clientHeight,
     };
 
-    camera2D.directions = [stack.xCosine, stack.yCosine, stack.zCosine];
-    camera2D.box = box2D;
-    camera2D.canvas = canvas2D;
-    camera2D.orientation = orientation;
-    camera2D.invertRows = false;
-    camera2D.invertColumns = false;
-    camera2D.rotate45 = false;
-    camera2D.rotate = 0;
-    camera2D.update();
-    camera2D.fitBox(2);
-    stackHelper2D.orientation = camera2D.stackOrientation;
-    gui(stackHelper2D);
-
-    animate2D = () => {
-        controls2D.update();
-        renderer2D.render(scene2D, camera2D);
-
-        requestAnimationFrame(function() {
-            animate2D();
-        });
-    };
-
-    animate2D();
+    object.camera.directions = [stack.xCosine, stack.yCosine, stack.zCosine];
+    object.camera.box = box2D;
+    object.camera.canvas = canvas2D;
+    object.camera.orientation = object.sliceOrientation;
+    object.camera.invertRows = false;
+    object.camera.invertColumns = false;
+    object.camera.rotate45 = false;
+    object.camera.rotate = 0;
+    object.camera.update();
+    object.camera.fitBox(2);
+    object.stackHelper.orientation = object.camera.stackOrientation;
+    object.stackHelper.index = Math.floor(object.stackHelper.orientationMaxIndex / 2);
+    object.scene.add(object.stackHelper);
 }
 
+function render2D() {
 
-function gui() {
-    const gui = new dat.GUI({
-        autoPlace: false,
-    });
+    r1.controls.update();
+    r2.controls.update();
+    r3.controls.update();
+    // r1 //
+    r1.renderer.clear();
+    r1.renderer.render(r1.scene, r1.camera);
+    // r2 //
+    r2.renderer.clear();
+    r2.renderer.render(r2.scene, r2.camera);
+    // r3
+    r3.renderer.clear();
+    r3.renderer.render(r3.scene, r3.camera);
+}
 
-    const customContainer = document.getElementById('my-gui-container');
-    customContainer.appendChild(gui.domElement);
-    const camUtils = {
-        invertRows: false,
-        invertColumns: false,
-        rotate45: false,
-        rotate: 0,
-        orientation: 'default',
-        convention: 'radio',
+function ray2D(stack) {
+
+    init2D();
+
+    loader2D = new AMI.VolumeLoader();
+
+    loader2D.free();
+
+    initHelpersStack(r1, stack);
+    initHelpersStack(r2, stack);
+    initHelpersStack(r3, stack);
+
+    $(r1.slider).attr({
+        'min': 0,
+        'max': r1.stackHelper.stack.dimensionsIJK.z - 1,
+        'value': r1.stackHelper.index
+    }).next().html(r1.stackHelper.index);
+
+    $(r2.slider).attr({
+        'min': 0,
+        'max': r2.stackHelper.stack.dimensionsIJK.z - 1,
+        'value': r2.stackHelper.index
+    }).next().html(r2.stackHelper.index);
+
+    $(r3.slider).attr({
+        'min': 0,
+        'max': r3.stackHelper.stack.dimensionsIJK.z - 1,
+        'value': r3.stackHelper.index
+    }).next().html(r3.stackHelper.index);
+
+    render2D();
+
+    function windowResize2D(object) {
+        object.camera.canvas = {
+            width: object.domElement.clientWidth,
+            height: object.domElement.clientHeight,
+        };
+        object.camera.fitBox(2, 1);
+        object.renderer.setSize(
+            object.domElement.clientWidth,
+            object.domElement.clientHeight
+        );
+
+        // update info to draw borders properly
+        object.stackHelper.slice.canvasWidth = object.domElement.clientWidth;
+        object.stackHelper.slice.canvasHeight = object.domElement.clientHeight;
+    }
+
+    function onWindowResize2D() {
+        // update 2d
+        windowResize2D(r1);
+        windowResize2D(r2);
+        windowResize2D(r3);
     };
+    window.addEventListener('resize', onWindowResize2D, false);
 
-    // camera2D
-    const cameraFolder = gui.addFolder('camera2D');
-    const invertRows = cameraFolder.add(camUtils, 'invertRows');
-    invertRows.onChange(() => {
-        camera2D.invertRows();
-    });
-
-    const invertColumns = cameraFolder.add(camUtils, 'invertColumns');
-    invertColumns.onChange(() => {
-        camera2D.invertColumns();
-    });
-
-    const rotate45 = cameraFolder.add(camUtils, 'rotate45');
-    rotate45.onChange(() => {
-        camera2D.rotate();
-    });
-
-    cameraFolder
-        .add(camera2D, 'angle', 0, 360)
-        .step(1)
-        .listen();
-
-    const orientationUpdate = cameraFolder.add(camUtils, 'orientation', [
-        'default',
-        'axial',
-        'coronal',
-        'sagittal',
-    ]);
-    orientationUpdate.onChange(value => {
-        camera2D.orientation = value;
-        camera2D.update();
-        camera2D.fitBox(2);
-        stackHelper2D.orientation = camera2D.stackOrientation;
-    });
-
-    const conventionUpdate = cameraFolder.add(camUtils, 'convention', ['radio', 'neuro']);
-    conventionUpdate.onChange(value => {
-        camera2D.convention = value;
-        camera2D.update();
-        camera2D.fitBox(2);
-    });
-
-    cameraFolder.open();
-
-    const stackFolder = gui.addFolder('stacks2D');
-    stackFolder
-        .add(stackHelper2D, 'index', 0, stackHelper2D.stack.dimensionsIJK.z - 1)
-        .step(1)
-        .listen();
-    stackFolder
-        .add(stackHelper2D.slice, 'interpolation', 0, 1)
-        .step(1)
-        .listen();
-    stackFolder.open();
-};
+}

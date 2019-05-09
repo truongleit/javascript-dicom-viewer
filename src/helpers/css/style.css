@@ -1012,7 +1012,7 @@ img.brand-devices {
     cursor: pointer;
 }
 
-span.file-name,
+span.algorithm-name,
 .setting .name {
     margin-left: 9px;
     font-weight: 500;
@@ -1154,11 +1154,22 @@ span.file-name,
 }
 
 .list-files .title {
-    font-weight: 700;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    padding: 10px 30px;
+    border-bottom: solid 1px #ccc;
+    box-sizing: border-box;
+}
+
+.list-files .title {
+    font-weight: 500;
     font-size: 23px;
     letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-left: 3px;
+    text-transform: capitalize;
+    background-color: #FAFAFA;
 }
 
 .list-files::-webkit-scrollbar-track {
@@ -1176,6 +1187,47 @@ span.file-name,
 
 .list-files::-webkit-scrollbar-button {
     display: none;
+}
+
+.viewer .modal.modal-fixed-footer .modal-footer {
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+    left: 0;
+    width: 100%;
+    padding: 0;
+}
+
+.viewer .modal.modal-fixed-footer .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 27px;
+    box-sizing: border-box;
+}
+
+.viewer .modal.modal-fixed-footer .modal-footer {
+    background-color: #6da5ef;
+    color: #FFF;
+}
+
+.viewer .modal-content.fixed-width {
+    width: auto !important;
+}
+
+.loaded-slices {
+    margin: 50px 0;
+    height: 100%;
+}
+
+.slice-amount {
+    width: fit-content;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.3px;
 }
 
 .render-info .content {

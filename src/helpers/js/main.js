@@ -172,16 +172,22 @@ $(document).ready(function() {
             $(this).next().html(value);
             if (renderAlgorithm == 'textureBased') {
                 volume.indexX = parseInt(value);
+            } else if (renderAlgorithm == 'rayCasting') {
+                r1.stackHelper.index = parseInt(value);
             }
         } else if ($(this).hasClass('index-y')) {
             $(this).next().html(value);
             if (renderAlgorithm == 'textureBased') {
                 volume.indexY = parseInt(value);
+            } else if (renderAlgorithm == 'rayCasting') {
+                r2.stackHelper.index = parseInt(value);
             }
         } else {
             $(this).next().html(value);
             if (renderAlgorithm == 'textureBased') {
                 volume.indexZ = parseInt(value);
+            } else if (renderAlgorithm == 'rayCasting') {
+                r3.stackHelper.index = parseInt(value);
             }
         }
     });
@@ -347,12 +353,13 @@ $(document).ready(function() {
     // Execute Ray-cating rendering algorithm //
     $('.ray-casting').click(function() {
         renderAlgorithm = 'rayCasting';
-        showViewer();
+        showViewer('Ray Casting');
         $('.viewer').addClass('opened');
         $('.lds-hourglass').addClass('block');
         var total = files.length;
         renderThumbnails(total, files);
-        $('.modal').removeClass('temp-block');
+        $('.slice-amount').text(total + ' of ' + total + ' slices loaded');
+        $('.modal').removeClass('temp-block').find('.modal-content').addClass('fixed-width');
         setTimeout(function() {
             readMultipleFiles(files);
         }, 1500);
@@ -364,11 +371,12 @@ $(document).ready(function() {
         renderAlgorithm = 'textureBased';
         initTexturebasedRendering();
         $('.lds-hourglass').addClass('block');
-        showViewer();
+        showViewer('Texture-based');
         $('.viewer').addClass('opened');
         var total = files.length;
         renderThumbnails(total, files);
-        $('.modal').removeClass('temp-block');
+        $('.slice-amount').text(total + ' of ' + total + ' slices loaded');
+        $('.modal').removeClass('temp-block').find('.modal-content').addClass('fixed-width');
         counter = files.length;
         reader = new FileReader();
         setTimeout(function() {
@@ -384,7 +392,8 @@ String.prototype.capitalize = function() {
 }
 
 // Display viewer dom //
-function showViewer() {
+function showViewer(algorithm) {
+    $('.algorithm-name').text(algorithm);
     $('.viewer').css('display', 'block').addClass('animated fadeInUp');
 }
 
@@ -393,7 +402,6 @@ function texturebasedUpdateMinColor(picker) {
     var rgb = [Math.round(picker.rgb[0]), Math.round(picker.rgb[1]), Math.round(picker.rgb[2])];
     if (renderAlgorithm == 'textureBased') {
         volume.minColor = [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255];
-        console.log(volume.minColor);
     }
 }
 
@@ -447,7 +455,7 @@ function recursiveLoading(idx) {
 function renderThumbnails(amount, file) {
     var divData = [];
     for (let i = 0; i < amount; i++) {
-        $('.list-files').append('<div id="dicomImage' + (i + 1) + '" class="file"></div>');
+        $('.loaded-slices').append('<div id="dicomImage' + (i + 1) + '" class="file"></div>');
         var divName = '#dicomImage' + (i + 1);
         var element = $(divName).get(0);
         $(divName).append('<div class="slice-number">' + (i + 1) + '</div>')
@@ -504,9 +512,9 @@ function texturebasedRendering(volume) {
         volume.windowHigh = 1506;
         volume.lowerThreshold = 308;
         volume.upperThreshold = 2565;
-        volume.minColor = [0.16862745098039217, 0.17254901960784313, 0.17647058823529413];
+        volume.minColor = [0, 0, 0];
         volume.maxColor = [1, 1, 1];
-        volume.windowHigh = 2547;
+        volume.windowHigh = 2532;
         threeD.add(volume);
         threeD.render();
     }
@@ -525,36 +533,7 @@ function texturebasedRendering(volume) {
         $('.lds-hourglass').removeClass('block');
         $('.rendering-layout').addClass('hidden');
         $('.texture-setting').removeClass('hidden');
-        //
-        // now the real GUI
-        var gui = new dat.GUI({
-            autoPlace: false
-        });
-        $('.render-container').append(gui.domElement);
-        // the following configures the gui for interacting with the X.volume
-        var volumegui = gui.addFolder('Volume');
-        // now we can configure controllers which..
-        // .. switch between slicing and volume rendering
-        var vrController = volumegui.add(volume, 'volumeRendering');
-        // .. configure the volume rendering opacity
-        var opacityController = volumegui.add(volume, 'opacity', 0, 1);
-        // .. and the threshold in the min..max range
-        var lowerThresholdController = volumegui.add(volume, 'lowerThreshold',
-            volume.min, volume.max);
-        var upperThresholdController = volumegui.add(volume, 'upperThreshold',
-            volume.min, volume.max);
-        var lowerWindowController = volumegui.add(volume, 'windowLow', volume.min,
-            volume.max);
-        var upperWindowController = volumegui.add(volume, 'windowHigh', volume.min,
-            volume.max);
-        // the indexX,Y,Z are the currently displayed slice indices in the range
-        // 0..dimensions-1
-        var sliceXController = volumegui.add(volume, 'indexX', 0,
-            volume.dimensions[0] - 1);
-        var sliceYController = volumegui.add(volume, 'indexY', 0,
-            volume.dimensions[1] - 1);
-        var sliceZController = volumegui.add(volume, 'indexZ', 0,
-            volume.dimensions[2] - 1);
+
         $('.min-color-picker').attr({
             'value': '2b2c2d'
         });
@@ -598,6 +577,5 @@ function texturebasedRendering(volume) {
             'max': volume.max,
             'value': volume.windowHigh
         }).next().html(volume.windowHigh);
-        volumegui.open();
     };
 }

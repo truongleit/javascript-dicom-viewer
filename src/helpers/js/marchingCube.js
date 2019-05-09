@@ -52,11 +52,12 @@ $(document).ready(function() {
         renderAlgorithm = 'marchingCube';
         var files = document.getElementById("file_inp").files;
         $('.lds-hourglass').addClass('block');
-        showViewer();
+        showViewer('Marching Cube');
         $('.viewer').addClass('opened');
         var total = files.length;
         renderThumbnails(total, files);
-        $('.modal').removeClass('temp-block');
+        $('.slice-amount').text(total + ' of ' + total + ' slices loaded');
+        $('.modal').removeClass('temp-block').find('.modal-content').addClass('fixed-width');
         setTimeout(function() {
             marchingCubeRender(files);
         }, 1500)
@@ -87,10 +88,11 @@ function marchingCubeRender(files) {
             .getRange();
         const firstIsoValue = (dataRange[0] + dataRange[1]) / 3;
 
-        const el = document.querySelector('.isoValue');
-        el.setAttribute('min', dataRange[0]);
-        el.setAttribute('max', dataRange[1]);
-        el.setAttribute('value', firstIsoValue);
+        $('.isoValue').attr({
+            'min': dataRange[0],
+            'max': dataRange[1],
+            'value': firstIsoValue
+        }).next().html(firstIsoValue);
 
         const container = document.getElementById('3d');
         openglRenderWindow.setContainer(container);

@@ -330,9 +330,7 @@ function rayCasting(files) {
 
     // force first render
     render();
-    ray2D('sliceX', stack, 'sagittal');
-    // ray2D('sliceY', stack, 'coronal');
-    // ray2D('sliceZ', stack, 'axial');
+    ray2D(stack);
     // notify puppeteer to take screenshot
     const puppetDiv = document.createElement('div');
     puppetDiv.setAttribute('id', 'puppeteer');
