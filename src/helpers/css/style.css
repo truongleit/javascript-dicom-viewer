@@ -1364,6 +1364,29 @@ span.algorithm-name,
     display: none;
 }
 
+.vtk-color {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    padding: 20px 0;
+}
+
+.vtk-color a {
+    margin-top: 10px;
+}
+
+.marching-cube-setting .jscolor {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0;
+    border: none;
+    outline: none;
+}
+
 .ray-setting.hidden {
     display: none;
 }

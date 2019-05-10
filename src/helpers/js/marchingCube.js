@@ -48,6 +48,10 @@ $(document).ready(function() {
             $('.lds-hourglass').removeClass('block');
         }
     });
+    $('.vtk-color-button').click(function() {
+        actor.getProperty().setColor(meshColorMB[0], meshColorMB[1], meshColorMB[2]);
+        renderWindow.render();
+    });
     $('.marching-cube').on('click', function() {
         renderAlgorithm = 'marchingCube';
         var files = document.getElementById("file_inp").files;
@@ -99,6 +103,7 @@ function marchingCubeRender(files) {
         const { width, height } = container.getBoundingClientRect();
         openglRenderWindow.setSize(width, height);
 
+
         const interactor = vtkRenderWindowInteractor.newInstance();
         interactor.setView(openglRenderWindow);
         interactor.initialize();
@@ -113,6 +118,7 @@ function marchingCubeRender(files) {
             position: [1, 1, 0],
             viewUp: [0, 0, -1]
         });
+        renderer.getActiveCamera().set({ position: [1, 1, 0], viewUp: [0, 0, -1] });
         renderer.resetCamera();
         renderWindow.render();
         $('.rendering-layout').addClass('fade-out');

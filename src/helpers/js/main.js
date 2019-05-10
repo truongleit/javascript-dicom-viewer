@@ -413,6 +413,14 @@ function texturebasedUpdateMaxColor(picker) {
     }
 }
 
+// Update 3D object's color (Marching Cube)
+var meshColorMB = [0, 0, 0];
+
+function vtkColorPicker(picker) {
+    var rgb = [Math.round(picker.rgb[0]), Math.round(picker.rgb[1]), Math.round(picker.rgb[2])];
+    meshColorMB = [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255];
+}
+
 // Sorting for complex text //
 function naturalSort(a, b) {
     var aPriority = /[a-z]/i.test(a) * 3 + /\d+/i.test(a) * 2;
