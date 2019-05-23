@@ -49,8 +49,10 @@ $(document).ready(function() {
         }
     });
     $('.vtk-color-button').click(function() {
-        actor.getProperty().setColor(meshColorMB[0], meshColorMB[1], meshColorMB[2]);
-        renderWindow.render();
+        if (renderAlgorithm == 'marchingCube') {
+            actor.getProperty().setColor(meshColorMB[0], meshColorMB[1], meshColorMB[2]);
+            renderWindow.render();
+        }
     });
     $('.marching-cube').on('click', function() {
         renderAlgorithm = 'marchingCube';
