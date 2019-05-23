@@ -9,6 +9,48 @@ var filesLoaded = false;
 var renderAlgorithm = '';
 
 $(document).ready(function() {
+    //delete canvas 
+    $(".delete-render").on("click",function(){
+        switch (renderAlgorithm){
+            case "rayCasting":
+                $("canvas").remove();
+                reset_value_of_slice();
+                renderAlgorithm = '';
+                $(".ray-setting").toggleClass("hidden");
+                break;
+            case "textureBased":
+                $("canvas").remove();
+                reset_value_of_slice();
+                renderAlgorithm = '';
+                $(".texture-setting").addClass("hidden");
+                break;
+            case "marchingCube":
+                    $("canvas").remove();
+                    reset_value_of_slice();
+                    $(".marching-cube-setting").addClass("hidden");
+                    renderAlgorithm = '';
+                    break;
+            default:   
+                break;
+        }
+    })
+    function reset_value_of_slice(){
+        $('.index-x').attr({
+            'max': (0),
+            'value': 0
+        }).next().html(0);
+        $('.index-y').attr({
+            'max': (0),
+            'value': 0
+        }).next().html(0);
+        $('.index-z').attr({
+            'max': (0),
+            'value': 0
+        }).next().html(0);
+    }
+
+    //end delete function
+
     $('.modal').modal();
     // Ray-casting config //
     //
@@ -381,7 +423,8 @@ $(document).ready(function() {
         reader = new FileReader();
         setTimeout(function() {
             recursiveLoading(0);
-        }, 1500)
+        }, 1500);
+  
     });
 
 });
