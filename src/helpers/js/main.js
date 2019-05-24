@@ -9,10 +9,28 @@ var filesLoaded = false;
 var renderAlgorithm = '';
 
 $(document).ready(function() {
-    // delete canvas and slice //
-    $('.delete-render').on("click",function(){
+    //
+    // Switch rendering algorithm
+    //
+    $('.switch-algorithm').change(function() {
+        var optionSelected = $(this).find("option:selected");
+        var valueSelected = optionSelected.val();
+        if (valueSelected == renderAlgorithm) {
+            $('.re-render-button').addClass('disabled');
+        } else {
+            $('.re-render-button').removeClass('disabled');
+        }
+    });
+    $('.re-render-button').click(function() {
+        var optionSelected = $('.switch-algorithm').find("option:selected");
+        var valueSelected = optionSelected.val();
+    });
+    //
+    // Delete current rendering //
+    //
+    $('.delete-render').on("click", function() {
         deleteCanvas();
-        switch (renderAlgorithm){
+        switch (renderAlgorithm) {
             case "rayCasting":
                 $('.ray-setting').addClass("hidden");
                 break;
@@ -22,13 +40,10 @@ $(document).ready(function() {
             case "marchingCube":
                 $('.marching-cube-setting').addClass("hidden");
                 break;
-            default:   
+            default:
                 break;
         }
-    })
-    // end delete function //
-
-    $('.modal').modal();
+    });
     // Ray-casting config //
     //
     // Interpolation
@@ -57,8 +72,9 @@ $(document).ready(function() {
         }
     });
 
-    // Material select //
+    // Material select and modal initalization //
     $('select').formSelect();
+    $('.modal').modal();
 
     // Ray-casting algorithm //
     $('.ray-algorithm select').change(function() {
@@ -383,6 +399,8 @@ $(document).ready(function() {
             readMultipleFiles(files);
         }, 1500);
         $('.slider').slick('unslick');
+        $('.switch-algorithm').val(renderAlgorithm);
+        $('select').formSelect();
     });
 
     // Execute Texture-based rendering algorithm //
@@ -401,14 +419,16 @@ $(document).ready(function() {
         setTimeout(function() {
             recursiveLoading(0);
         }, 1500);
-  
+        $('.slider').slick('unslick');
+        $('.switch-algorithm').val(renderAlgorithm);
+        $('select').formSelect();
     });
 
 });
 
 
-// Delete canvas and hide slice //
-function deleteCanvas(renderAlgorithm){
+// Delete canvas and reset range slider //
+function deleteCanvas(renderAlgorithm) {
     renderAlgorithm = '';
     $('canvas').remove();
     $('.loaded-slices').remove();
@@ -567,6 +587,22 @@ function texturebasedRendering(volume) {
         volume.windowHigh = 2532;
         threeD.add(volume);
         threeD.render();
+        var canvas = $('#3d canvas');
+
+        var context = canvas[0].getContext("2d");
+
+        resizeWindow = function() {
+            window.w = canvas.width = window.innerWidth;
+            return window.h = canvas.height = window.innerHeight;
+        };
+
+        resizeWindow();
+
+        window.addEventListener('resize', resizeWindow, false);
+
+        window.onload = function() {
+            return setTimeout(resizeWindow, 0);
+        };
     }
     threeD.onShowtime = function() {
         //
@@ -627,5 +663,18 @@ function texturebasedRendering(volume) {
             'max': volume.max,
             'value': volume.windowHigh
         }).next().html(volume.windowHigh);
+        ESresize();
     };
+}
+// Trigger the window resize event
+function ESresize() {
+    if (typeof(Event) === 'function') {
+        // modern browsers
+        window.dispatchEvent(new Event('resize'));
+    } else {
+        //This will be executed on old browsers and especially IE
+        var resizeEvent = window.document.createEvent('UIEvents');
+        resizeEvent.initUIEvent('resize', true, false, window, 0);
+        window.dispatchEvent(resizeEvent);
+    }
 }

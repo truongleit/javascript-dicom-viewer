@@ -789,6 +789,10 @@ img.brand-devices {
     transition: background ease-in .4s;
 }
 
+.viewer.block {
+    display: block;
+}
+
 .viewer.open {
     top: 0;
     opacity: 1;
@@ -854,6 +858,29 @@ img.brand-devices {
 .minimize,
 .cancel {
     padding: 10px;
+}
+
+.re-render {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+}
+
+.re-render>* {
+    margin-right: 7px;
+}
+
+.re-render .select-wrapper input.select-dropdown {
+    border-bottom: 1px solid #2979ff;
+}
+
+.re-render .dropdown-content li>span {
+    font-size: 16px;
+    color: #2979ff;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;
 }
 
 .render-container {

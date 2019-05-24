@@ -146,6 +146,17 @@
                     <div class="title">DIREA</div>
                     <div class="description">DICOM Reader</div>
                 </div>
+                <div class="re-render">
+                    <div class="col s12">
+                        <select class="switch-algorithm">
+                            <option value="" disabled selected>Choose your algorithm</option>
+                            <option value="marchingCube">Marching Cube</option>
+                            <option value="rayCasting">Ray Casting</option>
+                            <option value="textureBased">Texture-based</option>
+                        </select>
+                    </div>
+                    <a class="waves-effect waves-light blue accent-3 btn re-render-button disabled">Render</a>
+                </div>
             </div>
             <div class="control-buttons">
 
@@ -233,7 +244,6 @@
                                                 0
                                             </div>
                                         </div>
-                                        <!-- add class hidden when delete -->
                                         <div class="attribute-config texture-setting hidden">
                                             <div class="input-field col s12 texturebased-algorithm">
                                                 <select>
@@ -456,9 +466,8 @@
                 <div class="canvas-container">
                     <div class="lds-hourglass loading-canvas"></div>
                     <div class="rendering-layout"></div>
-                    <!-- delete 3d -->
                     <div id="3d" class="three-dimemsion">
-                        <div class="title ">3D</div>
+                        <div class="title">3D</div>
                         <div id="my-lut-container" style="display:none;">
                             <div id="my-lut-min">0.0</div>
                             <div id="my-lut-canvases"></div>
