@@ -10,31 +10,30 @@ var renderAlgorithm = '';
 
 $(document).ready(function() {
     //delete canvas 
-    $(".delete-render").on("click",function(){
+    $('.delete-render').on("click",function(){
+        deleteCanvas();
         switch (renderAlgorithm){
             case "rayCasting":
-                $("canvas").remove();
-                reset_value_of_slice();
-                renderAlgorithm = '';
-                $(".ray-setting").toggleClass("hidden");
+                $('.ray-setting').addClass("hidden");
                 break;
             case "textureBased":
-                $("canvas").remove();
-                reset_value_of_slice();
-                renderAlgorithm = '';
-                $(".texture-setting").addClass("hidden");
+                $('.texture-setting').addClass("hidden");
                 break;
             case "marchingCube":
-                    $("canvas").remove();
-                    reset_value_of_slice();
-                    $(".marching-cube-setting").addClass("hidden");
-                    renderAlgorithm = '';
-                    break;
+                $('.marching-cube-setting').addClass("hidden");
+                break;
             default:   
                 break;
         }
     })
-    function reset_value_of_slice(){
+    function deleteCanvas(renderAlgorithm){
+        renderAlgorithm = '';
+
+        $('#3d canvas').remove();
+        $('#sliceX > canvas').remove();
+        $('#sliceY > canvas').remove();
+        $('#sliceZ > canvas').remove();
+
         $('.index-x').attr({
             'max': (0),
             'value': 0
@@ -47,6 +46,7 @@ $(document).ready(function() {
             'max': (0),
             'value': 0
         }).next().html(0);
+        return true;
     }
 
     //end delete function
