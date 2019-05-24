@@ -9,6 +9,25 @@ var filesLoaded = false;
 var renderAlgorithm = '';
 
 $(document).ready(function() {
+    // delete canvas and slice //
+    $('.delete-render').on("click",function(){
+        deleteCanvas();
+        switch (renderAlgorithm){
+            case "rayCasting":
+                $('.ray-setting').addClass("hidden");
+                break;
+            case "textureBased":
+                $('.texture-setting').addClass("hidden");
+                break;
+            case "marchingCube":
+                $('.marching-cube-setting').addClass("hidden");
+                break;
+            default:   
+                break;
+        }
+    })
+    // end delete function //
+
     $('.modal').modal();
     // Ray-casting config //
     //
@@ -381,10 +400,33 @@ $(document).ready(function() {
         reader = new FileReader();
         setTimeout(function() {
             recursiveLoading(0);
-        }, 1500)
+        }, 1500);
+  
     });
 
 });
+
+
+// Delete canvas and hide slice //
+function deleteCanvas(renderAlgorithm){
+    renderAlgorithm = '';
+    $('canvas').remove();
+    $('.loaded-slices').remove();
+    $('.slice-amount').text("");
+    $('.index-x').attr({
+        'max': (0),
+        'value': 0
+    }).next().html(0);
+    $('.index-y').attr({
+        'max': (0),
+        'value': 0
+    }).next().html(0);
+    $('.index-z').attr({
+        'max': (0),
+        'value': 0
+    }).next().html(0);
+    return true;
+}
 
 // Capitalize first letter in text //
 String.prototype.capitalize = function() {
