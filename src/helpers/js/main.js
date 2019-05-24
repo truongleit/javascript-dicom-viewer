@@ -9,7 +9,7 @@ var filesLoaded = false;
 var renderAlgorithm = '';
 
 $(document).ready(function() {
-    //delete canvas 
+    // delete canvas and slice //
     $('.delete-render').on("click",function(){
         deleteCanvas();
         switch (renderAlgorithm){
@@ -26,30 +26,7 @@ $(document).ready(function() {
                 break;
         }
     })
-    function deleteCanvas(renderAlgorithm){
-        renderAlgorithm = '';
-
-        $('#3d canvas').remove();
-        $('#sliceX > canvas').remove();
-        $('#sliceY > canvas').remove();
-        $('#sliceZ > canvas').remove();
-
-        $('.index-x').attr({
-            'max': (0),
-            'value': 0
-        }).next().html(0);
-        $('.index-y').attr({
-            'max': (0),
-            'value': 0
-        }).next().html(0);
-        $('.index-z').attr({
-            'max': (0),
-            'value': 0
-        }).next().html(0);
-        return true;
-    }
-
-    //end delete function
+    // end delete function //
 
     $('.modal').modal();
     // Ray-casting config //
@@ -428,6 +405,28 @@ $(document).ready(function() {
     });
 
 });
+
+
+// Delete canvas and hide slice //
+function deleteCanvas(renderAlgorithm){
+    renderAlgorithm = '';
+    $('canvas').remove();
+    $('.loaded-slices').remove();
+    $('.slice-amount').text("");
+    $('.index-x').attr({
+        'max': (0),
+        'value': 0
+    }).next().html(0);
+    $('.index-y').attr({
+        'max': (0),
+        'value': 0
+    }).next().html(0);
+    $('.index-z').attr({
+        'max': (0),
+        'value': 0
+    }).next().html(0);
+    return true;
+}
 
 // Capitalize first letter in text //
 String.prototype.capitalize = function() {
