@@ -7,6 +7,7 @@ var v;
 var sliceX, sliceY, sliceZ;
 var filesLoaded = false;
 var renderAlgorithm = '';
+var oldRenderAlgorithm = '';
 
 $(document).ready(function() {
     //
@@ -27,7 +28,9 @@ $(document).ready(function() {
         deleteCanvas(renderAlgorithm);
         switch (valueSelected) {
             case "rayCasting":
-                $('.mb-interactor-disable').trigger('click');
+                if (oldRenderAlgorithm == 'marchingCube') {
+                    $('.mb-interactor-disable').trigger('click');
+                }
                 renderAlgorithm = 'rayCasting';
                 $('.lds-hourglass').addClass('block');
                 setTimeout(function() {
@@ -39,7 +42,6 @@ $(document).ready(function() {
                 $('.statistics').remove();
                 break;
             case "textureBased":
-                $('.test-mb').trigger('click');
                 renderAlgorithm = 'textureBased';
                 initTexturebasedRendering();
                 $('.lds-hourglass').addClass('block');
@@ -58,6 +60,7 @@ $(document).ready(function() {
         };
         $('.re-render-button').addClass('disabled');
     });
+    //
     // Ray-casting config //
     //
     // Interpolation
@@ -444,6 +447,7 @@ $(document).ready(function() {
 // Delete canvas and reset range slider //
 function deleteCanvas(currentAlgorithm) {
 
+    oldRenderAlgorithm = currentAlgorithm;
     $('.rendering-layout').removeClass('fade-out');
     $('.rendering-layout').removeClass('hidden');
     switch (currentAlgorithm) {
