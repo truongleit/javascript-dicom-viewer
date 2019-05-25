@@ -14,22 +14,7 @@ import vtkInteractorStyleTrackballCamera from 'vtk.js/Sources/Interaction/Style/
 
 
 const renderWindow = vtkRenderWindow.newInstance();
-const renderer = vtkRenderer.newInstance({ background: [0.2, 0.3, 0.4] });
-renderWindow.addRenderer(renderer);
-
-const openglRenderWindow = vtkOpenGLRenderWindow.newInstance();
-renderWindow.addView(openglRenderWindow);
-
-const actor = vtkActor.newInstance();
-const mapper = vtkMapper.newInstance();
-const marchingCube = vtkImageMarchingCubes.newInstance({
-    contourValue: 0.0,
-    computeNormals: true,
-    mergePoints: true,
-});
-
-actor.setMapper(mapper);
-mapper.setInputConnection(marchingCube.getOutputPort());
+const interactor = vtkRenderWindowInteractor.newInstance();
 
 function updateIsoValue(e) {
     const isoValue = Number(e.target.value);
@@ -38,6 +23,10 @@ function updateIsoValue(e) {
 }
 
 $(document).ready(function() {
+    $('.mb-interactor-disable').click(function() {
+        const container = document.getElementById('3d');
+        interactor.unbindEvents(container);
+    });
     $(".isoValue").bind('keyup mousemove', function() {
         if (renderAlgorithm == 'marchingCube') {
             var value = $(this).val();
@@ -66,28 +55,53 @@ $(document).ready(function() {
         $('.modal').removeClass('temp-block').find('.modal-content').addClass('fixed-width');
         setTimeout(function() {
             marchingCubeRender(files);
-        }, 1500)
-    })
+        }, 1500);
+        $('.switch-algorithm').val(renderAlgorithm);
+        $('select').formSelect();
+    });
+    $('.mb-switch').on('click', function() {
+        renderAlgorithm = 'marchingCube';
+        $('.lds-hourglass').addClass('block');
+        setTimeout(function() {
+            marchingCubeRender(files);
+        }, 1500);
+        $('.algorithm-name').text('Marching Cube');
+    });
 });
-
-const reader = vtkHttpDataSetReader.newInstance({
-    fetchGzip: true
-});
-marchingCube.setInputConnection(reader.getOutputPort());
 
 function marchingCubeRender(files) {
-    let reader = itkreadImageDICOMFileSeries;
+
+    const renderer = vtkRenderer.newInstance({ background: [0.2, 0.3, 0.4] });
+    renderWindow.addRenderer(renderer);
+
+    const openglRenderWindow = vtkOpenGLRenderWindow.newInstance();
+    renderWindow.addView(openglRenderWindow);
+
+    const actor = vtkActor.newInstance();
+    const mapper = vtkMapper.newInstance();
+    const marchingCube = vtkImageMarchingCubes.newInstance({
+        contourValue: 0.0,
+        computeNormals: true,
+        mergePoints: true,
+    });
+
+    actor.setMapper(mapper);
+    mapper.setInputConnection(marchingCube.getOutputPort());
+
+    const reader = vtkHttpDataSetReader.newInstance({
+        fetchGzip: true
+    });
+    marchingCube.setInputConnection(reader.getOutputPort());
+
+    let dicomReader = itkreadImageDICOMFileSeries;
     let arg = files;
-    reader(null, arg).then(({
+    dicomReader(null, arg).then(({
         image: itkImage,
         webWorker
     }) => {
         webWorker.terminate()
-        console.log(itkImage)
 
         const imageData = vtkITKHelper.convertItkToVtkImage(itkImage);
-        console.log(imageData)
-
         const dataRange = imageData
             .getPointData()
             .getScalars()
@@ -106,11 +120,9 @@ function marchingCubeRender(files) {
         openglRenderWindow.setSize(width, height);
 
 
-        const interactor = vtkRenderWindowInteractor.newInstance();
         interactor.setView(openglRenderWindow);
         interactor.initialize();
         interactor.bindEvents(container);
-
         interactor.setInteractorStyle(vtkInteractorStyleTrackballCamera.newInstance());
 
         marchingCube.setInputData(imageData);
@@ -122,14 +134,15 @@ function marchingCubeRender(files) {
         });
         renderer.getActiveCamera().set({ position: [1, 1, 0], viewUp: [0, 0, -1] });
         renderer.resetCamera();
-        renderWindow.render();
+        renderWindow.render()
+
         $('.rendering-layout').addClass('fade-out');
         $('.lds-hourglass').removeClass('block');
         $('.rendering-layout').addClass('hidden');
         $('.marching-cube-setting').removeClass('hidden');
+
+        global.actor = actor;
+        global.mapper = mapper;
+        global.marchingCube = marchingCube;
     })
 }
-
-global.actor = actor;
-global.mapper = mapper;
-global.marchingCube = marchingCube;

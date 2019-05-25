@@ -27,6 +27,7 @@ $(document).ready(function() {
         deleteCanvas(renderAlgorithm);
         switch (valueSelected) {
             case "rayCasting":
+                $('.mb-interactor-disable').trigger('click');
                 renderAlgorithm = 'rayCasting';
                 $('.lds-hourglass').addClass('block');
                 setTimeout(function() {
@@ -35,8 +36,10 @@ $(document).ready(function() {
                 $('.algorithm-name').text('Ray Casting');
                 $('.switch-algorithm').val(renderAlgorithm);
                 $('select').formSelect();
+                $('.statistics').remove();
                 break;
             case "textureBased":
+                $('.test-mb').trigger('click');
                 renderAlgorithm = 'textureBased';
                 initTexturebasedRendering();
                 $('.lds-hourglass').addClass('block');
@@ -50,6 +53,7 @@ $(document).ready(function() {
                 $('select').formSelect();
                 break;
             default:
+                $('.mb-switch').trigger('click');
                 break;
         };
         $('.re-render-button').addClass('disabled');
@@ -459,6 +463,7 @@ function deleteCanvas(currentAlgorithm) {
     renderAlgorithm = '';
     $('.canvas-container canvas').remove();
     // $('.slice-amount').text("");
+
     $('.index-x').attr({
         'max': (0),
         'value': 0

@@ -883,6 +883,11 @@ img.brand-devices {
     padding: 14px 16px;
 }
 
+.mb-switch,
+.mb-interactor-disable {
+    display: none;
+}
+
 .render-container {
     width: 100%;
     height: 100%;
