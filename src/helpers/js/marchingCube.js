@@ -65,6 +65,8 @@ $(document).ready(function() {
         setTimeout(function() {
             marchingCubeRender(files);
         }, 1500);
+        const container = document.getElementById('3d');
+        interactor.bindEvents(container);
         $('.algorithm-name').text('Marching Cube');
     });
 });
