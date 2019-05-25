@@ -458,7 +458,7 @@ function deleteCanvas(currentAlgorithm) {
 
     renderAlgorithm = '';
     $('.canvas-container canvas').remove();
-    $('.slice-amount').text("");
+    // $('.slice-amount').text("");
     $('.index-x').attr({
         'max': (0),
         'value': 0
