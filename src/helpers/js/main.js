@@ -24,25 +24,35 @@ $(document).ready(function() {
     $('.re-render-button').click(function() {
         var optionSelected = $('.switch-algorithm').find("option:selected");
         var valueSelected = optionSelected.val();
-    });
-    //
-    // Delete current rendering //
-    //
-    $('.delete-render').on("click", function() {
-        deleteCanvas();
-        switch (renderAlgorithm) {
+        deleteCanvas(renderAlgorithm);
+        switch (valueSelected) {
             case "rayCasting":
-                $('.ray-setting').addClass("hidden");
+                renderAlgorithm = 'rayCasting';
+                $('.lds-hourglass').addClass('block');
+                setTimeout(function() {
+                    readMultipleFiles(files);
+                }, 1500);
+                $('.algorithm-name').text('Ray Casting');
+                $('.switch-algorithm').val(renderAlgorithm);
+                $('select').formSelect();
                 break;
             case "textureBased":
-                $('.texture-setting').addClass("hidden");
-                break;
-            case "marchingCube":
-                $('.marching-cube-setting').addClass("hidden");
+                renderAlgorithm = 'textureBased';
+                initTexturebasedRendering();
+                $('.lds-hourglass').addClass('block');
+                counter = files.length;
+                reader = new FileReader();
+                setTimeout(function() {
+                    recursiveLoading(0);
+                }, 1500);
+                $('.algorithm-name').text('Texture-based');
+                $('.switch-algorithm').val(renderAlgorithm);
+                $('select').formSelect();
                 break;
             default:
                 break;
-        }
+        };
+        $('.re-render-button').addClass('disabled');
     });
     // Ray-casting config //
     //
@@ -428,10 +438,26 @@ $(document).ready(function() {
 
 
 // Delete canvas and reset range slider //
-function deleteCanvas(renderAlgorithm) {
+function deleteCanvas(currentAlgorithm) {
+
+    $('.rendering-layout').removeClass('fade-out');
+    $('.rendering-layout').removeClass('hidden');
+    switch (currentAlgorithm) {
+        case "rayCasting":
+            $('.ray-setting').addClass("hidden");
+            break;
+        case "textureBased":
+            $('.texture-setting').addClass("hidden");
+            break;
+        case "marchingCube":
+            $('.marching-cube-setting').addClass("hidden");
+            break;
+        default:
+            break;
+    }
+
     renderAlgorithm = '';
-    $('canvas').remove();
-    $('.loaded-slices').remove();
+    $('.canvas-container canvas').remove();
     $('.slice-amount').text("");
     $('.index-x').attr({
         'max': (0),
@@ -445,6 +471,7 @@ function deleteCanvas(renderAlgorithm) {
         'max': (0),
         'value': 0
     }).next().html(0);
+
     return true;
 }
 
