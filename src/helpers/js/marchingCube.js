@@ -13,7 +13,7 @@ import vtkRenderer from 'vtk.js/Sources/Rendering/Core/Renderer';
 import vtkInteractorStyleTrackballCamera from 'vtk.js/Sources/Interaction/Style/InteractorStyleTrackballCamera';
 
 
-const renderWindow = vtkRenderWindow.newInstance();
+let renderWindow;
 const interactor = vtkRenderWindowInteractor.newInstance();
 
 function updateIsoValue(e) {
@@ -65,14 +65,13 @@ $(document).ready(function() {
         setTimeout(function() {
             marchingCubeRender(files);
         }, 1500);
-        const container = document.getElementById('3d');
-        interactor.bindEvents(container);
         $('.algorithm-name').text('Marching Cube');
     });
 });
 
 function marchingCubeRender(files) {
 
+    renderWindow = vtkRenderWindow.newInstance();
     const renderer = vtkRenderer.newInstance({ background: [0.2, 0.3, 0.4] });
     renderWindow.addRenderer(renderer);
 
@@ -120,7 +119,6 @@ function marchingCubeRender(files) {
         openglRenderWindow.setContainer(container);
         const { width, height } = container.getBoundingClientRect();
         openglRenderWindow.setSize(width, height);
-
 
         interactor.setView(openglRenderWindow);
         interactor.initialize();
