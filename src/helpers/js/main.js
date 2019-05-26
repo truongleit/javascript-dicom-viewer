@@ -42,6 +42,9 @@ $(document).ready(function() {
                 $('.statistics').remove();
                 break;
             case "textureBased":
+                if (oldRenderAlgorithm == 'marchingCube') {
+                    $('.mb-interactor-disable').trigger('click');
+                }
                 renderAlgorithm = 'textureBased';
                 initTexturebasedRendering();
                 $('.lds-hourglass').addClass('block');
@@ -455,6 +458,10 @@ function deleteCanvas(currentAlgorithm) {
             $('.ray-setting').addClass("hidden");
             break;
         case "textureBased":
+            threeD.destroy();
+            sliceX.destroy();
+            sliceY.destroy();
+            sliceZ.destroy();
             $('.texture-setting').addClass("hidden");
             break;
         case "marchingCube":

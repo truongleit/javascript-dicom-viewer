@@ -56,6 +56,7 @@ $(document).ready(function() {
         setTimeout(function() {
             marchingCubeRender(files);
         }, 1500);
+        $('.slider').slick('unslick');
         $('.switch-algorithm').val(renderAlgorithm);
         $('select').formSelect();
     });
