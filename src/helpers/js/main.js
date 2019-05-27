@@ -454,27 +454,27 @@ $(document).ready(function() {
         var checked = $('input[class="auto-play"]').is(":checked");
         $('.slice-slider').slick('unslick');
         $('.slice-slider-nav').slick('unslick');
-        slickSetUp(upper_number, lower_number, checked);
+        slickSetUp(parseInt(upper_number), parseInt(lower_number), checked);
     });
     // Execute Slice mode only //
     $('.slice-only').click(function() {
-        slickSetUp(3, 6, false);
+        $('.lds-hourglass').addClass('block');
+        showViewer('Slice Mode');
+        $('.render-container').addClass('for-slice-mode');
+        $('.slice-slider, .slice-slider-nav, .sidenav-trigger').removeClass('hidden');
+        $('.files-bar, .controller, .canvas-container').addClass('hidden');
+        $('.viewer').addClass('opened');
+        var total = files.length;
+        setTimeout(function() {
+            twoDMode(total, files);
+            twoDMode2(total, files);
+        }, 1500);
+        slickSetUp(1, 5, false);
     });
 
 });
 
 function slickSetUp(upper_number, lower_number, checked){
-    $('.lds-hourglass').addClass('block');
-    showViewer('Slice Mode');
-    $('.render-container').addClass('for-slice-mode');
-    $('.slice-slider, .slice-slider-nav, .sidenav-trigger').removeClass('hidden');
-    $('.files-bar, .controller, .canvas-container').addClass('hidden');
-    $('.viewer').addClass('opened');
-    var total = files.length;
-    setTimeout(function() {
-        twoDMode(total, files);
-        twoDMode2(total, files);
-    }, 1500);
     setTimeout(function() {
         $('.slice-slider').slick({
             infinite: false,
