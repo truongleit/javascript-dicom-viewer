@@ -1777,6 +1777,32 @@ span.algorithm-name,
     padding: 0 32px;
 }
 
+.switch label input[type=checkbox]:checked+.lever:after {
+    background-color: #2979ff !important;
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #90caf9 !important;
+}
+
+input[type=checkbox]:checked:not(:disabled)~.lever:active::before,
+input[type=checkbox]:checked:not(:disabled).tabbed:focus~.lever::before {
+    -webkit-transform: scale(2.4);
+    transform: scale(2.4);
+    background-color: rgba(68, 138, 255, 0.4);
+}
+
+[type="radio"]:checked+span:after,
+[type="radio"].with-gap:checked+span:before,
+[type="radio"].with-gap:checked+span:after {
+    border: 2px solid #2979ff;
+}
+
+[type="radio"]:checked+span:after,
+[type="radio"].with-gap:checked+span:after {
+    background-color: #2979ff;
+}
+
 .canvas-2d {
     width: 500px;
     height: 500px;
