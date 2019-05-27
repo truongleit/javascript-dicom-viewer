@@ -448,14 +448,6 @@ $(document).ready(function() {
         $('.switch-algorithm').val(renderAlgorithm);
         $('select').formSelect();
     });
-    $('.btn-apply').click(function(){
-        var upper_number = $('input[name="upper_slide"]:checked').val();
-        var lower_number = $('input[name="lower_slide"]:checked').val();
-        var checked = $('input[class="auto-play"]').is(":checked");
-        $('.slice-slider').slick('unslick');
-        $('.slice-slider-nav').slick('unslick');
-        slickSetUp(parseInt(upper_number), parseInt(lower_number), checked);
-    });
     // Execute Slice mode only //
     $('.slice-only').click(function() {
         $('.lds-hourglass').addClass('block');
@@ -469,12 +461,42 @@ $(document).ready(function() {
             twoDMode(total, files);
             twoDMode2(total, files);
         }, 1500);
-        slickSetUp(1, 5, false);
+        setTimeout(function() {
+            $('.slice-slider').slick({
+                infinite: false,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                arrows: false,
+                asNavFor: '.slice-slider-nav',
+                draggable: false
+            });
+            $('.slice-slider-nav').slick({
+                infinite: false,
+                slidesToShow: 6,
+                slidesToScroll: 1,
+                asNavFor: '.slice-slider',
+                arrows: true,
+                centerMode: false,
+                focusOnSelect: true,
+                draggable: false
+            });
+        }, 1500);
+        $('.slider').slick('unslick');
     });
-
+    //
+    // Change settings for slice mode
+    //
+    $('.btn-apply').click(function() {
+        var upper_number = $('input[name="upper_slide"]:checked').val();
+        var lower_number = $('input[name="lower_slide"]:checked').val();
+        var checked = $('input[class="auto-play"]').is(":checked");
+        $('.slice-slider').slick('unslick');
+        $('.slice-slider-nav').slick('unslick');
+        slickSetUp(parseInt(upper_number), parseInt(lower_number), checked);
+    });
 });
 
-function slickSetUp(upper_number, lower_number, checked){
+function slickSetUp(upper_number, lower_number, checked) {
     setTimeout(function() {
         $('.slice-slider').slick({
             infinite: false,
@@ -485,7 +507,7 @@ function slickSetUp(upper_number, lower_number, checked){
             draggable: false,
             autoplay: checked
         });
-          $('.slice-slider-nav').slick({
+        $('.slice-slider-nav').slick({
             infinite: false,
             slidesToShow: lower_number,
             slidesToScroll: 1,
@@ -497,7 +519,6 @@ function slickSetUp(upper_number, lower_number, checked){
             autoplay: checked
         });
     }, 1500);
-    $('.slider').slick('unslick');
 }
 // Delete canvas and reset range slider //
 function deleteCanvas(currentAlgorithm) {
