@@ -452,6 +452,9 @@ $(document).ready(function() {
     $('.slice-only').click(function() {
         $('.lds-hourglass').addClass('block');
         showViewer('Slice Mode');
+        $('.viewer').css({
+            'background': '#212121'
+        });
         $('.render-container').addClass('for-slice-mode');
         $('.slice-slider, .slice-slider-nav, .sidenav-trigger').removeClass('hidden');
         $('.files-bar, .controller, .canvas-container').addClass('hidden');
@@ -464,7 +467,7 @@ $(document).ready(function() {
         setTimeout(function() {
             $('.slice-slider').slick({
                 infinite: false,
-                slidesToShow: 3,
+                slidesToShow: 1,
                 slidesToScroll: 1,
                 arrows: false,
                 asNavFor: '.slice-slider-nav',
@@ -481,7 +484,22 @@ $(document).ready(function() {
                 draggable: false
             });
         }, 1500);
+        $('.switch-algorithm').attr('disabled', 'disabled');
+        $('select').formSelect();
+        setTimeout(function() {
+            $('.slice-slider-nav').css({
+                'display': 'flex',
+                'align-items': 'center'
+            });
+        }, 1500);
         $('.slider').slick('unslick');
+    });
+    $('.slider-control').click(function() {
+        if ($(this).hasClass('left')) {
+            $('.slick-prev').trigger('click');
+        } else {
+            $('.slick-next').trigger('click');
+        }
     });
     //
     // Change settings for slice mode

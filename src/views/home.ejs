@@ -127,7 +127,7 @@
         </div>
     </div>
     <ul id="slide-out" class="sidenav">
-            <li><a class="subheader">Slice 1</a></li>
+        <li><a class="subheader">Slice 1</a></li>
         <li>
             <div class="slider-option">
                 <p>
@@ -192,8 +192,7 @@
             </div>
         </li>
         <li>
-            <a class="waves-effect waves-light btn btn-apply">Apply</a>
-            <a class="waves-effect waves-light blue accent-3 btn">Apply</a>
+            <a class="waves-effect waves-light blue accent-3 btn btn-apply">Apply</a>
         </li>
     </ul>
     <div class="viewer">
@@ -238,7 +237,11 @@
                     <i class="material-icons">tune</i>
                 </a>
                 <div class="slice-slider hidden"></div>
-                <div class="slice-slider-nav hidden"></div>
+                <div class="slice-slider-nav-container">
+                    <i class="material-icons slider-control left">keyboard_arrow_left</i>
+                    <div class="slice-slider-nav grey darken-3 z-depth-3 hidden"></div>
+                    <i class="material-icons slider-control right">keyboard_arrow_right</i>
+                </div>
                 <div id="my-gui-container"></div>
                 <a href="# " id="screenshot" download="VJS.png">Take screenshot</a>
                 <div class="controller">
@@ -569,4 +572,5 @@
 </body>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
 </html>

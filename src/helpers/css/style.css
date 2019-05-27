@@ -1725,28 +1725,46 @@ span.algorithm-name,
     width: 100%;
     height: 60%;
     overflow: hidden;
+    margin-top: 10px;
+}
+
+.slice-slider-nav-container {
+    width: 95%;
+    height: 30%;
+    margin: 0 auto 90px;
+    position: relative;
 }
 
 .slice-slider-nav {
     width: 100%;
-    height: 27%;
+    height: 100%;
     padding: 0 35px;
     position: relative;
 }
 
-.slice-slider-nav .slick-arrow {
+.slider-control {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 99;
+    z-index: 999;
+    color: #FFFFFF;
+    font-size: 45px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 
-.slice-slider-nav .slick-next {
+.slider-control.left {
+    left: 0;
+}
+
+.slider-control.right {
     right: 0;
 }
 
-.slice-slider-nav .slick-prev {
-    left: 0;
+.slick-arrow {
+    display: none !important;
 }
 
 .slice-slider-nav .slick-dots {
@@ -1765,7 +1783,7 @@ span.algorithm-name,
 .sidenav-trigger {
     position: absolute;
     right: 20px;
-    bottom: 85px;
+    top: 85px;
 }
 
 .slider-option,
@@ -1820,6 +1838,7 @@ input[type=checkbox]:checked:not(:disabled).tabbed:focus~.lever::before {
     float: left;
     position: relative;
     overflow: hidden;
+    text-align: center;
 }
 
 .file {
