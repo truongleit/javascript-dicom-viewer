@@ -448,46 +448,57 @@ $(document).ready(function() {
         $('.switch-algorithm').val(renderAlgorithm);
         $('select').formSelect();
     });
-
+    $('.btn-apply').click(function(){
+        var upper_number = $('input[name="upper_slide"]:checked').val();
+        var lower_number = $('input[name="lower_slide"]:checked').val();
+        var checked = $('input[class="auto-play"]').is(":checked");
+        $('.slice-slider').slick('unslick');
+        $('.slice-slider-nav').slick('unslick');
+        slickSetUp(upper_number, lower_number, checked);
+    });
     // Execute Slice mode only //
     $('.slice-only').click(function() {
-        $('.lds-hourglass').addClass('block');
-        showViewer('Slice Mode');
-        $('.render-container').addClass('for-slice-mode');
-        $('.slice-slider, .slice-slider-nav, .sidenav-trigger').removeClass('hidden');
-        $('.files-bar, .controller, .canvas-container').addClass('hidden');
-        $('.viewer').addClass('opened');
-        var total = files.length;
-        setTimeout(function() {
-            twoDMode(total, files);
-            twoDMode2(total, files);
-        }, 1500);
-        setTimeout(function() {
-            $('.slice-slider').slick({
-                infinite: false,
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                arrows: false,
-                asNavFor: '.slice-slider-nav',
-                draggable: false
-            });
-            $('.slice-slider-nav').slick({
-                infinite: false,
-                slidesToShow: 6,
-                slidesToScroll: 1,
-                asNavFor: '.slice-slider',
-                arrows: true,
-                centerMode: false,
-                focusOnSelect: true,
-                draggable: false
-            });
-        }, 1500);
-        $('.slider').slick('unslick');
+        slickSetUp(3, 6, false);
     });
 
 });
 
-
+function slickSetUp(upper_number, lower_number, checked){
+    $('.lds-hourglass').addClass('block');
+    showViewer('Slice Mode');
+    $('.render-container').addClass('for-slice-mode');
+    $('.slice-slider, .slice-slider-nav, .sidenav-trigger').removeClass('hidden');
+    $('.files-bar, .controller, .canvas-container').addClass('hidden');
+    $('.viewer').addClass('opened');
+    var total = files.length;
+    setTimeout(function() {
+        twoDMode(total, files);
+        twoDMode2(total, files);
+    }, 1500);
+    setTimeout(function() {
+        $('.slice-slider').slick({
+            infinite: false,
+            slidesToShow: upper_number,
+            slidesToScroll: 1,
+            arrows: false,
+            asNavFor: '.slice-slider-nav',
+            draggable: false,
+            autoplay: checked
+        });
+          $('.slice-slider-nav').slick({
+            infinite: false,
+            slidesToShow: lower_number,
+            slidesToScroll: 1,
+            asNavFor: '.slice-slider',
+            arrows: true,
+            centerMode: false,
+            focusOnSelect: true,
+            draggable: false,
+            autoplay: checked
+        });
+    }, 1500);
+    $('.slider').slick('unslick');
+}
 // Delete canvas and reset range slider //
 function deleteCanvas(currentAlgorithm) {
 
