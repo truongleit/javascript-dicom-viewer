@@ -66,7 +66,7 @@
                 <div class="algorithm-button texture-based">Texture-based</div>
             </div>
             <div class="user-options">
-                <div></div>
+                <a class="waves-effect waves-light btn slice-only">Slice</a>
             </div>
         </div>
     </div>
@@ -126,6 +126,75 @@
             </div>
         </div>
     </div>
+    <ul id="slide-out" class="sidenav">
+        <li><a class="subheader">Slice 1</a></li>
+        <li>
+            <div class="slider-option">
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" type="radio" checked />
+                        <span>1</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" type="radio" />
+                        <span>2</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" type="radio"  />
+                        <span>3</span>
+                    </label>
+                </p>
+            </div>
+        </li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a class="subheader">Slice 1</a></li>
+        <li>
+            <div class="slider-nav-option">
+                <p>
+                    <label>
+                            <input class="with-gap" name="group2" type="radio" checked />
+                            <span>5</span>
+                        </label>
+                </p>
+                <p>
+                    <label>
+                            <input class="with-gap" name="group2" type="radio" />
+                            <span>6</span>
+                        </label>
+                </p>
+                <p>
+                    <label>
+                            <input class="with-gap" name="group2" type="radio"  />
+                            <span>7</span>
+                        </label>
+                </p>
+            </div>
+        </li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a class="subheader">Other settings</a></li>
+        <li>
+            <div class="switch slice-mode-other">
+                <span>Autoplay</span>
+                <label class="right">
+                  Off
+                  <input type="checkbox">
+                  <span class="lever"></span>
+                  On
+                </label>
+            </div>
+        </li>
+        <li>
+            <a class="waves-effect waves-light btn">Apply</a>
+        </li>
+    </ul>
     <div class="viewer">
         <div id="modal1" class="modal modal-fixed-footer temp-block" style="border-radius:12px;">
             <div class="modal-content list-files">
@@ -164,6 +233,11 @@
 
             </div>
             <div class="render-container">
+                <a data-target="slide-out" class="btn-floating btn-large waves-effect waves-light blue accent-3 sidenav-trigger pulse hidden">
+                    <i class="material-icons">tune</i>
+                </a>
+                <div class="slice-slider hidden"></div>
+                <div class="slice-slider-nav hidden"></div>
                 <div id="my-gui-container"></div>
                 <a href="# " id="screenshot" download="VJS.png">Take screenshot</a>
                 <div class="controller">
@@ -427,14 +501,15 @@
                                         <span class="name">Background</span>
                                     </div>
                                     <div class="color-picker">
-                                        <div class="color black" color="35373a"><i class="material-icons">check</i></div>
-                                        <div class="color white" color="eff2f7"><i class="material-icons">check</i></div>
-                                        <div class="color bordeuax" color="9e0142"><i class="material-icons">check</i></div>
-                                        <div class="color red" color="d53e4f"><i class="material-icons">check</i></div>
-                                        <div class="color orange" color="f46d43"><i class="material-icons">check</i></div>
-                                        <div class="color yellow" color="fee08b"><i class="material-icons">check</i></div>
-                                        <div class="color green" color="abdda4"><i class="material-icons">check</i></div>
-                                        <div class="color blue" color="3288bd"><i class="material-icons">check</i></div>
+                                        <div class="color original" color="original"><i class="material-icons">check</i></div>
+                                        <div class="color moonlit-asteroid" color="moonlit-asteroid"><i class="material-icons">check</i></div>
+                                        <div class="color grade-grey" color="grade-grey"><i class="material-icons">check</i></div>
+                                        <div class="color red-sunset" color="red-sunset"><i class="material-icons">check</i></div>
+                                        <div class="color lawrencium" color="lawrencium"><i class="material-icons">check</i></div>
+                                        <div class="color celestial" color="celestial"><i class="material-icons">check</i></div>
+                                        <div class="color royal" color="royal"><i class="material-icons">check</i></div>
+                                        <div class="color frost" color="frost"><i class="material-icons">check</i></div>
+                                        <div class="color titanium" color="titanium"><i class="material-icons">check</i></div>
                                     </div>
                                 </div>
                                 <div class="colors setting">
