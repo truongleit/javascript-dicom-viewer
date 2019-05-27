@@ -8,8 +8,12 @@ var sliceX, sliceY, sliceZ;
 var filesLoaded = false;
 var renderAlgorithm = '';
 var oldRenderAlgorithm = '';
+var currentViewerColor = '';
 
 $(document).ready(function() {
+    $('.sidenav').sidenav({
+        edge: 'right'
+    });
     //
     // Switch rendering algorithm
     //
@@ -307,9 +311,10 @@ $(document).ready(function() {
     // Change viewer's background color //
     $('.color').click(function() {
         var color = $(this).attr('color');
-        $('.viewer').css('background', '#' + color);
+        $('.viewer').removeClass(currentViewerColor).addClass(color);
         $('.color i').removeClass('block');
         $(this).find('i').addClass('block');
+        currentViewerColor = color;
     });
 
     // Initialize and run the slideshows on homepage //
@@ -412,7 +417,7 @@ $(document).ready(function() {
         $('.viewer').addClass('opened');
         $('.lds-hourglass').addClass('block');
         var total = files.length;
-        renderThumbnails(total, files);
+        // renderThumbnails(total, files);
         $('.slice-amount').text(total + ' of ' + total + ' slices loaded');
         $('.modal').removeClass('temp-block').find('.modal-content').addClass('fixed-width');
         setTimeout(function() {
@@ -431,7 +436,7 @@ $(document).ready(function() {
         showViewer('Texture-based');
         $('.viewer').addClass('opened');
         var total = files.length;
-        renderThumbnails(total, files);
+        // renderThumbnails(total, files);
         $('.slice-amount').text(total + ' of ' + total + ' slices loaded');
         $('.modal').removeClass('temp-block').find('.modal-content').addClass('fixed-width');
         counter = files.length;
@@ -442,6 +447,42 @@ $(document).ready(function() {
         $('.slider').slick('unslick');
         $('.switch-algorithm').val(renderAlgorithm);
         $('select').formSelect();
+    });
+
+    // Execute Slice mode only //
+    $('.slice-only').click(function() {
+        $('.lds-hourglass').addClass('block');
+        showViewer('Slice Mode');
+        $('.render-container').addClass('for-slice-mode');
+        $('.slice-slider, .slice-slider-nav, .sidenav-trigger').removeClass('hidden');
+        $('.files-bar, .controller, .canvas-container').addClass('hidden');
+        $('.viewer').addClass('opened');
+        var total = files.length;
+        setTimeout(function() {
+            twoDMode(total, files);
+            twoDMode2(total, files);
+        }, 1500);
+        setTimeout(function() {
+            $('.slice-slider').slick({
+                infinite: false,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                arrows: false,
+                asNavFor: '.slice-slider-nav',
+                draggable: false
+            });
+            $('.slice-slider-nav').slick({
+                infinite: false,
+                slidesToShow: 6,
+                slidesToScroll: 1,
+                asNavFor: '.slice-slider',
+                arrows: true,
+                centerMode: false,
+                focusOnSelect: true,
+                draggable: false
+            });
+        }, 1500);
+        $('.slider').slick('unslick');
     });
 
 });
@@ -569,7 +610,47 @@ function renderThumbnails(amount, file) {
         $('.loaded-slices').append('<div id="dicomImage' + (i + 1) + '" class="file"></div>');
         var divName = '#dicomImage' + (i + 1);
         var element = $(divName).get(0);
-        $(divName).append('<div class="slice-number">' + (i + 1) + '</div>')
+        $(divName).append('<div class="slice-number">' + (i + 1) + '</div>');
+        cornerstone.enable(element);
+        divData.push(element);
+    }
+    for (let i = 0; i < amount; i++) {
+        var file = files[i];
+        var index = cornerstoneFileImageLoader.addFile(file);
+        var imageId = "dicomfile://" + index;
+        cornerstone.loadImage(imageId).then(function(image) {
+            cornerstone.displayImage(divData[i], image);
+        });
+    }
+}
+
+function twoDMode(amount, file) {
+    var divData = [];
+    for (let i = 0; i < amount; i++) {
+        $('.slice-slider').append('<div id="dicomImage' + (i + 1) + '" class="canvas-2d"></div>');
+        var divName = '#dicomImage' + (i + 1);
+        var element = $(divName).get(0);
+        $(divName).append('<div class="slice-number">' + (i + 1) + '</div>');
+        cornerstone.enable(element);
+        divData.push(element);
+    }
+    for (let i = 0; i < amount; i++) {
+        var file = files[i];
+        var index = cornerstoneFileImageLoader.addFile(file);
+        var imageId = "dicomfile://" + index;
+        cornerstone.loadImage(imageId).then(function(image) {
+            cornerstone.displayImage(divData[i], image);
+        });
+    }
+}
+
+function twoDMode2(amount, file) {
+    var divData = [];
+    for (let i = 0; i < amount; i++) {
+        $('.slice-slider-nav').append('<div id="dicomImageNav' + (i + 1) + '" class="canvas-2d-nav"></div>');
+        var divName = '#dicomImageNav' + (i + 1);
+        var element = $(divName).get(0);
+        $(divName).append('<div class="slice-number">' + (i + 1) + '</div>');
         cornerstone.enable(element);
         divData.push(element);
     }
