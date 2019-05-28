@@ -50,7 +50,6 @@ $(document).ready(function() {
         showViewer('Marching Cube');
         $('.viewer').addClass('opened');
         var total = files.length;
-        renderThumbnails(total, files);
         $('.slice-amount').text(total + ' of ' + total + ' slices loaded');
         $('.modal').removeClass('temp-block').find('.modal-content').addClass('fixed-width');
         setTimeout(function() {

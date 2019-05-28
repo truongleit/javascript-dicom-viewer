@@ -456,7 +456,7 @@ $(document).ready(function() {
             'background': '#212121'
         });
         $('.render-container').addClass('for-slice-mode');
-        $('.slice-slider, .slice-slider-nav, .sidenav-trigger').removeClass('hidden');
+        $('.slice-slider, .slice-slider-nav-container, .slice-slider-nav, .sidenav-trigger').removeClass('hidden');
         $('.files-bar, .controller, .canvas-container').addClass('hidden');
         $('.viewer').addClass('opened');
         var total = files.length;
