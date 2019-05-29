@@ -412,6 +412,7 @@ $(document).ready(function() {
 
     // Execute Ray-cating rendering algorithm //
     $('.ray-casting').click(function() {
+        $('.slice-mode-layout').addClass('hidden');
         renderAlgorithm = 'rayCasting';
         showViewer('Ray Casting');
         $('.viewer').addClass('opened');
@@ -430,6 +431,7 @@ $(document).ready(function() {
 
     // Execute Texture-based rendering algorithm //
     $('.texture-based').click(function() {
+        $('.slice-mode-layout').addClass('hidden');
         renderAlgorithm = 'textureBased';
         initTexturebasedRendering();
         $('.lds-hourglass').addClass('block');
@@ -475,11 +477,11 @@ $(document).ready(function() {
             });
             $('.slice-slider-nav').slick({
                 infinite: false,
-                slidesToShow: 6,
+                slidesToShow: 7,
                 slidesToScroll: 1,
                 asNavFor: '.slice-slider',
                 arrows: true,
-                centerMode: false,
+                centerMode: true,
                 focusOnSelect: true,
                 draggable: false
             });
@@ -492,6 +494,9 @@ $(document).ready(function() {
                 'align-items': 'center'
             });
         }, 1500);
+        setTimeout(function() {
+            $('.slice-mode-layout').addClass('animated fadeOutDown');
+        }, 2000);
         $('.slider').slick('unslick');
     });
     $('.slider-control').click(function() {
@@ -504,13 +509,17 @@ $(document).ready(function() {
     //
     // Change settings for slice mode
     //
-    $('.btn-apply').click(function() {
+    $('.slice-setting').click(function() {
+        $('.slice-mode-layout').removeClass('animated fadeOutDown');
         var upper_number = $('input[name="upper_slide"]:checked').val();
         var lower_number = $('input[name="lower_slide"]:checked').val();
         var checked = $('input[class="auto-play"]').is(":checked");
         $('.slice-slider').slick('unslick');
         $('.slice-slider-nav').slick('unslick');
         slickSetUp(parseInt(upper_number), parseInt(lower_number), checked);
+        setTimeout(function() {
+            $('.slice-mode-layout').addClass('animated fadeOutDown');
+        }, 2000);
     });
 });
 

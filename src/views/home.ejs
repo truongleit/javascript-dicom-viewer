@@ -125,7 +125,7 @@
         </div>
     </div>
     <ul id="slide-out" class="sidenav">
-        <li><a class="subheader">Slice 1</a></li>
+        <li><a class="subheader">Main viewer</a></li>
         <li>
             <div class="slider-option">
                 <p>
@@ -151,7 +151,7 @@
         <li>
             <div class="divider"></div>
         </li>
-        <li><a class="subheader">Slice 1</a></li>
+        <li><a class="subheader">Navigator</a></li>
         <li>
             <div class="slider-nav-option">
                 <p>
@@ -190,19 +190,37 @@
             </div>
         </li>
         <li>
-            <a class="waves-effect waves-light blue accent-3 btn btn-apply">Apply</a>
+            <div class="switch slice-mode-other">
+                <span>Draggable</span>
+                <label class="right">
+                  Off
+                  <input type="checkbox" class="draggable">
+                  <span class="lever"></span>
+                  On
+                </label>
+            </div>
+        </li>
+        <li>
+            <div class="switch slice-mode-other">
+                <span>Center Mode</span>
+                <label class="right">
+                  Off
+                  <input type="checkbox" class="center-mode">
+                  <span class="lever"></span>
+                  On
+                </label>
+            </div>
+        </li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li>
+            <a class="waves-effect waves-light blue accent-3 btn slice-setting">Apply</a>
         </li>
     </ul>
     <div class="viewer">
-        <div id="modal1" class="modal modal-fixed-footer temp-block" style="border-radius:12px;">
-            <div class="modal-content list-files">
-                <div class="title">Slice list</div>
-                <div class="loaded-slices"></div>
-                <div class="modal-footer">
-                    <div class="slice-amount"></div>
-                    <div class="modal-close waves-effect btn-flat" style="color:#FFF;">Close</div>
-                </div>
-            </div>
+        <div class="slice-mode-layout grey lighten-3">
+            <div class="lds-hourglass loading-canvas"></div>
         </div>
         <div class="viewer-container">
             <div class="interact-container">
@@ -568,7 +586,5 @@
         </div>
     </div>
 </body>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 
 </html>

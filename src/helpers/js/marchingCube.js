@@ -44,6 +44,7 @@ $(document).ready(function() {
         }
     });
     $('.marching-cube').on('click', function() {
+        $('.slice-mode-layout').addClass('hidden');
         renderAlgorithm = 'marchingCube';
         var files = document.getElementById("file_inp").files;
         $('.lds-hourglass').addClass('block');

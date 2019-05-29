@@ -238,6 +238,10 @@ body {
     border-color: #FFFFFF transparent #FFFFFF transparent;
 }
 
+.slice-mode-layout .lds-hourglass.loading-canvas:after {
+    border-color: #2979ff transparent #2979ff transparent;
+}
+
 .lds-hourglass:after {
     content: " ";
     display: block;
@@ -467,24 +471,8 @@ tbody tr {
 }
 
 .rendering-algorithm {
-    /* width: 98%;
-    justify-content: space-evenly;
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    height: 70px;
-    color: #232222;
-    font-size: 15px;
-    font-weight: 500;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    margin-bottom: 6px; */
-}
-
-.rendering-algorithm {
     width: 92%;
+    position: relative;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -1736,6 +1724,15 @@ span.algorithm-name,
     right: 0;
 }
 
+.slice-mode-layout {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}
+
 .slice-slider {
     width: 100%;
     height: 60%;
@@ -1761,7 +1758,7 @@ span.algorithm-name,
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 999;
+    z-index: 9;
     color: #FFFFFF;
     font-size: 45px;
     cursor: pointer;
@@ -1799,6 +1796,7 @@ span.algorithm-name,
     position: absolute;
     right: 20px;
     top: 85px;
+    z-index: 20;
 }
 
 .slider-option,
