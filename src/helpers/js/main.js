@@ -7,9 +7,67 @@ var v;
 var sliceX, sliceY, sliceZ;
 var filesLoaded = false;
 var renderAlgorithm = '';
+var oldRenderAlgorithm = '';
+var currentViewerColor = '';
 
 $(document).ready(function() {
-    $('.modal').modal();
+    $('.sidenav').sidenav({
+        edge: 'right'
+    });
+    //
+    // Switch rendering algorithm
+    //
+    $('.switch-algorithm').change(function() {
+        var optionSelected = $(this).find("option:selected");
+        var valueSelected = optionSelected.val();
+        if (valueSelected == renderAlgorithm) {
+            $('.re-render-button').addClass('disabled');
+        } else {
+            $('.re-render-button').removeClass('disabled');
+        }
+    });
+    $('.re-render-button').click(function() {
+        var optionSelected = $('.switch-algorithm').find("option:selected");
+        var valueSelected = optionSelected.val();
+        deleteCanvas(renderAlgorithm);
+        switch (valueSelected) {
+            case "rayCasting":
+                if (oldRenderAlgorithm == 'marchingCube') {
+                    $('.mb-interactor-disable').trigger('click');
+                }
+                renderAlgorithm = 'rayCasting';
+                $('.lds-hourglass').addClass('block');
+                setTimeout(function() {
+                    readMultipleFiles(files);
+                }, 1500);
+                $('.algorithm-name').text('Ray Casting');
+                $('.switch-algorithm').val(renderAlgorithm);
+                $('select').formSelect();
+                $('.statistics').remove();
+                break;
+            case "textureBased":
+                if (oldRenderAlgorithm == 'marchingCube') {
+                    $('.mb-interactor-disable').trigger('click');
+                }
+                renderAlgorithm = 'textureBased';
+                initTexturebasedRendering();
+                $('.lds-hourglass').addClass('block');
+                counter = files.length;
+                reader = new FileReader();
+                setTimeout(function() {
+                    recursiveLoading(0);
+                }, 1500);
+                $('.algorithm-name').text('Texture-based');
+                $('.switch-algorithm').val(renderAlgorithm);
+                $('select').formSelect();
+                break;
+            default:
+                $('.mb-switch').trigger('click');
+                break;
+        };
+        $('.re-render-button').addClass('disabled');
+    });
+    //
     // Ray-casting config //
     //
     // Interpolation
@@ -38,8 +96,9 @@ $(document).ready(function() {
         }
     });
 
-    // Material select //
+    // Material select and modal initalization //
     $('select').formSelect();
+    $('.modal').modal();
 
     // Ray-casting algorithm //
     $('.ray-algorithm select').change(function() {
@@ -252,9 +311,10 @@ $(document).ready(function() {
     // Change viewer's background color //
     $('.color').click(function() {
         var color = $(this).attr('color');
-        $('.viewer').css('background', '#' + color);
+        $('.viewer').removeClass(currentViewerColor).addClass(color);
         $('.color i').removeClass('block');
         $(this).find('i').addClass('block');
+        currentViewerColor = color;
     });
 
     // Initialize and run the slideshows on homepage //
@@ -352,39 +412,187 @@ $(document).ready(function() {
 
     // Execute Ray-cating rendering algorithm //
     $('.ray-casting').click(function() {
+        $('.slice-mode-layout').addClass('hidden');
         renderAlgorithm = 'rayCasting';
         showViewer('Ray Casting');
         $('.viewer').addClass('opened');
         $('.lds-hourglass').addClass('block');
         var total = files.length;
-        renderThumbnails(total, files);
+        // renderThumbnails(total, files);
         $('.slice-amount').text(total + ' of ' + total + ' slices loaded');
         $('.modal').removeClass('temp-block').find('.modal-content').addClass('fixed-width');
         setTimeout(function() {
             readMultipleFiles(files);
         }, 1500);
         $('.slider').slick('unslick');
+        $('.switch-algorithm').val(renderAlgorithm);
+        $('select').formSelect();
     });
 
     // Execute Texture-based rendering algorithm //
     $('.texture-based').click(function() {
+        $('.slice-mode-layout').addClass('hidden');
         renderAlgorithm = 'textureBased';
         initTexturebasedRendering();
         $('.lds-hourglass').addClass('block');
         showViewer('Texture-based');
         $('.viewer').addClass('opened');
         var total = files.length;
-        renderThumbnails(total, files);
+        // renderThumbnails(total, files);
         $('.slice-amount').text(total + ' of ' + total + ' slices loaded');
         $('.modal').removeClass('temp-block').find('.modal-content').addClass('fixed-width');
         counter = files.length;
         reader = new FileReader();
         setTimeout(function() {
             recursiveLoading(0);
-        }, 1500)
+        }, 1500);
+        $('.slider').slick('unslick');
+        $('.switch-algorithm').val(renderAlgorithm);
+        $('select').formSelect();
     });
+    // Execute Slice mode only //
+    $('.slice-only').click(function() {
+        $('.lds-hourglass').addClass('block');
+        showViewer('Slice Mode');
+        $('.viewer').css({
+            'background': '#212121'
+        });
+        $('.render-container').addClass('for-slice-mode');
+        $('.slice-slider, .slice-slider-nav-container, .slice-slider-nav, .sidenav-trigger').removeClass('hidden');
+        $('.files-bar, .controller, .canvas-container').addClass('hidden');
+        $('.viewer').addClass('opened');
+        var total = files.length;
+        setTimeout(function() {
+            twoDMode(total, files);
+            twoDMode2(total, files);
+        }, 1500);
+        setTimeout(function() {
+            $('.slice-slider').slick({
+                infinite: false,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                asNavFor: '.slice-slider-nav',
+                draggable: false
+            });
+            $('.slice-slider-nav').slick({
+                infinite: false,
+                slidesToShow: 7,
+                slidesToScroll: 1,
+                asNavFor: '.slice-slider',
+                arrows: true,
+                centerMode: true,
+                focusOnSelect: true,
+                draggable: false
+            });
+        }, 1500);
+        $('.switch-algorithm').attr('disabled', 'disabled');
+        $('select').formSelect();
+        setTimeout(function() {
+            $('.slice-slider-nav').css({
+                'display': 'flex',
+                'align-items': 'center'
+            });
+        }, 1500);
+        setTimeout(function() {
+            $('.slice-mode-layout').addClass('animated fadeOutDown');
+        }, 2000);
+        $('.slider').slick('unslick');
+    });
+    $('.slider-control').click(function() {
+        if ($(this).hasClass('left')) {
+            $('.slick-prev').trigger('click');
+        } else {
+            $('.slick-next').trigger('click');
+        }
+    });
+    //
+    // Change settings for slice mode
+    //
+    $('.slice-setting').click(function() {
+        $('.slice-mode-layout').removeClass('animated fadeOutDown');
+        var upper_number = $('input[name="upper_slide"]:checked').val();
+        var lower_number = $('input[name="lower_slide"]:checked').val();
+        var checked = $('input[class="auto-play"]').is(":checked");
+        var draggable = $('input[class="draggable"]').is(":checked");
+        var center_mode = $('input[class="center-mode"]').is(":checked");
 
+        $('.slice-slider').slick('unslick');
+        $('.slice-slider-nav').slick('unslick');
+        slickSetUp(parseInt(upper_number), parseInt(lower_number), draggable, center_mode, checked);
+        setTimeout(function() {
+            $('.slice-mode-layout').addClass('animated fadeOutDown');
+        }, 2000);
+    });
 });
+
+function slickSetUp(upper_number, lower_number, draggable, center_mode, checked) {
+    setTimeout(function() {
+        $('.slice-slider').slick({
+            infinite: false,
+            slidesToShow: upper_number,
+            slidesToScroll: 1,
+            arrows: false,
+            asNavFor: '.slice-slider-nav',
+            draggable: draggable,
+            autoplay: checked
+        });
+        $('.slice-slider-nav').slick({
+            infinite: false,
+            slidesToShow: lower_number,
+            slidesToScroll: 1,
+            asNavFor: '.slice-slider',
+            arrows: true,
+            centerMode: center_mode,
+            focusOnSelect: true,
+            draggable: draggable,
+            autoplay: checked
+        });
+    }, 1500);
+}
+// Delete canvas and reset range slider //
+function deleteCanvas(currentAlgorithm) {
+
+    oldRenderAlgorithm = currentAlgorithm;
+    $('.rendering-layout').removeClass('fade-out');
+    $('.rendering-layout').removeClass('hidden');
+    switch (currentAlgorithm) {
+        case "rayCasting":
+            $('.ray-setting').addClass("hidden");
+            break;
+        case "textureBased":
+            threeD.destroy();
+            sliceX.destroy();
+            sliceY.destroy();
+            sliceZ.destroy();
+            $('.texture-setting').addClass("hidden");
+            break;
+        case "marchingCube":
+            $('.marching-cube-setting').addClass("hidden");
+            break;
+        default:
+            break;
+    }
+
+    renderAlgorithm = '';
+    $('.canvas-container canvas').remove();
+    // $('.slice-amount').text("");
+
+    $('.index-x').attr({
+        'max': (0),
+        'value': 0
+    }).next().html(0);
+    $('.index-y').attr({
+        'max': (0),
+        'value': 0
+    }).next().html(0);
+    $('.index-z').attr({
+        'max': (0),
+        'value': 0
+    }).next().html(0);
+
+    return true;
+}
 
 // Capitalize first letter in text //
 String.prototype.capitalize = function() {
@@ -466,7 +674,47 @@ function renderThumbnails(amount, file) {
         $('.loaded-slices').append('<div id="dicomImage' + (i + 1) + '" class="file"></div>');
         var divName = '#dicomImage' + (i + 1);
         var element = $(divName).get(0);
-        $(divName).append('<div class="slice-number">' + (i + 1) + '</div>')
+        $(divName).append('<div class="slice-number">' + (i + 1) + '</div>');
+        cornerstone.enable(element);
+        divData.push(element);
+    }
+    for (let i = 0; i < amount; i++) {
+        var file = files[i];
+        var index = cornerstoneFileImageLoader.addFile(file);
+        var imageId = "dicomfile://" + index;
+        cornerstone.loadImage(imageId).then(function(image) {
+            cornerstone.displayImage(divData[i], image);
+        });
+    }
+}
+
+function twoDMode(amount, file) {
+    var divData = [];
+    for (let i = 0; i < amount; i++) {
+        $('.slice-slider').append('<div id="dicomImage' + (i + 1) + '" class="canvas-2d"></div>');
+        var divName = '#dicomImage' + (i + 1);
+        var element = $(divName).get(0);
+        $(divName).append('<div class="slice-number">' + (i + 1) + '</div>');
+        cornerstone.enable(element);
+        divData.push(element);
+    }
+    for (let i = 0; i < amount; i++) {
+        var file = files[i];
+        var index = cornerstoneFileImageLoader.addFile(file);
+        var imageId = "dicomfile://" + index;
+        cornerstone.loadImage(imageId).then(function(image) {
+            cornerstone.displayImage(divData[i], image);
+        });
+    }
+}
+
+function twoDMode2(amount, file) {
+    var divData = [];
+    for (let i = 0; i < amount; i++) {
+        $('.slice-slider-nav').append('<div id="dicomImageNav' + (i + 1) + '" class="canvas-2d-nav"></div>');
+        var divName = '#dicomImageNav' + (i + 1);
+        var element = $(divName).get(0);
+        $(divName).append('<div class="slice-number">' + (i + 1) + '</div>');
         cornerstone.enable(element);
         divData.push(element);
     }
@@ -525,6 +773,22 @@ function texturebasedRendering(volume) {
         volume.windowHigh = 2532;
         threeD.add(volume);
         threeD.render();
+        var canvas = $('#3d canvas');
+
+        var context = canvas[0].getContext("2d");
+
+        resizeWindow = function() {
+            window.w = canvas.width = window.innerWidth;
+            return window.h = canvas.height = window.innerHeight;
+        };
+
+        resizeWindow();
+
+        window.addEventListener('resize', resizeWindow, false);
+
+        window.onload = function() {
+            return setTimeout(resizeWindow, 0);
+        };
     }
     threeD.onShowtime = function() {
         //
@@ -585,5 +849,18 @@ function texturebasedRendering(volume) {
             'max': volume.max,
             'value': volume.windowHigh
         }).next().html(volume.windowHigh);
+        ESresize();
     };
+}
+// Trigger the window resize event
+function ESresize() {
+    if (typeof(Event) === 'function') {
+        // modern browsers
+        window.dispatchEvent(new Event('resize'));
+    } else {
+        //This will be executed on old browsers and especially IE
+        var resizeEvent = window.document.createEvent('UIEvents');
+        resizeEvent.initUIEvent('resize', true, false, window, 0);
+        window.dispatchEvent(resizeEvent);
+    }
 }

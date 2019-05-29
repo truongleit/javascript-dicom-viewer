@@ -64,9 +64,7 @@
                 <div class="algorithm-button marching-cube">Marching Cube</div>
                 <div class="algorithm-button ray-casting">Ray Casting</div>
                 <div class="algorithm-button texture-based">Texture-based</div>
-            </div>
-            <div class="user-options">
-                <div></div>
+                <div class="algorithm-button slice-only">Slice Mode</div>
             </div>
         </div>
     </div>
@@ -126,16 +124,103 @@
             </div>
         </div>
     </div>
-    <div class="viewer">
-        <div id="modal1" class="modal modal-fixed-footer temp-block" style="border-radius:12px;">
-            <div class="modal-content list-files">
-                <div class="title">Slice list</div>
-                <div class="loaded-slices"></div>
-                <div class="modal-footer">
-                    <div class="slice-amount"></div>
-                    <div class="modal-close waves-effect btn-flat" style="color:#FFF;">Close</div>
-                </div>
+    <ul id="slide-out" class="sidenav">
+        <li><a class="subheader">Main viewer</a></li>
+        <li>
+            <div class="slider-option">
+                <p>
+                    <label>
+                        <input class="with-gap" name="upper_slide" type="radio" value="1" />
+                        <span>1</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="upper_slide" type="radio" value="2"/>
+                        <span>2</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="upper_slide" type="radio" value="3" checked />
+                        <span>3</span>
+                    </label>
+                </p>
             </div>
+        </li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a class="subheader">Navigator</a></li>
+        <li>
+            <div class="slider-nav-option">
+                <p>
+                    <label>
+                            <input class="with-gap" name="lower_slide" type="radio" value="5" checked />
+                            <span>5</span>
+                        </label>
+                </p>
+                <p>
+                    <label>
+                            <input class="with-gap" name="lower_slide" value="6" type="radio" />
+                            <span>6</span>
+                        </label>
+                </p>
+                <p>
+                    <label>
+                            <input class="with-gap" name="lower_slide" value="7" type="radio"  />
+                            <span>7</span>
+                        </label>
+                </p>
+            </div>
+        </li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a class="subheader">Other settings</a></li>
+        <li>
+            <div class="switch slice-mode-other">
+                <span>Autoplay</span>
+                <label class="right">
+                  Off
+                  <input type="checkbox" class="auto-play">
+                  <span class="lever"></span>
+                  On
+                </label>
+            </div>
+        </li>
+        <li>
+            <div class="switch slice-mode-other">
+                <span>Draggable</span>
+                <label class="right">
+                  Off
+                  <input type="checkbox" class="draggable">
+                  <span class="lever"></span>
+                  On
+                </label>
+            </div>
+        </li>
+        <li>
+            <div class="switch slice-mode-other">
+                <span>Center Mode</span>
+                <label class="right">
+                  Off
+                  <input type="checkbox" class="center-mode">
+                  <span class="lever"></span>
+                  On
+                </label>
+            </div>
+        </li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li>
+            <a class="waves-effect waves-light blue accent-3 btn slice-setting">Apply</a>
+        </li>
+    </ul>
+    <div class="viewer">
+        <div class="slice-mode-layout grey lighten-3">
+            <div class="lds-hourglass loading-canvas"></div>
         </div>
         <div class="viewer-container">
             <div class="interact-container">
@@ -146,11 +231,33 @@
                     <div class="title">DIREA</div>
                     <div class="description">DICOM Reader</div>
                 </div>
+                <div class="re-render">
+                    <div class="col">
+                        <select class="switch-algorithm">
+                            <option value="" disabled selected>Choose algorithm</option>
+                            <option value="marchingCube">Marching Cube</option>
+                            <option value="rayCasting">Ray Casting</option>
+                            <option value="textureBased">Texture-based</option>
+                        </select>
+                    </div>
+                    <a class="waves-effect waves-light blue accent-3 btn re-render-button disabled">Render</a>
+                    <a class="waves-effect waves-light blue accent-3 btn mb-switch">Render</a>
+                    <a class="waves-effect waves-light blue accent-3 btn mb-interactor-disable"></a>
+                </div>
             </div>
             <div class="control-buttons">
 
             </div>
             <div class="render-container">
+                <a data-target="slide-out" class="btn-floating btn-large waves-effect waves-light blue accent-3 sidenav-trigger pulse hidden">
+                    <i class="material-icons">tune</i>
+                </a>
+                <div class="slice-slider hidden"></div>
+                <div class="slice-slider-nav-container hidden">
+                    <i class="material-icons slider-control left">keyboard_arrow_left</i>
+                    <div class="slice-slider-nav grey darken-3 z-depth-3 hidden"></div>
+                    <i class="material-icons slider-control right">keyboard_arrow_right</i>
+                </div>
                 <div id="my-gui-container"></div>
                 <a href="# " id="screenshot" download="VJS.png">Take screenshot</a>
                 <div class="controller">
@@ -216,7 +323,6 @@
                                     <span class="algorithm-name"></span>
                                     <div class="button-container">
                                         <div class="slice-list modal-trigger" href="#modal1">List</div>
-                                        <div class="delete-render">Delete</div>
                                     </div>
                                 </div>
                                 <div class="representation setting">
@@ -415,14 +521,15 @@
                                         <span class="name">Background</span>
                                     </div>
                                     <div class="color-picker">
-                                        <div class="color black" color="35373a"><i class="material-icons">check</i></div>
-                                        <div class="color white" color="eff2f7"><i class="material-icons">check</i></div>
-                                        <div class="color bordeuax" color="9e0142"><i class="material-icons">check</i></div>
-                                        <div class="color red" color="d53e4f"><i class="material-icons">check</i></div>
-                                        <div class="color orange" color="f46d43"><i class="material-icons">check</i></div>
-                                        <div class="color yellow" color="fee08b"><i class="material-icons">check</i></div>
-                                        <div class="color green" color="abdda4"><i class="material-icons">check</i></div>
-                                        <div class="color blue" color="3288bd"><i class="material-icons">check</i></div>
+                                        <div class="color original" color="original"><i class="material-icons">check</i></div>
+                                        <div class="color moonlit-asteroid" color="moonlit-asteroid"><i class="material-icons">check</i></div>
+                                        <div class="color grade-grey" color="grade-grey"><i class="material-icons">check</i></div>
+                                        <div class="color red-sunset" color="red-sunset"><i class="material-icons">check</i></div>
+                                        <div class="color lawrencium" color="lawrencium"><i class="material-icons">check</i></div>
+                                        <div class="color celestial" color="celestial"><i class="material-icons">check</i></div>
+                                        <div class="color royal" color="royal"><i class="material-icons">check</i></div>
+                                        <div class="color frost" color="frost"><i class="material-icons">check</i></div>
+                                        <div class="color titanium" color="titanium"><i class="material-icons">check</i></div>
                                     </div>
                                 </div>
                                 <div class="colors setting">
@@ -456,7 +563,7 @@
                     <div class="lds-hourglass loading-canvas"></div>
                     <div class="rendering-layout"></div>
                     <div id="3d" class="three-dimemsion">
-                        <div class="title ">3D</div>
+                        <div class="title">3D</div>
                         <div id="my-lut-container" style="display:none;">
                             <div id="my-lut-min">0.0</div>
                             <div id="my-lut-canvases"></div>
