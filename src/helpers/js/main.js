@@ -514,16 +514,19 @@ $(document).ready(function() {
         var upper_number = $('input[name="upper_slide"]:checked').val();
         var lower_number = $('input[name="lower_slide"]:checked').val();
         var checked = $('input[class="auto-play"]').is(":checked");
+        var draggable = $('input[class="draggable"]').is(":checked");
+        var center_mode = $('input[class="center-mode"]').is(":checked");
+
         $('.slice-slider').slick('unslick');
         $('.slice-slider-nav').slick('unslick');
-        slickSetUp(parseInt(upper_number), parseInt(lower_number), checked);
+        slickSetUp(parseInt(upper_number), parseInt(lower_number), draggable, center_mode, checked);
         setTimeout(function() {
             $('.slice-mode-layout').addClass('animated fadeOutDown');
         }, 2000);
     });
 });
 
-function slickSetUp(upper_number, lower_number, checked) {
+function slickSetUp(upper_number, lower_number, draggable, center_mode, checked) {
     setTimeout(function() {
         $('.slice-slider').slick({
             infinite: false,
@@ -531,7 +534,7 @@ function slickSetUp(upper_number, lower_number, checked) {
             slidesToScroll: 1,
             arrows: false,
             asNavFor: '.slice-slider-nav',
-            draggable: false,
+            draggable: draggable,
             autoplay: checked
         });
         $('.slice-slider-nav').slick({
@@ -540,9 +543,9 @@ function slickSetUp(upper_number, lower_number, checked) {
             slidesToScroll: 1,
             asNavFor: '.slice-slider',
             arrows: true,
-            centerMode: false,
+            centerMode: center_mode,
             focusOnSelect: true,
-            draggable: false,
+            draggable: draggable,
             autoplay: checked
         });
     }, 1500);
