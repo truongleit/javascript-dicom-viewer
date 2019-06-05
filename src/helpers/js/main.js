@@ -11,9 +11,6 @@ var oldRenderAlgorithm = '';
 var currentViewerColor = '';
 
 $(document).ready(function() {
-    $('.sidenav').sidenav({
-        edge: 'right'
-    });
     //
     // Switch rendering algorithm
     //
@@ -96,9 +93,12 @@ $(document).ready(function() {
         }
     });
 
-    // Material select and modal initalization //
+    // Material select, modal, side nav initalizations //
     $('select').formSelect();
     $('.modal').modal();
+    $('.sidenav').sidenav({
+        edge: 'right'
+    });
 
     // Ray-casting algorithm //
     $('.ray-algorithm select').change(function() {
@@ -681,6 +681,7 @@ function renderThumbnails(amount, file) {
         var file = files[i];
         var index = cornerstoneFileImageLoader.addFile(file);
         var imageId = "dicomfile://" + index;
+        console.log(divData[i]);
         cornerstone.loadImage(imageId).then(function(image) {
             cornerstone.displayImage(divData[i], image);
         });
@@ -699,8 +700,11 @@ function twoDMode(amount, file) {
     }
     for (let i = 0; i < amount; i++) {
         var file = files[i];
+        console.log(file);
         var index = cornerstoneFileImageLoader.addFile(file);
+        console.log(index);
         var imageId = "dicomfile://" + index;
+        console.log(imageId);
         cornerstone.loadImage(imageId).then(function(image) {
             cornerstone.displayImage(divData[i], image);
         });

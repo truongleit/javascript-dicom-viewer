@@ -184,7 +184,8 @@ body {
 .upload-area {
     display: none;
     width: 650px;
-    height: 600px;
+    /* height: 600px; */
+    height: auto;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -2015,8 +2016,6 @@ input[type=checkbox]:checked:not(:disabled).tabbed:focus~.lever::before {
     bottom: 20px;
     right: 20px;
     position: fixed;
-    /*left: 50%;*/
-    /*transform: translate(-50%, 0);*/
     z-index: 1;
     color: #212121;
     display: flex;
@@ -2041,4 +2040,25 @@ input[type=checkbox]:checked:not(:disabled).tabbed:focus~.lever::before {
 .modal.temp-block {
     display: block;
     visibility: hidden;
+}
+
+.dicom-canvas {
+    width: 256px;
+    height: 256px;
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    right: 0;
+    z-index: 999;
+}
+
+.dicom-extraction {
+    width: 256px;
+    height: 256px;
+    position: absolute;
+    top: 70%;
+    transform: translateY(-50%);
+    right: 0;
+    z-index: 999;
+    background-color: #FFF;
 }

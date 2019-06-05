@@ -11,6 +11,7 @@
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
     <link type='text/css' rel='stylesheet' href='/css/slick.css' />
     <link type='text/css' rel='stylesheet' href='/css/animate.css' />
+    <script type="text/javascript" src="/js/opencv.js"></script>
     <script type="text/javascript" src="/js/three.js"></script>
     <script type="text/javascript" src="/js/ami.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/stats.js/master/build/stats.min.js"></script>
@@ -26,6 +27,7 @@
     <script type="text/javascript" src="/js/jpx.min.js"></script>
     <script type="text/javascript" src="/js/raycasting.js"></script>
     <script type="text/javascript" src="/js/ray2D.js"></script>
+    <script type="text/javascript" src="/js/pointcloud.js"></script>
     <script type="text/javascript" src="/js/marchingCube.bundle.js"></script>
     <script type="text/javascript" src="/js/materialize.js"></script>
     <link type='text/css' rel='stylesheet' href='/css/materialize.min.css' />
@@ -64,6 +66,7 @@
                 <div class="algorithm-button marching-cube">Marching Cube</div>
                 <div class="algorithm-button ray-casting">Ray Casting</div>
                 <div class="algorithm-button texture-based">Texture-based</div>
+                <div class="algorithm-button point-cloud">Test</div>
                 <div class="algorithm-button slice-only">Slice Mode</div>
             </div>
         </div>
@@ -208,6 +211,10 @@
         </li>
     </ul>
     <div class="viewer">
+        <!-- <div id="boundary" class="dicom-canvas"></div> -->
+        <div id="extraction" class="dicom-extraction">
+            <canvas id="canvasOutput"></canvas>
+        </div>
         <div class="slice-mode-layout grey lighten-3">
             <div class="lds-hourglass loading-canvas"></div>
         </div>
@@ -227,6 +234,7 @@
                             <option value="marchingCube">Marching Cube</option>
                             <option value="rayCasting">Ray Casting</option>
                             <option value="textureBased">Texture-based</option>
+                            <option value="textureBased">Point Cloud</option>
                         </select>
                     </div>
                     <a class="waves-effect waves-light blue accent-3 btn re-render-button disabled">Render</a>
