@@ -47,9 +47,6 @@ $(document).ready(function() {
         $('.slice-mode-layout').addClass('hidden');
         renderAlgorithm = 'marchingCube';
         var files = document.getElementById("file_inp").files;
-        for (var i = 0; i < files.length; i++) {
-            getOrigin(files[i]);
-        };
         $('.lds-hourglass').addClass('block');
         showViewer('Marching Cube');
         $('.viewer').addClass('opened');
@@ -73,17 +70,17 @@ $(document).ready(function() {
     });
 });
 
-function getOrigin(file) {
-    console.log('true');
-    let dicomReader = itkreadImageDICOMFileSeries;
-    let arg = file;
-    dicomReader(null, arg).then(({
-        image: itkImage,
-        webWorker
-    }) => {
-        console.log(itkImage);
-    });
-}
+// function getOrigin(file) {
+//     console.log('true');
+//     let dicomReader = itkreadImageDICOMFileSeries;
+//     let arg = file;
+//     dicomReader(null, arg).then(({
+//         image: itkImage,
+//         webWorker
+//     }) => {
+//         console.log(itkImage);
+//     });
+// }
 
 function marchingCubeRender(files) {
 
