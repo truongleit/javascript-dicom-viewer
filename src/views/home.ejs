@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="text/javascript" src="/js/slick.min.js"></script>
     <script type="text/javascript" src="/js/xtk.js"></script>
+    <script src="https://unpkg.com/itk@9.4.0/umd/itk.js"></script>
     <script type="text/javascript" src="/js/jscolor.js"></script>
     <script type="text/javascript" src="/js/main.js"></script>
     <script type="text/javascript" src="/js/cornerstone.min.js"></script>
@@ -66,7 +67,7 @@
                 <div class="algorithm-button marching-cube">Marching Cube</div>
                 <div class="algorithm-button ray-casting">Ray Casting</div>
                 <div class="algorithm-button texture-based">Texture-based</div>
-                <div class="algorithm-button point-cloud">Test</div>
+                <div class="algorithm-button point-cloud">Point Cloud</div>
                 <div class="algorithm-button slice-only">Slice Mode</div>
             </div>
         </div>
@@ -211,10 +212,9 @@
         </li>
     </ul>
     <div class="viewer">
-        <!-- <div id="boundary" class="dicom-canvas"></div> -->
-        <div id="extraction" class="dicom-extraction">
+        <!-- <div id="extraction" class="dicom-extraction">
             <canvas id="canvasOutput"></canvas>
-        </div>
+        </div> -->
         <div class="slice-mode-layout grey lighten-3">
             <div class="lds-hourglass loading-canvas"></div>
         </div>

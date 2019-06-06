@@ -70,18 +70,6 @@ $(document).ready(function() {
     });
 });
 
-// function getOrigin(file) {
-//     console.log('true');
-//     let dicomReader = itkreadImageDICOMFileSeries;
-//     let arg = file;
-//     dicomReader(null, arg).then(({
-//         image: itkImage,
-//         webWorker
-//     }) => {
-//         console.log(itkImage);
-//     });
-// }
-
 function marchingCubeRender(files) {
 
     renderWindow = vtkRenderWindow.newInstance();
@@ -114,6 +102,7 @@ function marchingCubeRender(files) {
         webWorker
     }) => {
         webWorker.terminate()
+        console.log(itkImage);
         const imageData = vtkITKHelper.convertItkToVtkImage(itkImage);
         const dataRange = imageData
             .getPointData()

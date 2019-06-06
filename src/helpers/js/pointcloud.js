@@ -11,12 +11,16 @@ $(document).ready(function() {
         showViewer('Point Cloud');
         $('.viewer').addClass('opened');
 
+        let zInfo = await getZCoordinate(files);
+        console.log(zInfo);
 
         for (var i = 0; i < files.length; i++) {
-            await boundaryExtraction(files[i], points, i);
-            // console.log({ i, len: points.length });
+
+            await boundaryExtraction(files[i], points, i, zCoordinate);
+
         }
         console.log(points);
+
         $('.slider').slick('unslick');
         $('.switch-algorithm').val(renderAlgorithm);
         $('select').formSelect();
@@ -24,9 +28,17 @@ $(document).ready(function() {
     });
 });
 
+async function getZCoordinate(file) {
 
+    let data = await itk.readImageDICOMFileSeries(null, file).then(function({ image, webWorker }) {
+        webWorker.terminate();
+        return ([image.origin[2], image.spacing[2]]);
+    });
 
-async function boundaryExtraction(file, points, index) {
+    return data;
+}
+
+async function boundaryExtraction(file, points, index, zCoordinate) {
 
     //
     //// Read and draw DICOM to canvas
@@ -45,6 +57,7 @@ async function boundaryExtraction(file, points, index) {
     image = await cornerstone.loadImage(imageId)
     cornerstone.displayImage(element, image);
 
+    //
     //// Boundary extraction
     //
     var imgElement = $('#slice-' + index + ' canvas').get(0);
@@ -55,8 +68,10 @@ async function boundaryExtraction(file, points, index) {
     let flag = new Array(rows * cols);
     flag = flag.fill(false);
 
+    // Set the threshold to pixel data
     cv.threshold(mat.clone(), mat, 20, 100, cv.THRESH_BINARY);
 
+    // Mark and change inner's pixel color to white 
     flag[0] = true;
     for (let row = 0; row < rows; ++row) {
         for (let col = 0; col < cols; ++col) {
@@ -84,7 +99,7 @@ async function boundaryExtraction(file, points, index) {
             }
         }
     }
-
+    // Apply canny edge detection to remove all inner pixels
     cv.Canny(mat.clone(), mat, 50, 100, 3, false);
     // cv.imshow('canvasOutput', mat);
 
@@ -98,11 +113,10 @@ async function boundaryExtraction(file, points, index) {
             let grayscale = pixel[0];
 
             if (grayscale >= 250) {
-                points.push([row, col]);
+                points.push([row, col, zCoordinate]);
             }
         }
     }
     mat.delete();
-
 
 }
