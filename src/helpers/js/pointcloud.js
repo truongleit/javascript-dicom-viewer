@@ -3,6 +3,7 @@ var points = [];
 $(document).ready(function() {
     $('.point-cloud').click(async function() {
         $('#sliceX, #sliceY, #sliceZ').remove();
+        $('.slices.setting').addClass('hidden');
         $('#3d').css({
             'width': 100 + '%',
             'height': 100 + '%',
@@ -57,10 +58,10 @@ function pointCloudInit() {
     pointCloudScene.background = new THREE.Color(0x000000);
 
     pointCloudCamera = new THREE.PerspectiveCamera(10, pointCloudContainer.offsetWidth / pointCloudContainer.offsetHeight, 1, 1000);
-    pointCloudCamera.position.x = 3;
-    pointCloudCamera.position.y = -6;
-    pointCloudCamera.position.z = 0;
-    pointCloudCamera.up.set(1, 1, 1);
+    pointCloudCamera.position.x = -0.7738894355355945;
+    pointCloudCamera.position.y = -0.6186002375339695;
+    pointCloudCamera.position.z = -0.21005870317276934;
+    pointCloudCamera.up.set(0.239655992413268, 0.028890429480839173, -0.9704279202418031);
 
     pointCloudScene.add(pointCloudCamera);
 
@@ -73,14 +74,17 @@ function pointCloudInit() {
     let mesh = meshFromArray(points)
     pointCloudScene.add(mesh);
 
-    // pointCloudContainer = document.getElementById('3d');
-    // pointCloudContainer.appendChild(pointCloudRenderer.domElement);
+    console.log(mesh);
 
     pointCloudControls = new THREE.TrackballControls(pointCloudCamera, pointCloudRenderer.domElement);
 
-    pointCloudControls.rotateSpeed = 2.0;
-    pointCloudControls.zoomSpeed = 0.3;
-    pointCloudControls.panSpeed = 0.2;
+    var center = mesh.geometry.boundingSphere.center;
+    pointCloudControls.target.set(center.x, center.y, center.z);
+    pointCloudControls.update();
+
+    pointCloudControls.rotateSpeed = 1.0;
+    pointCloudControls.zoomSpeed = 0.6;
+    pointCloudControls.panSpeed = 0.1;
 
     pointCloudControls.noZoom = false;
     pointCloudControls.noPan = false;
@@ -91,12 +95,9 @@ function pointCloudInit() {
     pointCloudControls.minDistance = 0.3;
     pointCloudControls.maxDistance = 0.3 * 100;
 
-    pointCloudStats = new Stats();
-    pointCloudContainer.appendChild(pointCloudStats.dom);
+    window.addEventListener('resize', onWindowResizePointCloud(), false);
 
-    // window.addEventListener('resize', onWindowResize, false);
-
-    // window.addEventListener('keypress', keyboard);
+    window.addEventListener('keypress', keyboard);
 
 }
 
@@ -105,22 +106,21 @@ function pointCloudAnimate() {
     requestAnimationFrame(pointCloudAnimate);
     pointCloudControls.update();
     pointCloudRenderer.render(pointCloudScene, pointCloudCamera);
-    pointCloudStats.update();
 
 }
 
-function onWindowResize() {
+function onWindowResizePointCloud() {
 
-    pointCloudCamera.aspect = window.innerWidth / window.innerHeight;
+    pointCloudCamera.aspect = pointCloudContainer.offsetWidth / pointCloudContainer.offsetHeight;
     pointCloudCamera.updateProjectionMatrix();
-    pointCloudRenderer.setSize(window.innerWidth, window.innerHeight);
+    pointCloudRenderer.setSize(pointCloudContainer.offsetWidth, pointCloudContainer.offsetHeight);
     pointCloudControls.handleResize();
 
 }
 
 function keyboard(ev) {
 
-    var points = pointCloudScene.getObjectByName('Zaghetto.pcd');
+    var points = pointCloudScene.getObjectByName('dicomMesh');
 
     switch (ev.key || String.fromCharCode(ev.keyCode || ev.charCode)) {
 
@@ -165,6 +165,7 @@ function meshFromArray(array) {
 
     // build mesh
     var mesh = new THREE.Points(geometry, material);
+    mesh.name = 'dicomMesh';
 
     return mesh;
 }
@@ -256,7 +257,6 @@ async function boundaryExtraction(file, points, index, zCoordinate) {
 
             if (grayscale >= 250) {
                 points.push([row / 1000, col / 1000, zCoordinate / 1000]);
-                // points.push([row, col]);
             }
         }
     }

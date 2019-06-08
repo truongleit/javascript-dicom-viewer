@@ -461,8 +461,7 @@ $(document).ready(function() {
         });
         $('#3d, #sliceX, #sliceY, #sliceZ').css({ "display": "none" });
         $('.representation, .colors, .slices').remove();
-        // $('.render-container').addClass('for-slice-mode');
-        $('.slice-slider, .slice-slider-nav-container, .slice-slider-nav').removeClass('hidden');
+        $('.slice-slider, .slice-slider-nav-container, .slice-slider-nav, .sliders').removeClass('hidden');
         $('.canvas-container').append
         $('.viewer').addClass('opened');
         var total = files.length;
@@ -498,7 +497,6 @@ $(document).ready(function() {
                 'align-items': 'center'
             });
         }, 1500);
-
         $('.lds-hourglass').removeClass('block');
         setTimeout(function() {
             $('.slice-mode-layout').addClass('animated fadeOutDown');
@@ -581,7 +579,6 @@ function deleteCanvas(currentAlgorithm) {
 
     renderAlgorithm = '';
     $('.canvas-container canvas').remove();
-    // $('.slice-amount').text("");
 
     $('.index-x').attr({
         'max': (0),
@@ -687,7 +684,6 @@ function renderThumbnails(amount, file) {
         var file = files[i];
         var index = cornerstoneFileImageLoader.addFile(file);
         var imageId = "dicomfile://" + index;
-        console.log(divData[i]);
         cornerstone.loadImage(imageId).then(function(image) {
             cornerstone.displayImage(divData[i], image);
         });
@@ -706,11 +702,8 @@ function twoDMode(amount, file) {
     }
     for (let i = 0; i < amount; i++) {
         var file = files[i];
-        console.log(file);
         var index = cornerstoneFileImageLoader.addFile(file);
-        console.log(index);
         var imageId = "dicomfile://" + index;
-        console.log(imageId);
         cornerstone.loadImage(imageId).then(function(image) {
             cornerstone.displayImage(divData[i], image);
         });

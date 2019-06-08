@@ -129,89 +129,6 @@
             </div>
         </div>
     </div>
-    <!-- <ul id="slide-out" class="sidenav">
-        <li><a class="subheader">Main viewer</a></li>
-        <li>
-            <div class="slider-option">
-                <p>
-                    <label>
-                        <input class="with-gap" name="upper_slide" type="radio" value="1" checked />
-                        <span>1</span>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input class="with-gap" name="upper_slide" type="radio" value="2"/>
-                        <span>2</span>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input class="with-gap" name="upper_slide" type="radio" value="3" />
-                        <span>3</span>
-                    </label>
-                </p>
-            </div>
-        </li>
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li><a class="subheader">Navigator</a></li>
-        <li>
-            <div class="slider-nav-option">
-                <p>
-                    <label>
-                            <input class="with-gap" name="lower_slide" type="radio" value="5" checked />
-                            <span>5</span>
-                        </label>
-                </p>
-                <p>
-                    <label>
-                            <input class="with-gap" name="lower_slide" value="6" type="radio" />
-                            <span>6</span>
-                        </label>
-                </p>
-                <p>
-                    <label>
-                            <input class="with-gap" name="lower_slide" value="7" type="radio"  />
-                            <span>7</span>
-                        </label>
-                </p>
-            </div>
-        </li>
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li><a class="subheader">Other settings</a></li>
-        <li>
-            <div class="switch slice-mode-other">
-                <span>Autoplay</span>
-                <label class="right">
-                  Off
-                  <input type="checkbox" class="auto-play">
-                  <span class="lever"></span>
-                  On
-                </label>
-            </div>
-        </li>
-        <li>
-            <div class="switch slice-mode-other">
-                <span>Draggable</span>
-                <label class="right">
-                  Off
-                  <input type="checkbox" class="draggable">
-                  <span class="lever"></span>
-                  On
-                </label>
-            </div>
-        </li>
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li>
-            <a class="waves-effect waves-light blue accent-3 btn slice-setting">Apply</a>
-        </li>
-    </ul> -->
     <div class="viewer">
         <!-- <div id="extraction" class="dicom-extraction">
             <canvas id="canvasOutput"></canvas>
@@ -247,63 +164,8 @@
                 <a data-target="slide-out" class="btn-floating btn-large waves-effect waves-light blue accent-3 sidenav-trigger pulse hidden">
                     <i class="material-icons">tune</i>
                 </a>
-                <!-- <div class="slice-slider hidden"></div>
-                <div class="slice-slider-nav-container hidden">
-                    <i class="material-icons slider-control left">keyboard_arrow_left</i>
-                    <div class="slice-slider-nav grey darken-3 z-depth-3 hidden"></div>
-                    <i class="material-icons slider-control right">keyboard_arrow_right</i>
-                </div> -->
                 <div id="my-gui-container"></div>
                 <a href="# " id="screenshot" download="VJS.png">Take screenshot</a>
-                <!-- <div class="controller">
-                    <div class="switch-view">
-                        <span style="font-weight: 500;">3D</span><i class="material-icons">keyboard_arrow_down</i>
-                        <div class="dropdown-view">
-                            <div class="dimension-option">3D</div>
-                            <div class="dimension-option">2D</div>
-                        </div>
-                    </div>
-                    <div class="function-button">
-                        <i class="material-icons take-screenshot">camera_alt</i>
-                        <div class="function-info">Screenshot</div>
-                    </div>
-                    <div class="function-button">
-                        <i class="material-icons">flip</i>
-                        <div class="function-info">Split view</div>
-                    </div>
-                    <div class="function-button">
-                        <i class="material-icons">color_lens</i>
-                        <div class="function-info">Background color</div>
-                    </div>
-                    <div class="function-button">
-                        <i class="material-icons">filter_center_focus</i>
-                        <div class="function-info">Reset camera</div>
-                    </div>
-                    <div class="function-button">
-                        <i class="material-icons">crop</i>
-                        <div class="function-info">Crop</div>
-                    </div>
-                    <div class="function-button">
-                        <i class="material-icons">rotate_left</i>
-                        <div class="function-info">Rotate camera left 90&deg;</div>
-                    </div>
-                    <div class="function-button">
-                        <i class="material-icons">rotate_right</i>
-                        <div class="function-info">Rotate camera right 90&deg;</div>
-                    </div>
-                    <div class="function-button reset-dimension reset-to-X">
-                        <span>X</span>
-                        <div class="function-info reset-camera">Reset camera to orientation X</div>
-                    </div>
-                    <div class="function-button reset-dimension reset-to-Y">
-                        <span>Y</span>
-                        <div class="function-info reset-camera">Reset camera to orientation Y</div>
-                    </div>
-                    <div class="function-button reset-dimension reset-to-Z">
-                        <span>Z</span>
-                        <div class="function-info reset-camera">Reset camera to orientation Z</div>
-                    </div>
-                </div> -->
                 <div class="files-bar">
                     <div class="tab-container">
                         <div class="tab-title">
@@ -500,7 +362,7 @@
                                     </div>
 
                                 </div>
-                                <div class="sliders">
+                                <div class="sliders hidden">
                                     <div><a class="subheader">Main viewer</a></div>
                                     <div>
                                         <div class="slider-option">
@@ -582,9 +444,6 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="divider"></div>
-                                    </div>
-                                    <div>
                                         <a class="slice-apply waves-effect waves-light blue accent-3 btn slice-setting">Apply</a>
                                     </div>
                                 </div>
@@ -642,10 +501,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- add slider here ------------------------------------------------------------------------>
-
                 <div class="canvas-container">
-                    <!-- <div class="lds-hourglass loading-canvas"></div> -->
                     <div class="rendering-layout"></div>
                     <div id="3d" class="three-dimemsion">
                         <div class="title">3D</div>
@@ -664,28 +520,18 @@
                     <div id="sliceZ" class="two-dimemsion">
                         <div class="title ">Z-axis</div>
                     </div>
-
-
-
                     <div class="my-slider">
-                        <!-- <div class="slider-upper"> -->
                         <div class="slice-mode-layout grey lighten-3">
                             <div class="lds-hourglass loading-canvas"></div>
                         </div>
                         <div class="slice-slider hidden"></div>
-
-                        <!-- </div> -->
-                        <!-- <div class="slider-below"> -->
                         <div class="slice-slider-nav-container hidden">
                             <i class="material-icons slider-control left">keyboard_arrow_left</i>
                             <div class="slice-slider-nav  darken-3 z-depth-3 hidden"></div>
                             <i class="material-icons slider-control right">keyboard_arrow_right</i>
                         </div>
-                        <!-- </div> -->
                     </div>
                 </div>
-
-                <!-- -------------------------------------------------------------------------------------- -->
             </div>
         </div>
     </div>
