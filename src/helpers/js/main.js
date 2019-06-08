@@ -453,13 +453,17 @@ $(document).ready(function() {
     // Execute Slice mode only //
     $('.slice-only').click(function() {
         $('.lds-hourglass').addClass('block');
+        $('.files-bar').css({ 'width': '312px' });
+        $('.canvas-container').css({ 'width': 'calc(100% - ' + 312 + 'px)' });
         showViewer('Slice Mode');
         $('.viewer').css({
             'background': '#212121'
         });
-        $('.render-container').addClass('for-slice-mode');
-        $('.slice-slider, .slice-slider-nav-container, .slice-slider-nav, .sidenav-trigger').removeClass('hidden');
-        $('.files-bar, .controller, .canvas-container').addClass('hidden');
+        $('#3d, #sliceX, #sliceY, #sliceZ').css({ "display": "none" });
+        $('.representation, .colors, .slices').remove();
+        // $('.render-container').addClass('for-slice-mode');
+        $('.slice-slider, .slice-slider-nav-container, .slice-slider-nav').removeClass('hidden');
+        $('.canvas-container').append
         $('.viewer').addClass('opened');
         var total = files.length;
         setTimeout(function() {
@@ -477,7 +481,7 @@ $(document).ready(function() {
             });
             $('.slice-slider-nav').slick({
                 infinite: false,
-                slidesToShow: 7,
+                slidesToShow: 5,
                 slidesToScroll: 1,
                 asNavFor: '.slice-slider',
                 arrows: true,
@@ -489,11 +493,13 @@ $(document).ready(function() {
         $('.switch-algorithm').attr('disabled', 'disabled');
         $('select').formSelect();
         setTimeout(function() {
-            $('.slice-slider-nav').css({
+            $('.slice-slider-nav, .slice-slider').css({
                 'display': 'flex',
                 'align-items': 'center'
             });
         }, 1500);
+
+        $('.lds-hourglass').removeClass('block');
         setTimeout(function() {
             $('.slice-mode-layout').addClass('animated fadeOutDown');
         }, 2000);

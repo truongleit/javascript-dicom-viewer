@@ -129,13 +129,13 @@
             </div>
         </div>
     </div>
-    <ul id="slide-out" class="sidenav">
+    <!-- <ul id="slide-out" class="sidenav">
         <li><a class="subheader">Main viewer</a></li>
         <li>
             <div class="slider-option">
                 <p>
                     <label>
-                        <input class="with-gap" name="upper_slide" type="radio" value="1" />
+                        <input class="with-gap" name="upper_slide" type="radio" value="1" checked />
                         <span>1</span>
                     </label>
                 </p>
@@ -147,7 +147,7 @@
                 </p>
                 <p>
                     <label>
-                        <input class="with-gap" name="upper_slide" type="radio" value="3" checked />
+                        <input class="with-gap" name="upper_slide" type="radio" value="3" />
                         <span>3</span>
                     </label>
                 </p>
@@ -211,14 +211,11 @@
         <li>
             <a class="waves-effect waves-light blue accent-3 btn slice-setting">Apply</a>
         </li>
-    </ul>
+    </ul> -->
     <div class="viewer">
         <!-- <div id="extraction" class="dicom-extraction">
             <canvas id="canvasOutput"></canvas>
         </div> -->
-        <div class="slice-mode-layout grey lighten-3">
-            <div class="lds-hourglass loading-canvas"></div>
-        </div>
         <div class="viewer-container">
             <div class="interact-container">
                 <div class="logo">
@@ -250,15 +247,15 @@
                 <a data-target="slide-out" class="btn-floating btn-large waves-effect waves-light blue accent-3 sidenav-trigger pulse hidden">
                     <i class="material-icons">tune</i>
                 </a>
-                <div class="slice-slider hidden"></div>
+                <!-- <div class="slice-slider hidden"></div>
                 <div class="slice-slider-nav-container hidden">
                     <i class="material-icons slider-control left">keyboard_arrow_left</i>
                     <div class="slice-slider-nav grey darken-3 z-depth-3 hidden"></div>
                     <i class="material-icons slider-control right">keyboard_arrow_right</i>
-                </div>
+                </div> -->
                 <div id="my-gui-container"></div>
                 <a href="# " id="screenshot" download="VJS.png">Take screenshot</a>
-                <div class="controller">
+                <!-- <div class="controller">
                     <div class="switch-view">
                         <span style="font-weight: 500;">3D</span><i class="material-icons">keyboard_arrow_down</i>
                         <div class="dropdown-view">
@@ -306,7 +303,7 @@
                         <span>Z</span>
                         <div class="function-info reset-camera">Reset camera to orientation Z</div>
                     </div>
-                </div>
+                </div> -->
                 <div class="files-bar">
                     <div class="tab-container">
                         <div class="tab-title">
@@ -503,6 +500,94 @@
                                     </div>
 
                                 </div>
+                                <div class="sliders">
+                                    <div><a class="subheader">Main viewer</a></div>
+                                    <div>
+                                        <div class="slider-option">
+                                            <p>
+                                                <label>
+                                                                <input class="with-gap" name="upper_slide" type="radio" value="1" checked />
+                                                                <span>1</span>
+                                                            </label>
+                                            </p>
+                                            <p>
+                                                <label>
+                                                                <input class="with-gap" name="upper_slide" type="radio" value="2"/>
+                                                                <span>2</span>
+                                                            </label>
+                                            </p>
+                                            <p>
+                                                <label>
+                                                                <input class="with-gap" name="upper_slide" type="radio" value="3" />
+                                                                <span>3</span>
+                                                            </label>
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                    <div>
+                                        <div class="divider"></div>
+                                    </div>
+
+                                    <div><a class="subheader">Navigator</a></div>
+                                    <div>
+                                        <div class="slider-nav-option">
+                                            <p>
+                                                <label>
+                                                            <input class="with-gap" name="lower_slide" type="radio" value="5" checked />
+                                                            <span>5</span>
+                                                        </label>
+                                            </p>
+                                            <p>
+                                                <label>
+                                                            <input class="with-gap" name="lower_slide" value="6" type="radio" />
+                                                            <span>6</span>
+                                                        </label>
+                                            </p>
+                                            <p>
+                                                <label>
+                                                            <input class="with-gap" name="lower_slide" value="7" type="radio"  />
+                                                            <span>7</span>
+                                                        </label>
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                    <div>
+                                        <div class="divider"></div>
+                                    </div>
+                                    <div><a class="subheader">Other settings</a></div>
+                                    <div>
+                                        <div class="switch slice-mode-other">
+                                            <span>Autoplay</span>
+                                            <label class="right">
+                                                  Off
+                                                  <input type="checkbox" class="auto-play">
+                                                  <span class="lever"></span>
+                                                  On
+                                                </label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="switch slice-mode-other">
+                                            <span>Draggable</span>
+                                            <label class="right">
+                                                  Off
+                                                  <input type="checkbox" class="draggable">
+                                                  <span class="lever"></span>
+                                                  On
+                                                </label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="divider"></div>
+                                    </div>
+                                    <div>
+                                        <a class="slice-apply waves-effect waves-light blue accent-3 btn slice-setting">Apply</a>
+                                    </div>
+                                </div>
                                 <div class="render-info setting">
                                     <div class="title">
                                         <i class="material-icons">info</i>
@@ -557,8 +642,10 @@
                         </div>
                     </div>
                 </div>
+                <!-- add slider here ------------------------------------------------------------------------>
+
                 <div class="canvas-container">
-                    <div class="lds-hourglass loading-canvas"></div>
+                    <!-- <div class="lds-hourglass loading-canvas"></div> -->
                     <div class="rendering-layout"></div>
                     <div id="3d" class="three-dimemsion">
                         <div class="title">3D</div>
@@ -568,7 +655,6 @@
                             <div id="my-lut-max">1.0</div>
                         </div>
                     </div>
-
                     <div id="sliceX" class="two-dimemsion">
                         <div class="title ">X-axis</div>
                     </div>
@@ -579,7 +665,27 @@
                         <div class="title ">Z-axis</div>
                     </div>
 
+
+
+                    <div class="my-slider">
+                        <!-- <div class="slider-upper"> -->
+                        <div class="slice-mode-layout grey lighten-3">
+                            <div class="lds-hourglass loading-canvas"></div>
+                        </div>
+                        <div class="slice-slider hidden"></div>
+
+                        <!-- </div> -->
+                        <!-- <div class="slider-below"> -->
+                        <div class="slice-slider-nav-container hidden">
+                            <i class="material-icons slider-control left">keyboard_arrow_left</i>
+                            <div class="slice-slider-nav  darken-3 z-depth-3 hidden"></div>
+                            <i class="material-icons slider-control right">keyboard_arrow_right</i>
+                        </div>
+                        <!-- </div> -->
+                    </div>
                 </div>
+
+                <!-- -------------------------------------------------------------------------------------- -->
             </div>
         </div>
     </div>
