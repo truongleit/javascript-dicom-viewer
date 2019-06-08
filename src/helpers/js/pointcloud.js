@@ -2,6 +2,11 @@
 var points = [];
 $(document).ready(function() {
     $('.point-cloud').click(async function() {
+        $('#sliceX, #sliceY, #sliceZ').remove();
+        $('#3d').css({
+            'width': 100 + '%',
+            'height': 100 + '%',
+        });
         $('.slice-mode-layout').addClass('hidden');
         renderAlgorithm = 'Point Cloud';
 
@@ -24,7 +29,7 @@ $(document).ready(function() {
             await boundaryExtraction(files[i], points, i, zCoordinate);
 
         }
-        console.log(points);
+
         pcdLoader(points);
 
         $('.slider').slick('unslick');
@@ -34,104 +39,108 @@ $(document).ready(function() {
     });
 });
 
-
+var pointCloudContainer, pointCloudStats;
+var pointCloudCamera, pointCloudControls, pointCloudScene, pointCloudRenderer;
 
 function pcdLoader(points) {
 
-    var container, stats;
-    var camera, controls, scene, renderer;
+    pointCloudInit();
+    pointCloudAnimate();
 
-    init();
-    animate();
+}
 
-    function init() {
+function pointCloudInit() {
 
-        scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x000000);
+    pointCloudContainer = document.getElementById('3d');
 
-        camera = new THREE.PerspectiveCamera(15, window.innerWidth / window.innerHeight, 0.01, 40);
-        camera.position.x = 0.4;
-        camera.position.z = -2;
-        camera.up.set(0, 0, 1);
+    pointCloudScene = new THREE.Scene();
+    pointCloudScene.background = new THREE.Color(0x000000);
 
-        scene.add(camera);
+    pointCloudCamera = new THREE.PerspectiveCamera(10, pointCloudContainer.offsetWidth / pointCloudContainer.offsetHeight, 1, 1000);
+    pointCloudCamera.position.x = 3;
+    pointCloudCamera.position.y = -6;
+    pointCloudCamera.position.z = 0;
+    pointCloudCamera.up.set(1, 1, 1);
 
-        renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
+    pointCloudScene.add(pointCloudCamera);
 
-        let mesh = meshFromArray(points)
-        scene.add(mesh);
+    pointCloudRenderer = new THREE.WebGLRenderer({ antialias: true });
+    pointCloudRenderer.setPixelRatio(window.devicePixelRatio);
+    pointCloudRenderer.setSize(pointCloudContainer.offsetWidth, pointCloudContainer.offsetHeight);
+    pointCloudContainer.appendChild(pointCloudRenderer.domElement);
 
-        container = document.getElementById('3d');
-        container.appendChild(renderer.domElement);
 
-        controls = new THREE.TrackballControls(camera, renderer.domElement);
+    let mesh = meshFromArray(points)
+    pointCloudScene.add(mesh);
 
-        controls.rotateSpeed = 2.0;
-        controls.zoomSpeed = 0.3;
-        controls.panSpeed = 0.2;
+    // pointCloudContainer = document.getElementById('3d');
+    // pointCloudContainer.appendChild(pointCloudRenderer.domElement);
 
-        controls.noZoom = false;
-        controls.noPan = false;
+    pointCloudControls = new THREE.TrackballControls(pointCloudCamera, pointCloudRenderer.domElement);
 
-        controls.staticMoving = true;
-        controls.dynamicDampingFactor = 0.3;
+    pointCloudControls.rotateSpeed = 2.0;
+    pointCloudControls.zoomSpeed = 0.3;
+    pointCloudControls.panSpeed = 0.2;
 
-        controls.minDistance = 0.3;
-        controls.maxDistance = 0.3 * 100;
+    pointCloudControls.noZoom = false;
+    pointCloudControls.noPan = false;
 
-        stats = new Stats();
-        container.appendChild(stats.dom);
+    pointCloudControls.staticMoving = true;
+    pointCloudControls.dynamicDampingFactor = 0.3;
 
-        window.addEventListener('resize', onWindowResize, false);
+    pointCloudControls.minDistance = 0.3;
+    pointCloudControls.maxDistance = 0.3 * 100;
 
-        window.addEventListener('keypress', keyboard);
+    pointCloudStats = new Stats();
+    pointCloudContainer.appendChild(pointCloudStats.dom);
+
+    // window.addEventListener('resize', onWindowResize, false);
+
+    // window.addEventListener('keypress', keyboard);
+
+}
+
+function pointCloudAnimate() {
+
+    requestAnimationFrame(pointCloudAnimate);
+    pointCloudControls.update();
+    pointCloudRenderer.render(pointCloudScene, pointCloudCamera);
+    pointCloudStats.update();
+
+}
+
+function onWindowResize() {
+
+    pointCloudCamera.aspect = window.innerWidth / window.innerHeight;
+    pointCloudCamera.updateProjectionMatrix();
+    pointCloudRenderer.setSize(window.innerWidth, window.innerHeight);
+    pointCloudControls.handleResize();
+
+}
+
+function keyboard(ev) {
+
+    var points = pointCloudScene.getObjectByName('Zaghetto.pcd');
+
+    switch (ev.key || String.fromCharCode(ev.keyCode || ev.charCode)) {
+
+        case '+':
+            points.material.size *= 1.2;
+            points.material.needsUpdate = true;
+            break;
+
+        case '-':
+            points.material.size /= 1.2;
+            points.material.needsUpdate = true;
+            break;
+
+        case 'c':
+            points.material.color.setHex(Math.random() * 0xffffff);
+            points.material.needsUpdate = true;
+            break;
 
     }
 
-    function onWindowResize() {
-
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        controls.handleResize();
-
-    }
-
-    function keyboard(ev) {
-
-        var points = scene.getObjectByName('Zaghetto.pcd');
-
-        switch (ev.key || String.fromCharCode(ev.keyCode || ev.charCode)) {
-
-            case '+':
-                points.material.size *= 1.2;
-                points.material.needsUpdate = true;
-                break;
-
-            case '-':
-                points.material.size /= 1.2;
-                points.material.needsUpdate = true;
-                break;
-
-            case 'c':
-                points.material.color.setHex(Math.random() * 0xffffff);
-                points.material.needsUpdate = true;
-                break;
-
-        }
-
-    }
-
-    function animate() {
-
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene, camera);
-        stats.update();
-
-    }
 }
 
 function meshFromArray(array) {
