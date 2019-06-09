@@ -44,15 +44,11 @@ $(document).ready(function() {
         }
     });
     $('.marching-cube').on('click', function() {
-        $('.slice-mode-layout').addClass('hidden');
         renderAlgorithm = 'marchingCube';
         var files = document.getElementById("file_inp").files;
-        $('.lds-hourglass').addClass('block');
         showViewer('Marching Cube');
         $('.viewer').addClass('opened');
         var total = files.length;
-        $('.slice-amount').text(total + ' of ' + total + ' slices loaded');
-        $('.modal').removeClass('temp-block').find('.modal-content').addClass('fixed-width');
         setTimeout(function() {
             marchingCubeRender(files);
         }, 1500);
@@ -137,8 +133,7 @@ function marchingCubeRender(files) {
         renderer.resetCamera();
         renderWindow.render()
 
-        $('.rendering-layout').addClass('fade-out');
-        $('.lds-hourglass').removeClass('block');
+        $('.loading-render').addClass('animated fadeOutDown');
         $('.rendering-layout').addClass('hidden');
         $('.marching-cube-setting').removeClass('hidden');
 

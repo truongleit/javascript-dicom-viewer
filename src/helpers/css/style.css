@@ -239,7 +239,7 @@ body {
     border-color: #FFFFFF transparent #FFFFFF transparent;
 }
 
-.slice-mode-layout .lds-hourglass.loading-canvas:after {
+.loading-render .lds-hourglass.loading-canvas:after {
     border-color: #2979ff transparent #2979ff transparent;
 }
 
@@ -1736,7 +1736,7 @@ span.algorithm-name,
     right: 0;
 }
 
-.slice-mode-layout {
+.loading-render {
     width: 100%;
     height: 100%;
     position: absolute;

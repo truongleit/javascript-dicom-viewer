@@ -412,15 +412,10 @@ $(document).ready(function() {
 
     // Execute Ray-cating rendering algorithm //
     $('.ray-casting').click(function() {
-        $('.slice-mode-layout').addClass('hidden');
         renderAlgorithm = 'rayCasting';
         showViewer('Ray Casting');
         $('.viewer').addClass('opened');
-        $('.lds-hourglass').addClass('block');
         var total = files.length;
-        // renderThumbnails(total, files);
-        $('.slice-amount').text(total + ' of ' + total + ' slices loaded');
-        $('.modal').removeClass('temp-block').find('.modal-content').addClass('fixed-width');
         setTimeout(function() {
             readMultipleFiles(files);
         }, 1500);
@@ -431,16 +426,11 @@ $(document).ready(function() {
 
     // Execute Texture-based rendering algorithm //
     $('.texture-based').click(function() {
-        $('.slice-mode-layout').addClass('hidden');
         renderAlgorithm = 'textureBased';
         initTexturebasedRendering();
-        $('.lds-hourglass').addClass('block');
         showViewer('Texture-based');
         $('.viewer').addClass('opened');
         var total = files.length;
-        // renderThumbnails(total, files);
-        $('.slice-amount').text(total + ' of ' + total + ' slices loaded');
-        $('.modal').removeClass('temp-block').find('.modal-content').addClass('fixed-width');
         counter = files.length;
         reader = new FileReader();
         setTimeout(function() {
@@ -452,7 +442,6 @@ $(document).ready(function() {
     });
     // Execute Slice mode only //
     $('.slice-only').click(function() {
-        $('.lds-hourglass').addClass('block');
         $('.files-bar').css({ 'width': '312px' });
         $('.canvas-container').css({ 'width': 'calc(100% - ' + 312 + 'px)' });
         showViewer('Slice Mode');
@@ -462,7 +451,6 @@ $(document).ready(function() {
         $('#3d, #sliceX, #sliceY, #sliceZ').css({ "display": "none" });
         $('.representation, .colors, .slices').remove();
         $('.slice-slider, .slice-slider-nav-container, .slice-slider-nav, .sliders').removeClass('hidden');
-        $('.canvas-container').append
         $('.viewer').addClass('opened');
         var total = files.length;
         setTimeout(function() {
@@ -497,9 +485,8 @@ $(document).ready(function() {
                 'align-items': 'center'
             });
         }, 1500);
-        $('.lds-hourglass').removeClass('block');
         setTimeout(function() {
-            $('.slice-mode-layout').addClass('animated fadeOutDown');
+            $('.loading-render').addClass('animated fadeOutDown');
         }, 2000);
         $('.slider').slick('unslick');
     });
@@ -514,7 +501,7 @@ $(document).ready(function() {
     // Change settings for slice mode
     //
     $('.slice-setting').click(function() {
-        $('.slice-mode-layout').removeClass('animated fadeOutDown');
+        $('.loading-render').removeClass('animated fadeOutDown');
         var upper_number = $('input[name="upper_slide"]:checked').val();
         var lower_number = $('input[name="lower_slide"]:checked').val();
         var checked = $('input[class="auto-play"]').is(":checked");
@@ -524,7 +511,7 @@ $(document).ready(function() {
         $('.slice-slider-nav').slick('unslick');
         slickSetUp(parseInt(upper_number), parseInt(lower_number), draggable, checked);
         setTimeout(function() {
-            $('.slice-mode-layout').addClass('animated fadeOutDown');
+            $('.loading-render').addClass('animated fadeOutDown');
         }, 2000);
     });
 });
@@ -803,9 +790,7 @@ function texturebasedRendering(volume) {
         sliceZ.add(volume);
         sliceZ.render();
 
-        $('.rendering-layout').addClass('fade-out');
-        $('.lds-hourglass').removeClass('block');
-        $('.rendering-layout').addClass('hidden');
+        $('.loading-render').addClass('animated fadeOutDown');
         $('.texture-setting').removeClass('hidden');
 
         $('.min-color-picker').attr({

@@ -8,7 +8,7 @@ $(document).ready(function() {
             'width': 100 + '%',
             'height': 100 + '%',
         });
-        $('.slice-mode-layout').addClass('hidden');
+
         renderAlgorithm = 'Point Cloud';
 
         var files = document.getElementById("file_inp").files;
@@ -23,6 +23,9 @@ $(document).ready(function() {
         var zSpacing = zInfo[1];
         var newPoint = initPoint;
 
+        var meshWidth = zInfo[2];
+        var meshHeight = zInfo[3];
+
         for (var i = 0; i < files.length; i++) {
 
             var zCoordinate = (i == 0) ? initPoint : newPoint;
@@ -31,12 +34,11 @@ $(document).ready(function() {
 
         }
 
-        pcdLoader(points);
-
+        pcdLoader(points, meshWidth, meshHeight);
+        $('.loading-render').addClass('animated fadeOutDown');
         $('.slider').slick('unslick');
         $('.switch-algorithm').val(renderAlgorithm);
         $('select').formSelect();
-        $('.lds-hourglass').removeClass('block');
     });
 });
 
@@ -74,8 +76,6 @@ function pointCloudInit() {
     let mesh = meshFromArray(points)
     pointCloudScene.add(mesh);
 
-    console.log(mesh);
-
     pointCloudControls = new THREE.TrackballControls(pointCloudCamera, pointCloudRenderer.domElement);
 
     var center = mesh.geometry.boundingSphere.center;
@@ -98,6 +98,7 @@ function pointCloudInit() {
     window.addEventListener('resize', onWindowResizePointCloud(), false);
 
     window.addEventListener('keypress', keyboard);
+
 
 }
 
@@ -143,7 +144,7 @@ function keyboard(ev) {
 
 }
 
-function meshFromArray(array) {
+function meshFromArray(array, width, height) {
 
     var position = [];
 
@@ -166,6 +167,8 @@ function meshFromArray(array) {
     // build mesh
     var mesh = new THREE.Points(geometry, material);
     mesh.name = 'dicomMesh';
+    mesh.width = parseInt(width);
+    mesh.height = parseInt(height);
 
     return mesh;
 }
@@ -174,7 +177,7 @@ async function getZCoordinate(file) {
 
     let data = await itk.readImageDICOMFileSeries(null, file).then(function({ image, webWorker }) {
         webWorker.terminate();
-        return ([image.origin[2], image.spacing[2]]);
+        return ([image.origin[2], image.spacing[2], image.size[0], image.size[1]]);
     });
 
     return data;

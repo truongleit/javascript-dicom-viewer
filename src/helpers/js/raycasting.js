@@ -306,9 +306,7 @@ function rayCasting(files) {
     controls.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
     // create GUI
     // buildGUI();
-    $('.rendering-layout').addClass('fade-out');
-    $('.lds-hourglass').removeClass('block');
-    $('.rendering-layout').addClass('hidden');
+
     $('.ray-setting').removeClass('hidden');
     // screenshot experiment
     let screenshotElt = document.getElementById('screenshot');
@@ -331,6 +329,8 @@ function rayCasting(files) {
     // force first render
     render();
     ray2D(stack);
+
+    $('.loading-render').addClass('animated fadeOutDown');
     // notify puppeteer to take screenshot
     const puppetDiv = document.createElement('div');
     puppetDiv.setAttribute('id', 'puppeteer');
