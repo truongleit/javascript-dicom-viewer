@@ -9,6 +9,7 @@ var filesLoaded = false;
 var renderAlgorithm = '';
 var oldRenderAlgorithm = '';
 var currentViewerColor = '';
+var t0;
 
 $(document).ready(function() {
     //
@@ -417,6 +418,7 @@ $(document).ready(function() {
         $('.viewer').addClass('opened');
         var total = files.length;
         setTimeout(function() {
+            t0 = performance.now();
             readMultipleFiles(files);
         }, 1500);
         $('.slider').slick('unslick');
@@ -434,6 +436,7 @@ $(document).ready(function() {
         counter = files.length;
         reader = new FileReader();
         setTimeout(function() {
+            t0 = performance.now();
             recursiveLoading(0);
         }, 1500);
         $('.slider').slick('unslick');
@@ -792,6 +795,9 @@ function texturebasedRendering(volume) {
 
         $('.loading-render').addClass('animated fadeOutDown');
         $('.texture-setting').removeClass('hidden');
+
+        var t1 = performance.now();
+        console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         $('.min-color-picker').attr({
             'value': '2b2c2d'

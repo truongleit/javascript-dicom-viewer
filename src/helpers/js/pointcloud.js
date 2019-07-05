@@ -17,6 +17,8 @@ $(document).ready(function() {
         showViewer('Point Cloud');
         $('.viewer').addClass('opened');
 
+        t0 = performance.now();
+
         let zInfo = await getZCoordinate(files);
 
         var initPoint = zInfo[0];
@@ -35,10 +37,12 @@ $(document).ready(function() {
         }
 
         pcdLoader(points, meshWidth, meshHeight);
+
         $('.loading-render').addClass('animated fadeOutDown');
         $('.slider').slick('unslick');
         $('.switch-algorithm').val(renderAlgorithm);
         $('select').formSelect();
+
     });
 });
 
@@ -94,6 +98,9 @@ function pointCloudInit() {
 
     pointCloudControls.minDistance = 0.3;
     pointCloudControls.maxDistance = 0.3 * 100;
+
+    var t1 = performance.now();
+    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
     window.addEventListener('resize', onWindowResizePointCloud(), false);
 

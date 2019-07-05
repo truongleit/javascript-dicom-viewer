@@ -331,7 +331,9 @@ function rayCasting(files) {
     ray2D(stack);
 
     $('.loading-render').addClass('animated fadeOutDown');
-    // notify puppeteer to take screenshot
+    var t1 = performance.now();
+    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+        // notify puppeteer to take screenshot
     const puppetDiv = document.createElement('div');
     puppetDiv.setAttribute('id', 'puppeteer');
     document.body.appendChild(puppetDiv);
