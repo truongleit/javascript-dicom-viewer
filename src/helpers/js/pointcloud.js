@@ -168,7 +168,7 @@ function meshFromArray(array, width, height) {
     geometry.computeBoundingSphere();
 
     // build material
-    var material = new THREE.PointsMaterial({ size: 0.005 });
+    var material = new THREE.PointsMaterial({ size: 0.003565 });
     material.color.setHex(Math.random() * 0xffffff);
 
     // build mesh
@@ -184,6 +184,7 @@ async function getZCoordinate(file) {
 
     let data = await itk.readImageDICOMFileSeries(null, file).then(function({ image, webWorker }) {
         webWorker.terminate();
+        console.log(image);
         return ([image.origin[2], image.spacing[2], image.size[0], image.size[1]]);
     });
 
@@ -266,7 +267,7 @@ async function boundaryExtraction(file, points, index, zCoordinate) {
             let grayscale = pixel[0];
 
             if (grayscale >= 250) {
-                points.push([row / 1000, col / 1000, zCoordinate / 1000]);
+                points.push([row / 500, col / 500, zCoordinate / 2000]);
             }
         }
     }
