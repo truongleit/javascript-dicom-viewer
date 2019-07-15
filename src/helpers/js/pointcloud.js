@@ -39,7 +39,7 @@ $(document).ready(function() {
         var files = document.getElementById("file_inp").files;
 
         $('.lds-hourglass').addClass('block');
-        showViewer('Sinh' + '' + 's Method');
+        showViewer('Sinh' + '\'' + 's Method');
         $('.viewer').addClass('opened');
 
         t0 = performance.now();
