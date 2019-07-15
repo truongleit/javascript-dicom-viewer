@@ -1443,7 +1443,8 @@ span.algorithm-name,
     display: none;
 }
 
-.vtk-color {
+.vtk-color,
+.sinh-color {
     width: 100%;
     display: flex;
     align-items: center;
@@ -1452,7 +1453,8 @@ span.algorithm-name,
     padding: 20px 0;
 }
 
-.vtk-color a {
+.vtk-color a,
+.sinh-color a {
     margin-top: 10px;
 }
 
