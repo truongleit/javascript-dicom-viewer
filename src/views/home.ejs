@@ -189,6 +189,11 @@
                                         <i class="material-icons drop-down rotated">keyboard_arrow_up</i>
                                     </div>
                                     <div class="config opened">
+                                        <div class="attribute-config sinh-setting hidden">
+                                            <div class="attribute">Point's size</div>
+                                            <a class="waves-effect waves-light light-blue lighten-1 btn size-decrease"><i class="material-icons">remove</i></a>
+                                            <a class="waves-effect waves-light light-blue lighten-1 btn size-increase"><i class="material-icons">add</i></a>
+                                        </div>
                                         <div class="attribute-config marching-cube-setting hidden">
                                             <div class="attribute">ISO Value</div>
                                             <input class="isoValue" type="range" min="0" max="100" step="0.05" value="0">
@@ -255,6 +260,12 @@
                                             <div class="texture-max-color">
                                                 <span class="color-min-title">Max Color:</span>
                                                 <input class="max-color-picker jscolor {onFineChange:'texturebasedUpdateMaxColor(this)'} ripple" value="ffffff">
+                                            </div>
+                                        </div>
+                                        <div class="attribute-config sinh-setting marching-cube-setting hidden" style="padding-right:20px;">
+                                            <div class="vtk-color">
+                                                <input class="vtk-color-picker jscolor {onFineChange:'vtkColorPicker(this)'}" value="000000">
+                                                <a class="btn waves-effect waves-light blue vtk-color-button">Apply</a>
                                             </div>
                                         </div>
                                         <div class="attribute-config ray-setting hidden">

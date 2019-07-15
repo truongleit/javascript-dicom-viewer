@@ -1,6 +1,11 @@
 // Execute Point cloud rendering algorithm //
 var points = [];
 $(document).ready(function() {
+
+    $('.size-decrease').click(function() {
+
+    });
+
     $('.point-cloud').click(async function() {
         $('#sliceX, #sliceY, #sliceZ').remove();
         $('.slices.setting').addClass('hidden');
@@ -42,6 +47,9 @@ $(document).ready(function() {
         $('.slider').slick('unslick');
         $('.switch-algorithm').val(renderAlgorithm);
         $('select').formSelect();
+
+        $('.sinh-setting').removeClass('hidden');
+
 
     });
 });
@@ -267,7 +275,7 @@ async function boundaryExtraction(file, points, index, zCoordinate) {
             let grayscale = pixel[0];
 
             if (grayscale >= 250) {
-                points.push([row / 500, col / 500, zCoordinate / 2000]);
+                points.push([row / 400, col / 400, zCoordinate / 2000]);
             }
         }
     }
