@@ -1,10 +1,30 @@
 // Execute Point cloud rendering algorithm //
 var points = [];
+
 $(document).ready(function() {
 
     $('.size-decrease').click(function() {
-
+        var points = pointCloudScene.getObjectByName('dicomMesh');
+        if (renderAlgorithm == 'Point Cloud') {
+            points.material.size /= 1.2;
+            points.material.needsUpdate = true;
+        }
     });
+
+    $('.size-increase').click(function() {
+        var points = pointCloudScene.getObjectByName('dicomMesh');
+        if (renderAlgorithm == 'Point Cloud') {
+            points.material.size *= 1.2;
+            points.material.needsUpdate = true;
+        }
+    });
+
+    $('.random-color-button').click(function() {
+        var points = pointCloudScene.getObjectByName('dicomMesh');
+        points.material.color.setHex(Math.random() * 0xffffff);
+        points.material.needsUpdate = true;
+    });
+
 
     $('.point-cloud').click(async function() {
         $('#sliceX, #sliceY, #sliceZ').remove();
@@ -19,7 +39,7 @@ $(document).ready(function() {
         var files = document.getElementById("file_inp").files;
 
         $('.lds-hourglass').addClass('block');
-        showViewer('Point Cloud');
+        showViewer('Sinh' + '' + 's Method');
         $('.viewer').addClass('opened');
 
         t0 = performance.now();
@@ -71,7 +91,7 @@ function pointCloudInit() {
     pointCloudScene = new THREE.Scene();
     pointCloudScene.background = new THREE.Color(0x000000);
 
-    pointCloudCamera = new THREE.PerspectiveCamera(10, pointCloudContainer.offsetWidth / pointCloudContainer.offsetHeight, 1, 1000);
+    pointCloudCamera = new THREE.PerspectiveCamera(5, pointCloudContainer.offsetWidth / pointCloudContainer.offsetHeight, 1, 1000);
     pointCloudCamera.position.x = -0.7738894355355945;
     pointCloudCamera.position.y = -0.6186002375339695;
     pointCloudCamera.position.z = -0.21005870317276934;
@@ -134,6 +154,20 @@ function onWindowResizePointCloud() {
 
 }
 
+function pointColorPicker(picker) {
+    var points = pointCloudScene.getObjectByName('dicomMesh');
+    var hex = picker.toHEXString();
+    var color = new THREE.Color(hex);
+    points.material.color.setRGB(color.r, color.g, color.b);
+    points.material.needsUpdate = true;
+}
+
+function bgColorPicker(picker) {
+    var hex = picker.toHEXString();
+    var color = new THREE.Color(hex);
+    pointCloudScene.background = color;
+}
+
 function keyboard(ev) {
 
     var points = pointCloudScene.getObjectByName('dicomMesh');
@@ -176,8 +210,9 @@ function meshFromArray(array, width, height) {
     geometry.computeBoundingSphere();
 
     // build material
-    var material = new THREE.PointsMaterial({ size: 0.003565 });
-    material.color.setHex(Math.random() * 0xffffff);
+    var material = new THREE.PointsMaterial({ size: 0.005 });
+    // material.color.setHex(Math.random() * 0xffffff);
+    material.color.setHex(0x1D7FFF);
 
     // build mesh
     var mesh = new THREE.Points(geometry, material);
@@ -275,7 +310,7 @@ async function boundaryExtraction(file, points, index, zCoordinate) {
             let grayscale = pixel[0];
 
             if (grayscale >= 250) {
-                points.push([row / 400, col / 400, zCoordinate / 2000]);
+                points.push([row / 400, col / 400, zCoordinate / 1900]);
             }
         }
     }

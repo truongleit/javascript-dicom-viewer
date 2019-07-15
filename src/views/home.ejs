@@ -191,8 +191,8 @@
                                     <div class="config opened">
                                         <div class="attribute-config sinh-setting hidden">
                                             <div class="attribute">Point's size</div>
-                                            <a class="waves-effect waves-light light-blue lighten-1 btn size-decrease"><i class="material-icons">remove</i></a>
-                                            <a class="waves-effect waves-light light-blue lighten-1 btn size-increase"><i class="material-icons">add</i></a>
+                                            <a class="waves-effect waves-light btn size-decrease blue"><i class="material-icons">remove</i></a>
+                                            <a class="waves-effect waves-light btn size-increase blue"><i class="material-icons">add</i></a>
                                         </div>
                                         <div class="attribute-config marching-cube-setting hidden">
                                             <div class="attribute">ISO Value</div>
@@ -264,10 +264,16 @@
                                         </div>
                                         <div class="attribute-config sinh-setting marching-cube-setting hidden" style="padding-right:20px;">
                                             <div class="vtk-color">
-                                                <input class="vtk-color-picker jscolor {onFineChange:'vtkColorPicker(this)'}" value="000000">
-                                                <a class="btn waves-effect waves-light blue vtk-color-button">Apply</a>
+                                                <input class="vtk-color-picker jscolor {onFineChange:'pointColorPicker(this)'}" value="000000">
+                                                <a class="btn waves-effect waves-light blue random-color-button">Random</a>
                                             </div>
                                         </div>
+                                        <!-- <div class="attribute-config sinh-setting marching-cube-setting hidden" style="padding-right:20px;">
+                                            <div class="vtk-color">
+                                                <input class="vtk-color-picker jscolor {onFineChange:'bgColorPicker(this)'}" value="000000">
+                                                <a class="btn waves-effect waves-light blue vtk-color-button">Apply</a>
+                                            </div>
+                                        </div> -->
                                         <div class="attribute-config ray-setting hidden">
                                             <div class="input-field col s12 ray-algorithm">
                                                 <select>
