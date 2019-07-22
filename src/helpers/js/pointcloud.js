@@ -3,28 +3,36 @@ var points = [];
 
 $(document).ready(function() {
 
+    //
+    //// Increase points'
+    //
     $('.size-decrease').click(function() {
         var points = pointCloudScene.getObjectByName('dicomMesh');
         if (renderAlgorithm == 'Point Cloud') {
-            points.material.size /= 1.2;
+            points.material.size /= 1.1;
             points.material.needsUpdate = true;
         }
     });
 
+    //
+    //// Decrease points' size
+    //
     $('.size-increase').click(function() {
         var points = pointCloudScene.getObjectByName('dicomMesh');
         if (renderAlgorithm == 'Point Cloud') {
-            points.material.size *= 1.2;
+            points.material.size *= 1.1;
             points.material.needsUpdate = true;
         }
     });
 
+    //
+    //// Randomize points' color
+    //
     $('.random-color-button').click(function() {
         var points = pointCloudScene.getObjectByName('dicomMesh');
         points.material.color.setHex(Math.random() * 0xffffff);
         points.material.needsUpdate = true;
     });
-
 
     $('.point-cloud').click(async function() {
         $('#sliceX, #sliceY, #sliceZ').remove();
