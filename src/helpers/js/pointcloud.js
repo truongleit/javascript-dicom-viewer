@@ -4,7 +4,7 @@ var points = [];
 $(document).ready(function() {
 
     //
-    //// Increase points'
+    //// Increase points' size
     //
     $('.size-decrease').click(function() {
         var points = pointCloudScene.getObjectByName('dicomMesh');
