@@ -42,6 +42,9 @@ $(document).ready(function() {
                 $(this)[0].href = screenshot;
                 break;
             case "textureBased":
+                screenshot = dom.toDataURL();
+                $(this)[0].download = 'AMI-' + Date.now() + '.png';
+                $(this)[0].href = screenshot;
                 break;
             default:
                 break;
@@ -754,22 +757,7 @@ function texturebasedRendering(volume) {
         volume.windowHigh = 2532;
         threeD.add(volume);
         threeD.render();
-        var canvas = $('#3d canvas');
 
-        var context = canvas[0].getContext("2d");
-
-        resizeWindow = function() {
-            window.w = canvas.width = window.innerWidth;
-            return window.h = canvas.height = window.innerHeight;
-        };
-
-        resizeWindow();
-
-        window.addEventListener('resize', resizeWindow, false);
-
-        window.onload = function() {
-            return setTimeout(resizeWindow, 0);
-        };
     }
     threeD.onShowtime = function() {
         //
@@ -829,7 +817,16 @@ function texturebasedRendering(volume) {
             'value': volume.windowHigh
         }).next().html(volume.windowHigh);
         ESresize();
+
+        // stats
+        stats = new Stats();
+        stats.domElement.className = 'statistics';
+        $('.monitor-container').append(stats.domElement);
+
     };
+    threeD.onRender = function () {
+        stats.update();
+    }
 }
 // Trigger the window resize event
 function ESresize() {
