@@ -11,6 +11,7 @@ var oldRenderAlgorithm = '';
 var currentViewerColor = '';
 var canvasSelected = '';
 var t0;
+let screenshot
 
 $(document).ready(function() {
     //
@@ -23,10 +24,26 @@ $(document).ready(function() {
     });
 
     $('.save-button').click(function () {
-        console.log(canvasSelected);
         var domElement = '#' + canvasSelected + ' canvas';
         var dom = $(domElement)[0];
-        Canvas2Image.saveAsPNG(dom, dom.width, dom.height)
+        switch (renderAlgorithm) {
+            case "rayCasting":
+                controls.update();
+                renderer.render(scene, camera);
+                screenshot = renderer.domElement.toDataURL();
+                $(this)[0].download = 'AMI-' + Date.now() + '.png';
+                $(this)[0].href = screenshot;
+                break;
+            case "Point Cloud":
+                pointCloudControls.update();
+                pointCloudRenderer.render(pointCloudScene, pointCloudCamera);
+                screenshot = pointCloudRenderer.domElement.toDataURL();
+                $(this)[0].download = 'AMI-' + Date.now() + '.png';
+                $(this)[0].href = screenshot;
+                break;
+            default:
+                break;
+        }
     });
     //
     // Switch rendering algorithm
@@ -34,21 +51,16 @@ $(document).ready(function() {
     $('.switch-algorithm').change(function() {
         var optionSelected = $(this).find("option:selected");
         var valueSelected = optionSelected.val();
-        if (valueSelected == renderAlgorithm) {
-            $('.re-render-button').addClass('disabled');
-        } else {
-            $('.re-render-button').removeClass('disabled');
-        }
+        ( valueSelected == renderAlgorithm ) ?  $('.re-render-button').addClass('disabled') : $('.re-render-button').removeClass('disabled');
     });
+
     $('.re-render-button').click(function() {
         var optionSelected = $('.switch-algorithm').find("option:selected");
         var valueSelected = optionSelected.val();
         deleteCanvas(renderAlgorithm);
         switch (valueSelected) {
             case "rayCasting":
-                if (oldRenderAlgorithm == 'marchingCube') {
-                    $('.mb-interactor-disable').trigger('click');
-                }
+                if ( oldRenderAlgorithm == 'marchingCube' ) $('.mb-interactor-disable').trigger('click');
                 renderAlgorithm = 'rayCasting';
                 $('.lds-hourglass').addClass('block');
                 setTimeout(function() {
@@ -60,9 +72,7 @@ $(document).ready(function() {
                 $('.statistics').remove();
                 break;
             case "textureBased":
-                if (oldRenderAlgorithm == 'marchingCube') {
-                    $('.mb-interactor-disable').trigger('click');
-                }
+                if ( oldRenderAlgorithm == 'marchingCube' ) $('.mb-interactor-disable').trigger('click');
                 renderAlgorithm = 'textureBased';
                 initTexturebasedRendering();
                 $('.lds-hourglass').addClass('block');
@@ -88,11 +98,7 @@ $(document).ready(function() {
     //
     $('.ray-interpolation').change(function() {
         if (renderAlgorithm == 'rayCasting') {
-            if (this.checked) {
-                vrHelper.interpolation = 1;
-            } else {
-                vrHelper.interpolation = 0;
-            }
+            ( this.checked ) ? vrHelper.interpolation = 1 : vrHelper.interpolation = 0;
             if (vrHelper.uniforms) modified = true;
         }
     });
@@ -101,11 +107,7 @@ $(document).ready(function() {
     //
     $('.ray-shading').change(function() {
         if (renderAlgorithm == 'rayCasting') {
-            if (this.checked) {
-                vrHelper.shading = 1;
-            } else {
-                vrHelper.shading = 0;
-            }
+            ( this.checked ) ? vrHelper.shading = 1 : vrHelper.shading = 0;
             if (vrHelper.uniforms) modified = true;
         }
     });
@@ -113,9 +115,6 @@ $(document).ready(function() {
     // Material select, modal, side nav initalizations //
     $('select').formSelect();
     $('.modal').modal();
-    $('.sidenav').sidenav({
-        edge: 'right'
-    });
 
     // Ray-casting algorithm //
     $('.ray-algorithm select').change(function() {
@@ -191,9 +190,7 @@ $(document).ready(function() {
     $('.texture-opacity').on('input', function() {
         var value = $(this).val();
         $(this).next().html(value);
-        if (renderAlgorithm == 'textureBased') {
-            volume.opacity = parseFloat(value);
-        }
+        if (renderAlgorithm == 'textureBased') volume.opacity = parseFloat(value);
     });
 
     // Switch between 3D and 2D modes //
@@ -209,36 +206,28 @@ $(document).ready(function() {
     $('.texture-lower-threshold').bind('keyup mousemove', function() {
         var value = $(this).val();
         $(this).next().html(value);
-        if (renderAlgorithm == 'textureBased') {
-            volume.lowerThreshold = parseInt(value);
-        }
+        if (renderAlgorithm == 'textureBased') volume.lowerThreshold = parseInt(value);
     });
 
     // Upper Threshold //
     $('.texture-upper-threshold').bind('keyup mousemove', function() {
         var value = $(this).val();
         $(this).next().html(value);
-        if (renderAlgorithm == 'textureBased') {
-            volume.upperThreshold = parseInt(value);
-        }
+        if (renderAlgorithm == 'textureBased') volume.upperThreshold = parseInt(value);
     });
 
     // Window Low //
     $('.texture-window-low').bind('keyup mousemove', function() {
         var value = $(this).val();
         $(this).next().html(value);
-        if (renderAlgorithm == 'textureBased') {
-            volume.windowLow = parseInt(value);
-        }
+        if (renderAlgorithm == 'textureBased') volume.windowLow = parseInt(value);
     });
 
     // Window High //
     $('.texture-window-high').bind('keyup mousemove', function() {
         var value = $(this).val();
         $(this).next().html(value);
-        if (renderAlgorithm == 'textureBased') {
-            volume.windowHigh = parseInt(value);
-        }
+        if (renderAlgorithm == 'textureBased') volume.windowHigh = parseInt(value);
     });
 
     // Change slice's index (new UI) //
@@ -271,17 +260,11 @@ $(document).ready(function() {
     // Reset dimension //
     $('.reset-dimension').click(function() {
         if ($(this).hasClass('reset-to-X')) {
-            if (renderAlgorithm == 'textureBased') {
-                threeD.camera.position = [500, 0, 0];
-            }
+            if (renderAlgorithm == 'textureBased') threeD.camera.position = [500, 0, 0];
         } else if ($(this).hasClass('reset-to-Y')) {
-            if (renderAlgorithm == 'textureBased') {
-                threeD.camera.position = [0, 500, 0];
-            }
+            if (renderAlgorithm == 'textureBased') threeD.camera.position = [0, 500, 0];
         } else {
-            if (renderAlgorithm == 'textureBased') {
-                threeD.camera.position = [0, 0, 500];
-            }
+            if (renderAlgorithm == 'textureBased') threeD.camera.position = [0, 0, 500];
         }
     });
 
@@ -299,13 +282,9 @@ $(document).ready(function() {
     $('.dimension-option').click(function() {
         $('.switch-view span').html($(this).text());
         if ($(this).text() == '3D') {
-            if (renderAlgorithm == 'textureBased') {
-                volume.volumeRendering = true;
-            }
+            if (renderAlgorithm == 'textureBased') volume.volumeRendering = true;
         } else {
-            if (renderAlgorithm == 'textureBased') {
-                volume.volumeRendering = false;
-            }
+            if (renderAlgorithm == 'textureBased') volume.volumeRendering = false;
         }
     });
 
@@ -510,11 +489,7 @@ $(document).ready(function() {
         $('.slider').slick('unslick');
     });
     $('.slider-control').click(function() {
-        if ($(this).hasClass('left')) {
-            $('.slick-prev').trigger('click');
-        } else {
-            $('.slick-next').trigger('click');
-        }
+        ( $(this).hasClass('left') ) ? $('.slick-prev').trigger('click') : $('.slick-next').trigger('click');
     });
     //
     // Change settings for slice mode
@@ -616,17 +591,13 @@ function showViewer(algorithm) {
 // Update min color (Texture-based) //
 function texturebasedUpdateMinColor(picker) {
     var rgb = [Math.round(picker.rgb[0]), Math.round(picker.rgb[1]), Math.round(picker.rgb[2])];
-    if (renderAlgorithm == 'textureBased') {
-        volume.minColor = [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255];
-    }
+    if (renderAlgorithm == 'textureBased') volume.minColor = [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255];
 }
 
 // Update max color (Texture-based) //
 function texturebasedUpdateMaxColor(picker) {
     var rgb = [Math.round(picker.rgb[0]), Math.round(picker.rgb[1]), Math.round(picker.rgb[2])];
-    if (renderAlgorithm == 'textureBased') {
-        volume.maxColor = [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255];
-    }
+    if (renderAlgorithm == 'textureBased') volume.maxColor = [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255];
 }
 
 // Update 3D object's color (Marching Cube)
@@ -811,9 +782,6 @@ function texturebasedRendering(volume) {
 
         $('.loading-render').addClass('animated fadeOutDown');
         $('.texture-setting').removeClass('hidden');
-
-        var t1 = performance.now();
-        console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         $('.min-color-picker').attr({
             'value': '2b2c2d'

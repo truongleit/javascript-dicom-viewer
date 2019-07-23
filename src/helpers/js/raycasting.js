@@ -301,7 +301,7 @@ function init() {
     // stats
     stats = new Stats();
     stats.domElement.className = 'statistics';
-    threeD.appendChild(stats.domElement);
+    $('.monitor-container').append(stats.domElement);
 
     // camera
     camera = new THREE.PerspectiveCamera(25, threeD.offsetWidth / threeD.offsetHeight, 0.1, 100000);
@@ -366,23 +366,8 @@ function rayCasting(files) {
     camera.lookAt(centerLPS.x, centerLPS.y, centerLPS.z);
     camera.updateProjectionMatrix();
     controls.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
-    // create GUI
-    // buildGUI();
 
     $('.ray-setting').removeClass('hidden');
-    // screenshot experiment
-    let screenshotElt = document.getElementById('screenshot');
-    screenshotElt.addEventListener('click', function() {
-        controls.update();
-
-        if (ready) {
-            renderer.render(scene, camera);
-        }
-
-        let screenshot = renderer.domElement.toDataURL();
-        screenshotElt.download = 'AMI-' + Date.now() + '.png';
-        screenshotElt.href = screenshot;
-    });
 
     // good to go
     ready = true;
@@ -393,9 +378,8 @@ function rayCasting(files) {
     ray2D(stack);
 
     $('.loading-render').addClass('animated fadeOutDown');
-    var t1 = performance.now();
-    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
-        // notify puppeteer to take screenshot
+
+    // notify puppeteer to take screenshot
     const puppetDiv = document.createElement('div');
     puppetDiv.setAttribute('id', 'puppeteer');
     document.body.appendChild(puppetDiv);

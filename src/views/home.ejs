@@ -28,7 +28,7 @@
     <script type="text/javascript" src="/js/marchingCube.bundle.js"></script>
     <!------------ UI JavaScript ------------>
     <script type="text/javascript" src="/js/ui/materialize.js"></script>
-    <script type="text/javascript" src="/js/ui/stats.min.js"></script>
+    <script type="text/javascript" src="/js/ui/stats.js"></script>
     <script type="text/javascript" src="/js/ui/jscolor.js"></script>
     <script type="text/javascript" src="/js/ui/slick.min.js"></script>
     <!------------ UI CSS ------------>
@@ -160,9 +160,6 @@
 
             </div>
             <div class="render-container">
-                <a data-target="slide-out" class="btn-floating btn-large waves-effect waves-light blue accent-3 sidenav-trigger pulse hidden">
-                    <i class="material-icons">tune</i>
-                </a>
                 <div id="my-gui-container"></div>
                 <a href="# " id="screenshot" download="VJS.png">Take screenshot</a>
                 <div class="files-bar">
@@ -188,6 +185,16 @@
                                         <i class="material-icons drop-down rotated">keyboard_arrow_up</i>
                                     </div>
                                     <div class="config opened">
+                                        <div class="attribute-config ray-setting hidden">
+                                            <div class="input-field col s12 ray-algorithm">
+                                                <select>
+                                                    <option value="" disabled selected>Choose your option</option>
+                                                    <option value="0" selected>Ray Casting</option>
+                                                    <option value="1">MIP</option>
+                                                </select>
+                                                <label>Algorithm</label>
+                                            </div>
+                                        </div>
                                         <div class="attribute-config sinh-setting hidden">
                                             <div class="attribute">Point's size</div>
                                             <a class="waves-effect waves-light btn size-decrease blue accent-3"><i class="material-icons">remove</i></a>
@@ -268,16 +275,6 @@
                                             </div>
                                         </div>
                                         <div class="attribute-config ray-setting hidden">
-                                            <div class="input-field col s12 ray-algorithm">
-                                                <select>
-                                                  <option value="" disabled selected>Choose your option</option>
-                                                  <option value="0" selected>Ray Casting</option>
-                                                  <option value="1">MIP</option>
-                                                </select>
-                                                <label>Algorithm</label>
-                                            </div>
-                                        </div>
-                                        <div class="attribute-config ray-setting hidden">
                                             <div class="input-field col s12 ray-lut">
                                                 <select>
                                                   <option value="" disabled selected>Choose your option</option>
@@ -306,7 +303,7 @@
                                             </div>
                                         </div>
                                         <div class="attribute-title ray-setting hidden">
-                                            Steps & Alpha & Shininess
+                                            Steps // Alpha // Shininess
                                         </div>
                                         <div class="attribute-config ray-setting hidden">
                                             <div class="attribute">Steps</div>
@@ -426,7 +423,6 @@
                                         </div>
                                     </div>
 
-
                                     <div>
                                         <div class="divider"></div>
                                     </div>
@@ -472,8 +468,15 @@
                                                 <option value="sliceZ">2D - Z-AXIS</option>
                                             </select>
                                         </div>
-                                        <a class="waves-effect waves-light blue accent-3 btn save-button disabled">Save</a>
+                                        <a href="#" download="VJS.png" class="waves-effect waves-light blue accent-3 btn save-button disabled">Save</a>
                                     </div>
+                                </div>
+                                <div class="render-info setting" style="margin-bottom: 80px;">
+                                    <div class="title">
+                                        <i class="material-icons">equalizer</i>
+                                        <span class="name">Performance Monitor</span>
+                                    </div>
+                                    <div class="monitor-container"></div>
                                 </div>
                             </div>
                             <div class="global-setting">

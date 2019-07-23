@@ -98,7 +98,7 @@ function marchingCubeRender(files) {
         webWorker
     }) => {
         webWorker.terminate()
-        console.log(itkImage);
+
         const imageData = vtkITKHelper.convertItkToVtkImage(itkImage);
         const dataRange = imageData
             .getPointData()

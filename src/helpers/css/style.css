@@ -1498,6 +1498,10 @@ span.algorithm-name,
     font-size: 15px;
 }
 
+.representation .ray-setting {
+    margin-top: 12px;
+}
+
 .ray-setting.hidden {
     display: none;
 }
@@ -1779,10 +1783,11 @@ span.algorithm-name,
 }
 
 .twoD-container {
-      width: 30%;
-        height: calc(100vh - 70px);
-      display: flex;
-      flex-direction: column;
+    width: 30%;
+    height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+    background-color: #2e2e2e;
   }
 
 .two-dimemsion {
@@ -1999,6 +2004,12 @@ input[type=checkbox]:checked:not(:disabled).tabbed:focus~.lever::before {
 
 /* TEST */
 
+.monitor-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
 #stats {
     position: absolute;
     top: 0;
@@ -2006,11 +2017,14 @@ input[type=checkbox]:checked:not(:disabled).tabbed:focus~.lever::before {
 }
 
 .statistics {
-    position: absolute !important;
-    top: unset !important;
-    left: 5px !important;
-    bottom: 5px !important;
-    z-index: 1000 !important;
+    display: flex;
+    justify-content: center;
+    opacity: .9;
+    /*position: absolute !important;*/
+    /*top: unset !important;*/
+    /*left: 5px !important;*/
+    /*bottom: 5px !important;*/
+    /*z-index: 1000 !important;*/
 }
 
 #my-gui-container input[type=text]:not(.browser-default) {

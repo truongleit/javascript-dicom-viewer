@@ -135,21 +135,24 @@ function pointCloudInit() {
     pointCloudControls.minDistance = 0.3;
     pointCloudControls.maxDistance = 0.3 * 100;
 
-    var t1 = performance.now();
-    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
-
     window.addEventListener('resize', onWindowResizePointCloud(), false);
 
     window.addEventListener('keypress', keyboard);
+
+    // stats
+    stats = new Stats();
+    stats.domElement.className = 'statistics';
+    $('.monitor-container').append(stats.domElement);
 
 
 }
 
 function pointCloudAnimate() {
 
-    requestAnimationFrame(pointCloudAnimate);
+    stats.update();
     pointCloudControls.update();
     pointCloudRenderer.render(pointCloudScene, pointCloudCamera);
+    requestAnimationFrame(pointCloudAnimate);
 
 }
 
@@ -235,7 +238,6 @@ async function getZCoordinate(file) {
 
     let data = await itk.readImageDICOMFileSeries(null, file).then(function({ image, webWorker }) {
         webWorker.terminate();
-        console.log(image);
         return ([image.origin[2], image.spacing[2], image.size[0], image.size[1]]);
     });
 
