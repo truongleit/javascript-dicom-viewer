@@ -9,9 +9,25 @@ var filesLoaded = false;
 var renderAlgorithm = '';
 var oldRenderAlgorithm = '';
 var currentViewerColor = '';
+var canvasSelected = '';
 var t0;
 
 $(document).ready(function() {
+    //
+    //// Save screenshot
+    //
+    $('.screenshot-option').change(function() {
+        var optionSelected = $(this).find("option:selected");
+        canvasSelected = optionSelected.val();
+        ( renderAlgorithm == 'Point Cloud' && (canvasSelected == 'sliceX' || canvasSelected == 'sliceY' || canvasSelected == 'sliceZ') ) ? $('.save-button').addClass('disabled') : $('.save-button').removeClass('disabled');
+    });
+
+    $('.save-button').click(function () {
+        console.log(canvasSelected);
+        var domElement = '#' + canvasSelected + ' canvas';
+        var dom = $(domElement)[0];
+        Canvas2Image.saveAsPNG(dom, dom.width, dom.height)
+    });
     //
     // Switch rendering algorithm
     //

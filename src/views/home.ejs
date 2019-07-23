@@ -132,9 +132,6 @@
         </div>
     </div>
     <div class="viewer">
-        <!-- <div id="extraction" class="dicom-extraction">
-            <canvas id="canvasOutput"></canvas>
-        </div> -->
         <div class="viewer-container">
             <div class="interact-container">
                 <div class="logo">
@@ -193,8 +190,8 @@
                                     <div class="config opened">
                                         <div class="attribute-config sinh-setting hidden">
                                             <div class="attribute">Point's size</div>
-                                            <a class="waves-effect waves-light btn size-decrease blue"><i class="material-icons">remove</i></a>
-                                            <a class="waves-effect waves-light btn size-increase blue"><i class="material-icons">add</i></a>
+                                            <a class="waves-effect waves-light btn size-decrease blue accent-3"><i class="material-icons">remove</i></a>
+                                            <a class="waves-effect waves-light btn size-increase blue accent-3"><i class="material-icons">add</i></a>
                                         </div>
                                         <div class="attribute-config marching-cube-setting hidden">
                                             <div class="attribute">ISO Value</div>
@@ -267,20 +264,14 @@
                                         <div class="attribute-config sinh-setting hidden" style="padding-right:20px;">
                                             <div class="sinh-color">
                                                 <input class="vtk-color-picker jscolor {onFineChange:'pointColorPicker(this)'}" value="000000">
-                                                <a class="btn waves-effect waves-light blue random-color-button">Random</a>
+                                                <a class="btn waves-effect waves-light blue accent-3 random-color-button">Random</a>
                                             </div>
                                         </div>
-                                        <!-- <div class="attribute-config sinh-setting marching-cube-setting hidden" style="padding-right:20px;">
-                                            <div class="vtk-color">
-                                                <input class="vtk-color-picker jscolor {onFineChange:'bgColorPicker(this)'}" value="000000">
-                                                <a class="btn waves-effect waves-light blue vtk-color-button">Apply</a>
-                                            </div>
-                                        </div> -->
                                         <div class="attribute-config ray-setting hidden">
                                             <div class="input-field col s12 ray-algorithm">
                                                 <select>
                                                   <option value="" disabled selected>Choose your option</option>
-                                                  <option value="0" selected>Ray Marching</option>
+                                                  <option value="0" selected>Ray Casting</option>
                                                   <option value="1">MIP</option>
                                                 </select>
                                                 <label>Algorithm</label>
@@ -468,11 +459,20 @@
                                 </div>
                                 <div class="render-info setting">
                                     <div class="title">
-                                        <i class="material-icons">info</i>
-                                        <span class="name">Information</span>
+                                        <i class="material-icons">add_a_photo</i>
+                                        <span class="name">Screenshot</span>
                                     </div>
-                                    <div class="content">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                                    <div class="attribute-config ray-setting">
+                                        <div class="input-field col s12 take-screenshot">
+                                            <select class="screenshot-option">
+                                                <option value="" disabled selected>Choose your option</option>
+                                                <option value="3d">3D -  Volume</option>
+                                                <option value="sliceX">2D - X-AXIS</option>
+                                                <option value="sliceY">2D - Y-AXIS</option>
+                                                <option value="sliceZ">2D - Z-AXIS</option>
+                                            </select>
+                                        </div>
+                                        <a class="waves-effect waves-light blue accent-3 btn save-button disabled">Save</a>
                                     </div>
                                 </div>
                             </div>

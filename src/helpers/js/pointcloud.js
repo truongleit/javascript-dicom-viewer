@@ -122,8 +122,8 @@ function pointCloudInit() {
     pointCloudControls.target.set(center.x, center.y, center.z);
     pointCloudControls.update();
 
-    pointCloudControls.rotateSpeed = 1.0;
-    pointCloudControls.zoomSpeed = 0.6;
+    pointCloudControls.rotateSpeed = 1.2;
+    pointCloudControls.zoomSpeed = 0.8;
     pointCloudControls.panSpeed = 0.1;
 
     pointCloudControls.noZoom = false;
