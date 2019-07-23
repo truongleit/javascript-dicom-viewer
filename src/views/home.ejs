@@ -7,30 +7,33 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="/asset/favicon-black.png" type="image/x-icon">
     <link rel="icon" href="/asset/favicon-black.png" type="image/x-icon">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.2/dat.gui.js"></script>
-    <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
-    <link type='text/css' rel='stylesheet' href='/css/slick.css' />
-    <link type='text/css' rel='stylesheet' href='/css/animate.css' />
-    <script type="text/javascript" src="/js/opencv.js"></script>
-    <script type="text/javascript" src="/js/three.js"></script>
-    <script type="text/javascript" src="/js/TrackballControls.js"></script>
-    <script type="text/javascript" src="/js/ami.js"></script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/stats.js/master/build/stats.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script type="text/javascript" src="/js/slick.min.js"></script>
-    <script type="text/javascript" src="/js/xtk.js"></script>
-    <script src="https://unpkg.com/itk@9.4.0/umd/itk.js"></script>
-    <script type="text/javascript" src="/js/jscolor.js"></script>
+    <!------------ JavaScript Libraries ------------>
+    <script type="text/javascript" src="/js/libraries/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/js/libraries/opencv.js"></script>
+    <script type="text/javascript" src="/js/libraries/three.js"></script>
+    <script type="text/javascript" src="/js/libraries/ami.min.js"></script>
+    <script type="text/javascript" src="/js/libraries/TrackballControls.js"></script>
+    <script type="text/javascript" src="/js/libraries/xtk.js"></script>
+    <script type="text/javascript" src="/js/libraries/itk.js"></script>
+    <script type="text/javascript" src="/js/libraries/jpx.min.js"></script>
+    <!------------ Cornerstone JavaScript ------------>
+    <script type="text/javascript" src="/js/cornerstone/cornerstone.min.js"></script>
+    <script type="text/javascript" src="/js/cornerstone/cornerstoneFileImageLoader.js"></script>
+    <script type="text/javascript" src="/js/cornerstone/cornerstoneWADOImageLoader.min.js"></script>
+    <script type="text/javascript" src="/js/cornerstone/dicomParser.min.js"></script>
+    <!------------ Core JavaScript ------------>
     <script type="text/javascript" src="/js/main.js"></script>
-    <script type="text/javascript" src="/js/cornerstone.min.js"></script>
-    <script type="text/javascript" src="/js/cornerstoneFileImageLoader.js"></script>
-    <script type="text/javascript" src="/js/cornerstoneWADOImageLoader.min.js"></script>
-    <script type="text/javascript" src="/js/dicomParser.min.js"></script>
-    <script type="text/javascript" src="/js/jpx.min.js"></script>
     <script type="text/javascript" src="/js/raycasting.js"></script>
     <script type="text/javascript" src="/js/pointcloud.js"></script>
     <script type="text/javascript" src="/js/marchingCube.bundle.js"></script>
-    <script type="text/javascript" src="/js/materialize.js"></script>
+    <!------------ UI JavaScript ------------>
+    <script type="text/javascript" src="/js/ui/materialize.js"></script>
+    <script type="text/javascript" src="/js/ui/stats.min.js"></script>
+    <script type="text/javascript" src="/js/ui/jscolor.js"></script>
+    <script type="text/javascript" src="/js/ui/slick.min.js"></script>
+    <!------------ UI CSS ------------>
+    <link type='text/css' rel='stylesheet' href='/css/slick.css' />
+    <link type='text/css' rel='stylesheet' href='/css/animate.css' />
     <link type='text/css' rel='stylesheet' href='/css/materialize.min.css' />
     <link type='text/css' rel='stylesheet' href='/css/style.css' />
     <title>DiRea - Medical Image Processing Tool</title>
@@ -529,14 +532,16 @@
                             <div id="my-lut-max">1.0</div>
                         </div>
                     </div>
-                    <div id="sliceX" class="two-dimemsion">
-                        <div class="title ">X-axis</div>
-                    </div>
-                    <div id="sliceY" class="two-dimemsion">
-                        <div class="title ">Y-axis</div>
-                    </div>
-                    <div id="sliceZ" class="two-dimemsion">
-                        <div class="title ">Z-axis</div>
+                    <div class="twoD-container">
+                        <div id="sliceX" class="two-dimemsion">
+                            <div class="title ">X-axis</div>
+                        </div>
+                        <div id="sliceY" class="two-dimemsion">
+                            <div class="title ">Y-axis</div>
+                        </div>
+                        <div id="sliceZ" class="two-dimemsion">
+                            <div class="title ">Z-axis</div>
+                        </div>
                     </div>
                     <div class="my-slider">
                         <div class="slice-slider hidden"></div>

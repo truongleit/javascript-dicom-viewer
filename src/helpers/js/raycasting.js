@@ -304,7 +304,7 @@ function init() {
     threeD.appendChild(stats.domElement);
 
     // camera
-    camera = new THREE.PerspectiveCamera(45, threeD.offsetWidth / threeD.offsetHeight, 0.1, 100000);
+    camera = new THREE.PerspectiveCamera(25, threeD.offsetWidth / threeD.offsetHeight, 0.1, 100000);
     camera.position.x = 166;
     camera.position.y = -471;
     camera.position.z = 153;

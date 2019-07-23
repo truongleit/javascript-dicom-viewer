@@ -1,4 +1,29 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900');
+
+/* fallback */
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/materialicons/v47/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
 body {
     width: 100vw;
     height: 100vh;
@@ -910,7 +935,6 @@ img.brand-devices {
     width: fill-available;
     display: flex;
     flex-wrap: wrap;
-    width: 75%;
 }
 
 .hidden {
@@ -918,7 +942,7 @@ img.brand-devices {
 }
 
 .files-bar {
-    width: 25%;
+    width: 470px;
     height: 100%;
     float: left;
     display: flex;
@@ -1676,10 +1700,8 @@ span.algorithm-name,
 .three-dimemsion {
     position: relative;
     outline: 1.5px solid #FFF;
-    width: 50%;
-    height: 50%;
-    /* width: 100%;
-    height: 100%; */
+    width: 70%;
+    height: calc(100vh - 70px);
 }
 
 .three-dimemsion .title {
@@ -1718,11 +1740,18 @@ span.algorithm-name,
     display: none;
 }
 
+.twoD-container {
+      width: 30%;
+        height: calc(100vh - 70px);
+      display: flex;
+      flex-direction: column;
+  }
+
 .two-dimemsion {
     position: relative;
     outline: 1.5px solid #FFF;
-    width: 50%;
-    height: 50%;
+    width: 100%;
+    height: 33.33%;
 }
 
 .two-dimemsion .title {
