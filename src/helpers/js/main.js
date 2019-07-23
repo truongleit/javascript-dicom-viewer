@@ -41,6 +41,8 @@ $(document).ready(function() {
                 $(this)[0].download = 'AMI-' + Date.now() + '.png';
                 $(this)[0].href = screenshot;
                 break;
+            case "textureBased":
+                break;
             default:
                 break;
         }
