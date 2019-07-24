@@ -937,6 +937,68 @@ img.brand-devices {
     flex-wrap: wrap;
 }
 
+#screenshot-container {
+     overflow: hidden;
+ }
+
+#screenshot-container .row {
+    margin-bottom: 0;
+}
+
+#screenshot-container .modal-footer {
+    padding: 0 24px;
+    box-sizing: border-box;
+ }
+
+#screenshot-container .modal-header {
+    padding: 24px;
+    font-size: 28px;
+    font-weight: 500;
+    color: #FFFFFF;
+    background-color: #2979FF;
+}
+
+.image-holder {
+    width: 100%;
+    padding-bottom: 65%;
+    border: 3.5px dashed #141715 ;
+}
+
+#screenshot-container .dropdown-content li>span {
+    font-size: 16px;
+    color: #2979ff;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;
+}
+
+#filename:focus {
+    border-bottom: 1px solid #2979FF;
+    -webkit-box-shadow: 0 1px 0 0 #2979FF;
+    box-shadow: 0 1px 0 0 #2979FF;
+}
+
+#filename:focus+label{
+    color: #2979FF;
+}
+
+.final-name {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 7px 0;
+}
+
+input.valid[type=text]:not(.browser-default)#filename {
+    border-bottom: 1px solid #2979FF;
+    -webkit-box-shadow: 0 1px 0 0 #2979FF;
+    box-shadow: 0 1px 0 0 #2979FF;
+}
+
+#screenshot-container .select-wrapper input.select-dropdown:focus {
+    border-bottom: 1px solid #2979FF;
+}
+
 .hidden {
     display: none !important;
 }
@@ -1267,32 +1329,6 @@ span.algorithm-name,
 
 .list-files::-webkit-scrollbar-button {
     display: none;
-}
-
-.viewer .modal.modal-fixed-footer .modal-footer {
-    position: fixed;
-    bottom: 0;
-    z-index: 999;
-    left: 0;
-    width: 100%;
-    padding: 0;
-}
-
-.viewer .modal.modal-fixed-footer .modal-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 27px;
-    box-sizing: border-box;
-}
-
-.viewer .modal.modal-fixed-footer .modal-footer {
-    background-color: #6da5ef;
-    color: #FFF;
-}
-
-.viewer .modal-content.fixed-width {
-    width: auto !important;
 }
 
 .loaded-slices {

@@ -17,39 +17,68 @@ $(document).ready(function() {
     //
     //// Save screenshot
     //
+    $('#screenshot-container').modal({
+            dismissible: true, // Modal can be dismissed by clicking outside of the modal
+            onOpenEnd: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                // var base64 = ReImg.fromCanvas($('#3d canvas').get(0)).toBase64();
+                var base64 = convertCanvasToImage($('#3d canvas').get(0)).src;
+                $('.image-holder').css({
+                    'background-size': 'contain',
+                    'background-position': 'center center',
+                    'background-image': 'url(' + base64 + ')',
+                    'background-repeat': 'no-repeat'
+                });
+                $('.save-button').attr({
+                    'href': base64
+                });
+            }
+        }
+    );
+
     $('.screenshot-option').change(function() {
         var optionSelected = $(this).find("option:selected");
         canvasSelected = optionSelected.val();
-        ( renderAlgorithm == 'Point Cloud' && (canvasSelected == 'sliceX' || canvasSelected == 'sliceY' || canvasSelected == 'sliceZ') ) ? $('.save-button').addClass('disabled') : $('.save-button').removeClass('disabled');
+        ( renderAlgorithm == 'Point Cloud' && (canvasSelected == 'sliceX' || canvasSelected == 'sliceY' || canvasSelected == 'sliceZ') ) ? $('.screenshot-open').addClass('disabled') : $('.screenshot-open').removeClass('disabled');
     });
 
-    $('.save-button').click(function () {
-        var domElement = '#' + canvasSelected + ' canvas';
-        var dom = $(domElement)[0];
-        switch (renderAlgorithm) {
-            case "rayCasting":
-                controls.update();
-                renderer.render(scene, camera);
-                screenshot = renderer.domElement.toDataURL();
-                $(this)[0].download = 'AMI-' + Date.now() + '.png';
-                $(this)[0].href = screenshot;
-                break;
-            case "Point Cloud":
-                pointCloudControls.update();
-                pointCloudRenderer.render(pointCloudScene, pointCloudCamera);
-                screenshot = pointCloudRenderer.domElement.toDataURL();
-                $(this)[0].download = 'AMI-' + Date.now() + '.png';
-                $(this)[0].href = screenshot;
-                break;
-            case "textureBased":
-                screenshot = dom.toDataURL();
-                $(this)[0].download = 'AMI-' + Date.now() + '.png';
-                $(this)[0].href = screenshot;
-                break;
-            default:
-                break;
-        }
-    });
+    // $('.save-button').click(function () {
+    //     var domElement = '#' + canvasSelected + ' canvas';
+    //     var dom = $(domElement).get(0);
+    //     switch (renderAlgorithm) {
+    //         case "rayCasting":
+    //             controls.update();
+    //             renderer.render(scene, camera);
+    //             screenshot = renderer.domElement.toDataURL();
+    //             $(this)[0].download = 'AMI-' + Date.now() + '.png';
+    //             $(this)[0].href = screenshot;
+    //             break;
+    //         case "Point Cloud":
+    //             pointCloudControls.update();
+    //             pointCloudRenderer.render(pointCloudScene, pointCloudCamera);
+    //             screenshot = pointCloudRenderer.domElement.toDataURL();
+    //             $(this)[0].download = 'AMI-' + Date.now() + '.png';
+    //             $(this)[0].href = screenshot;
+    //             break;
+    //         case "textureBased":
+    //             $(this)[0].download = 'AMI-' + Date.now() + '.png';
+    //             $(this)[0].href = screenshot;
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // });
+    $('#filename').keyup(function () {
+        var extension = $('.format-option').val().toUpperCase();
+        var filename = $(this).val();
+        var final = filename + '.' + extension;
+        $('.final-name').text(final);
+        $('.save-button').attr({
+            'download': final
+        });
+    })
+    //
+    //// End Screenshot
+    //
     //
     // Switch rendering algorithm
     //
@@ -119,7 +148,7 @@ $(document).ready(function() {
 
     // Material select, modal, side nav initalizations //
     $('select').formSelect();
-    $('.modal').modal();
+    // $('.modal').modal();
 
     // Ray-casting algorithm //
     $('.ray-algorithm select').change(function() {
@@ -839,4 +868,10 @@ function ESresize() {
         resizeEvent.initUIEvent('resize', true, false, window, 0);
         window.dispatchEvent(resizeEvent);
     }
+}
+
+function convertCanvasToImage(canvas, callback) {
+    var image = new Image();
+    image.src = canvas.toDataURL("image/png");
+    return image;
 }

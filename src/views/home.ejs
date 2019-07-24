@@ -132,6 +132,36 @@
         </div>
     </div>
     <div class="viewer">
+        <div id="screenshot-container" class="modal">
+            <div class="modal-header">
+                <div>Save Screenshot</div>
+            </div>
+            <div class="modal-content">
+                <div class="row">
+                    <div class="col s6">
+                        <div class="image-holder"></div>
+                        <div class="final-name">Your-Image.PNG</div>
+                    </div>
+                    <div class="col s6">
+                        <div class="input-field col s7">
+                            <input placeholder="Filename" id="filename" type="text" class="validate" value="Your-Image">
+                            <label for="filename">Filename</label>
+                        </div>
+                        <div class="input-field col s5">
+                            <select class="format-option">
+                                <option value="png" selected>PNG</option>
+                                <option value="jpeg">JPEG</option>
+                            </select>
+                            <label>Materialize Select</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                <a href="#" download="image.png" class="waves-effect waves-light blue accent-3 btn save-button">Download</a>
+            </div>
+        </div>
         <div class="viewer-container">
             <div class="interact-container">
                 <div class="logo">
@@ -468,7 +498,7 @@
                                                 <option value="sliceZ">2D - Z-AXIS</option>
                                             </select>
                                         </div>
-                                        <a href="#" download="VJS.png" class="waves-effect waves-light blue accent-3 btn save-button disabled">Save</a>
+                                        <a href="#screenshot-container" class="waves-effect waves-light blue accent-3 btn modal-trigger screenshot-open disabled">Save</a>
                                     </div>
                                 </div>
                                 <div class="render-info setting" style="margin-bottom: 80px;">

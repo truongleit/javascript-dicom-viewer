@@ -144,7 +144,6 @@ function pointCloudInit() {
     stats.domElement.className = 'statistics';
     $('.monitor-container').append(stats.domElement);
 
-
 }
 
 function pointCloudAnimate() {
