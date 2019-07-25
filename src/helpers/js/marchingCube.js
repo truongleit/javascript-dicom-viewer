@@ -13,7 +13,7 @@ import vtkRenderer from 'vtk.js/Sources/Rendering/Core/Renderer';
 import vtkInteractorStyleTrackballCamera from 'vtk.js/Sources/Interaction/Style/InteractorStyleTrackballCamera';
 
 
-let renderWindow;
+let renderWindow, openglRenderWindow;
 const interactor = vtkRenderWindowInteractor.newInstance();
 
 function updateIsoValue(e) {
@@ -23,6 +23,37 @@ function updateIsoValue(e) {
 }
 
 $(document).ready(function() {
+
+    //
+    //// Save screenshot
+    //
+    $('#screenshot-container').modal({
+            dismissible: true,
+            onOpenEnd: function(modal, trigger) {
+                var base64;
+                switch (renderAlgorithm) {
+                    case "marchingCube":
+                        openglRenderWindow.captureNextImage().then(function(data){
+                            base64 = data;
+                            screenshotCapture(base64);
+                        });
+                        renderWindow.render();
+                        break;
+                    case "rayCasting":
+                        controls.update();
+                        renderer.render(scene, camera);
+                        base64 = renderer.domElement.toDataURL();
+                        screenshotCapture(base64);
+                        break;
+                    default:
+                        base64 = convertCanvasToImage($('#3d canvas').get(0)).src;
+                        screenshotCapture(base64);
+                        break;
+                }
+            }
+        }
+    );
+
     $('.mb-interactor-disable').click(function() {
         const container = document.getElementById('3d');
         interactor.unbindEvents(container);
@@ -66,13 +97,25 @@ $(document).ready(function() {
     });
 });
 
+function screenshotCapture(data) {
+    $('.image-holder').css({
+        'background-size': 'contain',
+        'background-position': 'center center',
+        'background-image': 'url(' + data + ')',
+        'background-repeat': 'no-repeat'
+    });
+    $('.save-button').attr({
+        'href': data
+    });
+}
+
 function marchingCubeRender(files) {
 
     renderWindow = vtkRenderWindow.newInstance();
-    const renderer = vtkRenderer.newInstance({ background: [0.2, 0.3, 0.4] });
+    renderer = vtkRenderer.newInstance({ background: [0.2, 0.3, 0.4] });
     renderWindow.addRenderer(renderer);
 
-    const openglRenderWindow = vtkOpenGLRenderWindow.newInstance();
+    openglRenderWindow = vtkOpenGLRenderWindow.newInstance();
     renderWindow.addView(openglRenderWindow);
 
     const actor = vtkActor.newInstance();
@@ -131,7 +174,7 @@ function marchingCubeRender(files) {
         });
         renderer.getActiveCamera().set({ position: [1, 1, 0], viewUp: [0, 0, -1] });
         renderer.resetCamera();
-        renderWindow.render()
+        renderWindow.render();
 
         $('.loading-render').addClass('animated fadeOutDown');
         $('.rendering-layout').addClass('hidden');

@@ -15,7 +15,7 @@ let wheel = null;
 let wheelTO = null;
 let seriesContainer = [];
 let loader = new AMI.VolumeLoader(threeD);
-
+var meter
 let myStack = {
     algorithm: 'ray marching',
     lut: 'random',
@@ -271,8 +271,8 @@ function render() {
         renderer.render(scene, camera);
         modified = false;
     }
-
-    stats.update();
+    meter.tick();
+    // stats.update();
 }
 
 function init() {
@@ -299,9 +299,13 @@ function init() {
     scene = new THREE.Scene();
 
     // stats
-    stats = new Stats();
-    stats.domElement.className = 'statistics';
-    $('.monitor-container').append(stats.domElement);
+    // stats = new Stats();
+    // stats.domElement.className = 'statistics';
+    // $('.monitor-container').append(stats.domElement);
+
+    meter = new FPSMeter();
+    meter = new FPSMeter({ theme: 'light' });
+    meter = new FPSMeter($('.monitor-container').get(0), { graph: 1 });
 
     // camera
     camera = new THREE.PerspectiveCamera(25, threeD.offsetWidth / threeD.offsetHeight, 0.1, 100000);

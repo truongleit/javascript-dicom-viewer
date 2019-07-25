@@ -14,59 +14,16 @@ var t0;
 let screenshot
 
 $(document).ready(function() {
-    //
-    //// Save screenshot
-    //
-    $('#screenshot-container').modal({
-            dismissible: true, // Modal can be dismissed by clicking outside of the modal
-            onOpenEnd: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-                // var base64 = ReImg.fromCanvas($('#3d canvas').get(0)).toBase64();
-                var base64 = convertCanvasToImage($('#3d canvas').get(0)).src;
-                $('.image-holder').css({
-                    'background-size': 'contain',
-                    'background-position': 'center center',
-                    'background-image': 'url(' + base64 + ')',
-                    'background-repeat': 'no-repeat'
-                });
-                $('.save-button').attr({
-                    'href': base64
-                });
-            }
-        }
-    );
 
+    //
+    //// Screenshot UI handling (Core capturing feature is moved to marchingCube.js)
+    //
     $('.screenshot-option').change(function() {
         var optionSelected = $(this).find("option:selected");
         canvasSelected = optionSelected.val();
         ( renderAlgorithm == 'Point Cloud' && (canvasSelected == 'sliceX' || canvasSelected == 'sliceY' || canvasSelected == 'sliceZ') ) ? $('.screenshot-open').addClass('disabled') : $('.screenshot-open').removeClass('disabled');
     });
 
-    // $('.save-button').click(function () {
-    //     var domElement = '#' + canvasSelected + ' canvas';
-    //     var dom = $(domElement).get(0);
-    //     switch (renderAlgorithm) {
-    //         case "rayCasting":
-    //             controls.update();
-    //             renderer.render(scene, camera);
-    //             screenshot = renderer.domElement.toDataURL();
-    //             $(this)[0].download = 'AMI-' + Date.now() + '.png';
-    //             $(this)[0].href = screenshot;
-    //             break;
-    //         case "Point Cloud":
-    //             pointCloudControls.update();
-    //             pointCloudRenderer.render(pointCloudScene, pointCloudCamera);
-    //             screenshot = pointCloudRenderer.domElement.toDataURL();
-    //             $(this)[0].download = 'AMI-' + Date.now() + '.png';
-    //             $(this)[0].href = screenshot;
-    //             break;
-    //         case "textureBased":
-    //             $(this)[0].download = 'AMI-' + Date.now() + '.png';
-    //             $(this)[0].href = screenshot;
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // });
     $('#filename').keyup(function () {
         var extension = $('.format-option').val().toUpperCase();
         var filename = $(this).val();
@@ -870,7 +827,7 @@ function ESresize() {
     }
 }
 
-function convertCanvasToImage(canvas, callback) {
+function convertCanvasToImage(canvas) {
     var image = new Image();
     image.src = canvas.toDataURL("image/png");
     return image;
