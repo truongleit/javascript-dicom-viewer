@@ -827,8 +827,80 @@ function ESresize() {
     }
 }
 
+// Convert canvas to base64 image
 function convertCanvasToImage(canvas) {
     var image = new Image();
     image.src = canvas.toDataURL("image/png");
     return image;
 }
+
+// Customize FPS Monitor's theme
+FPSMeter.theme.diRea = {
+    heatmaps: [
+        {
+            saturation: 0.5,
+            lightness: 0.6
+        }
+    ],
+    container: {
+        // Settings
+        heatOn: "backgroundColor",
+
+        // Styles
+        position: "relative",
+        padding: "5px",
+        width: "85%",
+        height: "40px",
+        lineHeight: "40px",
+        textAlign: "right",
+        background: "#5795ff",
+        border: "1px solid #ccc",
+        borderColor: "rgba(0,0,0,0.1)",
+        color: "#fff",
+        textShadow: "1px 1px 0 rgba(0,0,0,.2)"
+    },
+    count: {
+        // Styles
+        position: "absolute",
+        top: 0,
+        right: 0,
+        padding: "5px 10px",
+        height: "40px",
+        lineHeight: "40px",
+        fontSize: "30px",
+        fontFamily: "Consolas, Andale Mono, monospace",
+        zIndex: 2
+    },
+    legend: {
+        // Styles
+        position: "absolute",
+        top: 0,
+        left: 0,
+        padding: "5px 10px",
+        height: "40px",
+        fontSize: "22px",
+        lineHeight: "40px",
+        fontFamily: "sans-serif",
+        textAlign: "left",
+        float: "left",
+        zIndex: 2
+    },
+    graph: {
+        // Styles
+        position: "relative",
+        boxSizing: "padding-box",
+        MozBoxSizing: "padding-box",
+        height: "100%",
+        zIndex: 1,
+        width: "100%"
+    },
+    column: {
+        // Settings
+        width: 12,
+        spacing: 2,
+
+        // Styles
+        background: "#777",
+        backgroundColor: "rgba(0,0,0,.2)"
+    }
+};

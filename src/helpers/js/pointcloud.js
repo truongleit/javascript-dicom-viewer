@@ -140,15 +140,23 @@ function pointCloudInit() {
     window.addEventListener('keypress', keyboard);
 
     // stats
-    stats = new Stats();
-    stats.domElement.className = 'statistics';
-    $('.monitor-container').append(stats.domElement);
+    // stats = new Stats();
+    // stats.domElement.className = 'statistics';
+    // $('.monitor-container').append(stats.domElement);
+
+    meter = new FPSMeter(
+        $('.monitor-container').get(0),
+        {
+            graph: 1,
+            theme: 'diRea'
+        });
 
 }
 
 function pointCloudAnimate() {
 
-    stats.update();
+    // stats.update();
+    meter.tick();
     pointCloudControls.update();
     pointCloudRenderer.render(pointCloudScene, pointCloudCamera);
     requestAnimationFrame(pointCloudAnimate);
