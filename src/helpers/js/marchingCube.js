@@ -16,13 +16,54 @@ import vtkInteractorStyleTrackballCamera from 'vtk.js/Sources/Interaction/Style/
 let renderWindow, openglRenderWindow;
 const interactor = vtkRenderWindowInteractor.newInstance();
 
-function updateIsoValue(e) {
-    const isoValue = Number(e.target.value);
-    marchingCube.setContourValue(isoValue);
-    renderWindow.render();
-}
-
 $(document).ready(function() {
+
+    //
+    //// IRO color picker for Background and Mesh
+    //
+    var meshColorPicker = new iro.ColorPicker('.vtk-color', {
+        width: 200,
+        borderWidth: 2,
+        borderColor: '#333',
+    });
+    var bgColorPicker = new iro.ColorPicker('#color-picker-container', {
+        width: 250,
+        borderWidth: 2,
+        borderColor: '#333',
+    });
+    meshColorPicker.on('color:change', onMeshColorChange);
+    bgColorPicker.on('color:change', onBackgroundColorChange);
+
+    function onMeshColorChange(color, changes) {
+        if (renderAlgorithm == 'marchingCube') {
+            var rgb = color.rgb;
+            actor.getProperty().setColor(rgb.r/255, rgb.g/255, rgb.b/255);
+            renderWindow.render();
+        }
+    }
+
+    function onBackgroundColorChange(color, changes) {
+        switch (renderAlgorithm) {
+            case 'marchingCube':
+                var rgb = color.rgb;
+                renderer.setBackground(rgb.r/255, rgb.g/255, rgb.b/255, 1);
+                renderWindow.render();
+                break;
+            case 'rayCasting':
+                var hex = color.hexString;
+                var bgColor = new THREE.Color(hex);
+                scene.background = bgColor;
+                modified = true;
+                break;
+            case 'Point Cloud':
+                var hex = color.hexString;
+                var bgColor = new THREE.Color(hex);
+                pointCloudScene.background = bgColor;
+                break;
+            case 'textureBased':
+                break;
+        }
+    }
 
     //
     //// Save screenshot
@@ -58,24 +99,24 @@ $(document).ready(function() {
         const container = document.getElementById('3d');
         interactor.unbindEvents(container);
     });
-    $(".isoValue").bind('keyup mousemove', function() {
+    //
+    //// Set iso-value (requires re-rendering process)
+    //
+    $('.isoValue').bind('keyup mousemove', function () {
+        var value = $(this).val();
+        $(this).next().html(value);
+    })
+    $('.apply-iso').click(function() {
         if (renderAlgorithm == 'marchingCube') {
-            var value = $(this).val();
-            $(this).next().html(value);
+            var value = $('.isoValue').val();
             marchingCube.setContourValue(Number(value));
-            $('.lds-hourglass').addClass('block');
-            renderWindow.render();
-            $('.lds-hourglass').removeClass('block');
-        }
-    });
-    $('.vtk-color-button').click(function() {
-        if (renderAlgorithm == 'marchingCube') {
-            actor.getProperty().setColor(meshColorMB[0], meshColorMB[1], meshColorMB[2]);
             renderWindow.render();
         }
     });
+
     $('.marching-cube').on('click', function() {
         renderAlgorithm = 'marchingCube';
+        $('.three-dimemsion').addClass('forced-fullwidth');
         var files = document.getElementById("file_inp").files;
         showViewer('Marching Cube');
         $('.viewer').addClass('opened');
@@ -88,8 +129,9 @@ $(document).ready(function() {
         $('select').formSelect();
     });
     $('.mb-switch').on('click', function() {
+        $('.monitor-container').empty();
         renderAlgorithm = 'marchingCube';
-        $('.lds-hourglass').addClass('block');
+        $('.loading-render').removeClass('animated fadeOutDown').css('display', 'block').removeClass('animated fadeInUp');
         setTimeout(function() {
             marchingCubeRender(files);
         }, 1500);
@@ -112,7 +154,7 @@ function screenshotCapture(data) {
 function marchingCubeRender(files) {
 
     renderWindow = vtkRenderWindow.newInstance();
-    renderer = vtkRenderer.newInstance({ background: [0.2, 0.3, 0.4] });
+    renderer = vtkRenderer.newInstance({ background: [0, 0, 0] });
     renderWindow.addRenderer(renderer);
 
     openglRenderWindow = vtkOpenGLRenderWindow.newInstance();
@@ -152,8 +194,8 @@ function marchingCubeRender(files) {
         $('.isoValue').attr({
             'min': dataRange[0],
             'max': dataRange[1],
-            'value': firstIsoValue
-        }).next().html(firstIsoValue);
+            'value': parseInt(firstIsoValue)
+        }).next().html(parseInt(firstIsoValue));
 
         const container = document.getElementById('3d');
         openglRenderWindow.setContainer(container);
@@ -175,6 +217,22 @@ function marchingCubeRender(files) {
         renderer.getActiveCamera().set({ position: [1, 1, 0], viewUp: [0, 0, -1] });
         renderer.resetCamera();
         renderWindow.render();
+
+        meter = new FPSMeter(
+            $('.monitor-container').get(0),
+            {
+                graph: 1,
+                theme: 'diRea'
+            });
+
+        console.log(renderWindow);
+        console.log(openglRenderWindow);
+        console.log(interactor);
+        console.log(marchingCube);
+
+        // renderer.setResizeCallback(function () {
+        //     meter.tick();
+        // });
 
         $('.loading-render').addClass('animated fadeOutDown');
         $('.rendering-layout').addClass('hidden');

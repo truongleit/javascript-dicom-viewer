@@ -26,6 +26,25 @@ $(document).ready(function() {
     });
 
     //
+    //// Color picker
+    //
+    var colorPC = new iro.ColorPicker('.sinh-color', {
+        width: 180,
+        borderWidth: 1,
+        borderColor: '#333',
+    });
+    colorPC.on('color:change', onPCColorChange);
+    function onPCColorChange(color, changes) {
+        if (renderAlgorithm == 'Point Cloud') {
+            var points = pointCloudScene.getObjectByName('dicomMesh');
+            var hex = color.hexString;
+            var color = new THREE.Color(hex);
+            points.material.color.setRGB(color.r, color.g, color.b);
+            points.material.needsUpdate = true;
+        }
+    }
+
+    //
     //// Randomize points' color
     //
     $('.random-color-button').click(function() {
@@ -46,7 +65,7 @@ $(document).ready(function() {
 
         var files = document.getElementById("file_inp").files;
 
-        $('.lds-hourglass').addClass('block');
+        $('.re-render').remove();
         showViewer('Sinh' + '\'' + 's Method');
         $('.viewer').addClass('opened');
 
@@ -140,10 +159,6 @@ function pointCloudInit() {
     window.addEventListener('keypress', keyboard);
 
     // stats
-    // stats = new Stats();
-    // stats.domElement.className = 'statistics';
-    // $('.monitor-container').append(stats.domElement);
-
     meter = new FPSMeter(
         $('.monitor-container').get(0),
         {
@@ -155,8 +170,7 @@ function pointCloudInit() {
 
 function pointCloudAnimate() {
 
-    // stats.update();
-    meter.tick();
+    if ($('.settings').hasClass('moved')) meter.tick();
     pointCloudControls.update();
     pointCloudRenderer.render(pointCloudScene, pointCloudCamera);
     requestAnimationFrame(pointCloudAnimate);
@@ -178,12 +192,6 @@ function pointColorPicker(picker) {
     var color = new THREE.Color(hex);
     points.material.color.setRGB(color.r, color.g, color.b);
     points.material.needsUpdate = true;
-}
-
-function bgColorPicker(picker) {
-    var hex = picker.toHEXString();
-    var color = new THREE.Color(hex);
-    pointCloudScene.background = color;
 }
 
 function keyboard(ev) {

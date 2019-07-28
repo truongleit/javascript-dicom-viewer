@@ -271,8 +271,9 @@ function render() {
         renderer.render(scene, camera);
         modified = false;
     }
-    meter.tick();
-    // stats.update();
+
+    if ($('.settings').hasClass('moved')) meter.tick();
+
 }
 
 function init() {
@@ -297,11 +298,9 @@ function init() {
 
     // scene
     scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000);
 
     // stats
-    // stats = new Stats();
-    // stats.domElement.className = 'statistics';
-    // $('.monitor-container').append(stats.domElement);
 
     meter = new FPSMeter(
         $('.monitor-container').get(0),

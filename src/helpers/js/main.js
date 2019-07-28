@@ -21,7 +21,7 @@ $(document).ready(function() {
     $('.screenshot-option').change(function() {
         var optionSelected = $(this).find("option:selected");
         canvasSelected = optionSelected.val();
-        ( renderAlgorithm == 'Point Cloud' && (canvasSelected == 'sliceX' || canvasSelected == 'sliceY' || canvasSelected == 'sliceZ') ) ? $('.screenshot-open').addClass('disabled') : $('.screenshot-open').removeClass('disabled');
+        ( ( renderAlgorithm == 'Point Cloud' || renderAlgorithm == 'marchingCube' ) && (canvasSelected == 'sliceX' || canvasSelected == 'sliceY' || canvasSelected == 'sliceZ') ) ? $('.screenshot-open').addClass('disabled') : $('.screenshot-open').removeClass('disabled');
     });
 
     $('#filename').keyup(function () {
@@ -51,9 +51,10 @@ $(document).ready(function() {
         deleteCanvas(renderAlgorithm);
         switch (valueSelected) {
             case "rayCasting":
+                $('.monitor-container').empty();
                 if ( oldRenderAlgorithm == 'marchingCube' ) $('.mb-interactor-disable').trigger('click');
                 renderAlgorithm = 'rayCasting';
-                $('.lds-hourglass').addClass('block');
+                $('.loading-render').removeClass('animated fadeOutDown').css('display', 'block').removeClass('animated fadeInUp');
                 setTimeout(function() {
                     readMultipleFiles(files);
                 }, 1500);
@@ -63,10 +64,11 @@ $(document).ready(function() {
                 $('.statistics').remove();
                 break;
             case "textureBased":
+                $('.monitor-container').empty();
                 if ( oldRenderAlgorithm == 'marchingCube' ) $('.mb-interactor-disable').trigger('click');
                 renderAlgorithm = 'textureBased';
                 initTexturebasedRendering();
-                $('.lds-hourglass').addClass('block');
+                $('.loading-render').removeClass('animated fadeOutDown').css('display', 'block').removeClass('animated fadeInUp');
                 counter = files.length;
                 reader = new FileReader();
                 setTimeout(function() {
@@ -178,6 +180,37 @@ $(document).ready(function() {
     //
     // Texture-based configs //
     //
+
+    //// Color picker
+    //// Min color
+    var minColorTB = new iro.ColorPicker('.tb-min-color', {
+        width: 140,
+        borderWidth: 1,
+        borderColor: '#333',
+    });
+    minColorTB.on('color:change', onMinColorChange);
+    function onMinColorChange(color, changes) {
+        if (renderAlgorithm == 'textureBased') {
+            var rgb = color.rgb;
+            volume.minColor = [rgb.r/255, rgb.g/255, rgb.b/255];
+        }
+    }
+
+    //// Max color
+    var maxColorTB = new iro.ColorPicker('.tb-max-color', {
+        width: 140,
+        borderWidth: 1,
+        borderColor: '#333',
+    });
+    maxColorTB.on('color:change', onMaxColorChange);
+    function onMaxColorChange(color, changes) {
+        if (renderAlgorithm == 'textureBased') {
+            var rgb = color.rgb;
+            volume.maxColor = [rgb.r/255, rgb.g/255, rgb.b/255];
+        }
+    }
+
+    // Opacity
     $('.texture-opacity').on('input', function() {
         var value = $(this).val();
         $(this).next().html(value);
@@ -591,14 +624,6 @@ function texturebasedUpdateMaxColor(picker) {
     if (renderAlgorithm == 'textureBased') volume.maxColor = [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255];
 }
 
-// Update 3D object's color (Marching Cube)
-var meshColorMB = [0, 0, 0];
-
-function vtkColorPicker(picker) {
-    var rgb = [Math.round(picker.rgb[0]), Math.round(picker.rgb[1]), Math.round(picker.rgb[2])];
-    meshColorMB = [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255];
-}
-
 // Sorting for complex text //
 function naturalSort(a, b) {
     var aPriority = /[a-z]/i.test(a) * 3 + /\d+/i.test(a) * 2;
@@ -706,6 +731,7 @@ function initTexturebasedRendering() {
         threeD = new X.renderer3D();
         threeD.container = '3d';
         threeD.init();
+        // threeD.bgColor([255, 255, 255]);
         threeD.camera.position = [0, 500, 0];
     } catch (Exception) {
         // no webgl on this machine
@@ -805,13 +831,16 @@ function texturebasedRendering(volume) {
         ESresize();
 
         // stats
-        stats = new Stats();
-        stats.domElement.className = 'statistics';
-        $('.monitor-container').append(stats.domElement);
+        meter = new FPSMeter(
+            $('.monitor-container').get(0),
+            {
+                graph: 1,
+                theme: 'diRea'
+            });
 
     };
     threeD.onRender = function () {
-        stats.update();
+        if ($('.settings').hasClass('moved')) meter.tick();
     }
 }
 // Trigger the window resize event

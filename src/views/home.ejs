@@ -27,6 +27,7 @@
     <script type="text/javascript" src="/js/ui/jscolor.js"></script>
     <script type="text/javascript" src="/js/ui/slick.min.js"></script>
     <script type="text/javascript" src="/js/ui/fpsmeter.min.js"></script>
+    <script type="text/javascript" src="/js/ui/iro.min.js"></script>
     <!------------ Core JavaScript ------------>
     <script type="text/javascript" src="/js/main.js"></script>
     <script type="text/javascript" src="/js/raycasting.js"></script>
@@ -145,22 +146,22 @@
                     </div>
                     <div class="col s6">
                         <div class="input-field col s7">
-                            <input placeholder="Filename" id="filename" type="text" class="validate" value="Your-Image">
+                            <input placeholder="Filename" id="filename" type="text" class="validate" value="your-image">
                             <label for="filename">Filename</label>
                         </div>
                         <div class="input-field col s5">
                             <select class="format-option">
                                 <option value="png" selected>PNG</option>
-                                <option value="jpeg">JPEG</option>
+                                <option disabled value="jpeg">JPEG</option>
                             </select>
-                            <label>Materialize Select</label>
+                            <label>Format</label>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <a href="#" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-                <a href="#" download="Your-Image.png" class="waves-effect waves-light blue accent-3 btn save-button">Download</a>
+                <a href="#" download="your-image.png" class="waves-effect waves-light blue accent-3 btn save-button">Download</a>
             </div>
         </div>
         <div class="viewer-container">
@@ -179,7 +180,6 @@
                             <option value="marchingCube">Marching Cube</option>
                             <option value="rayCasting">Ray Casting</option>
                             <option value="textureBased">Texture-based</option>
-                            <option value="textureBased">Point Cloud</option>
                         </select>
                     </div>
                     <a class="waves-effect waves-light blue accent-3 btn re-render-button disabled">Render</a>
@@ -192,7 +192,6 @@
             </div>
             <div class="render-container">
                 <div id="my-gui-container"></div>
-                <a href="# " id="screenshot" download="VJS.png">Take screenshot</a>
                 <div class="files-bar">
                     <div class="tab-container">
                         <div class="tab-title">
@@ -231,12 +230,15 @@
                                             <a class="waves-effect waves-light btn size-decrease blue accent-3"><i class="material-icons">remove</i></a>
                                             <a class="waves-effect waves-light btn size-increase blue accent-3"><i class="material-icons">add</i></a>
                                         </div>
-                                        <div class="attribute-config marching-cube-setting hidden">
-                                            <div class="attribute">ISO Value</div>
-                                            <input class="isoValue" type="range" min="0" max="100" step="0.05" value="0">
-                                            <div class="value">
-                                                0
+                                        <div class="attribute-config marching-cube-setting hidden" style="padding-right:20px;">
+                                            <div class="iso-slider">
+                                                <div class="attribute">ISO Value</div>
+                                                <input style="width:55%;" class="isoValue" type="range" min="0" max="100" step="0.05" value="0">
+                                                <div class="value">
+                                                    0
+                                                </div>
                                             </div>
+                                            <a class="btn waves-effect waves-light blue accent-3 apply-iso">Apply</a>
                                         </div>
                                         <div class="attribute-config texture-setting hidden">
                                             <div class="input-field col s12 texturebased-algorithm">
@@ -282,26 +284,18 @@
                                     </div>
                                     <div class="config opened">
                                         <div class="attribute-config marching-cube-setting hidden" style="padding-right:20px;">
-                                            <div class="vtk-color">
-                                                <input class="vtk-color-picker jscolor {onFineChange:'vtkColorPicker(this)'}" value="000000">
-                                                <a class="btn waves-effect waves-light blue vtk-color-button">Apply</a>
-                                            </div>
+                                            <div class="vtk-color"></div>
                                         </div>
-                                        <div class="attribute-config texture-setting hidden">
-                                            <div class="texture-min-color">
-                                                <span class="color-min-title">Min Color:</span>
-                                                <input class="min-color-picker jscolor {onFineChange:'texturebasedUpdateMinColor(this)'} ripple" value="000000">
+                                        <div class="attribute-config texture-setting texture-color-picker hidden">
+                                            <div class="tb-min-color tb-color">
+                                                <div class="tb-title">Min Color</div>
                                             </div>
-                                        </div>
-                                        <div class="attribute-config texture-setting hidden">
-                                            <div class="texture-max-color">
-                                                <span class="color-min-title">Max Color:</span>
-                                                <input class="max-color-picker jscolor {onFineChange:'texturebasedUpdateMaxColor(this)'} ripple" value="ffffff">
+                                            <div class="tb-max-color tb-color">
+                                                <div class="tb-title">Max Color</div>
                                             </div>
                                         </div>
                                         <div class="attribute-config sinh-setting hidden" style="padding-right:20px;">
                                             <div class="sinh-color">
-                                                <input class="vtk-color-picker jscolor {onFineChange:'pointColorPicker(this)'}" value="000000">
                                                 <a class="btn waves-effect waves-light blue accent-3 random-color-button">Random</a>
                                             </div>
                                         </div>
@@ -484,7 +478,7 @@
                                         <a class="slice-apply waves-effect waves-light blue accent-3 btn slice-setting">Apply</a>
                                     </div>
                                 </div>
-                                <div class="render-info setting">
+                                <div class="render-info setting" style="margin-bottom: 80px;">
                                     <div class="title">
                                         <i class="material-icons">add_a_photo</i>
                                         <span class="name">Screenshot</span>
@@ -492,22 +486,14 @@
                                     <div class="attribute-config ray-setting">
                                         <div class="input-field col s12 take-screenshot">
                                             <select class="screenshot-option">
-                                                <option value="" disabled selected>Choose your option</option>
-                                                <option value="3d">3D -  Volume</option>
+                                                <option value="3d" selected>3D -  Volume</option>
                                                 <option value="sliceX">2D - X-AXIS</option>
                                                 <option value="sliceY">2D - Y-AXIS</option>
                                                 <option value="sliceZ">2D - Z-AXIS</option>
                                             </select>
                                         </div>
-                                        <a href="#screenshot-container" class="waves-effect waves-light blue accent-3 btn modal-trigger screenshot-open disabled">Save</a>
+                                        <a href="#screenshot-container" class="waves-effect waves-light blue accent-3 btn modal-trigger screenshot-open">Save</a>
                                     </div>
-                                </div>
-                                <div class="render-info setting" style="margin-bottom: 80px;">
-                                    <div class="title">
-                                        <i class="material-icons">equalizer</i>
-                                        <span class="name">Performance Monitor</span>
-                                    </div>
-                                    <div class="monitor-container"></div>
                                 </div>
                             </div>
                             <div class="global-setting">
@@ -515,33 +501,14 @@
                                     <div class="title">
                                         <span class="name">Background</span>
                                     </div>
-                                    <div class="color-picker">
-                                        <div class="color original" color="original"><i class="material-icons">check</i></div>
-                                        <div class="color moonlit-asteroid" color="moonlit-asteroid"><i class="material-icons">check</i></div>
-                                        <div class="color grade-grey" color="grade-grey"><i class="material-icons">check</i></div>
-                                        <div class="color red-sunset" color="red-sunset"><i class="material-icons">check</i></div>
-                                        <div class="color lawrencium" color="lawrencium"><i class="material-icons">check</i></div>
-                                        <div class="color celestial" color="celestial"><i class="material-icons">check</i></div>
-                                        <div class="color royal" color="royal"><i class="material-icons">check</i></div>
-                                        <div class="color frost" color="frost"><i class="material-icons">check</i></div>
-                                        <div class="color titanium" color="titanium"><i class="material-icons">check</i></div>
-                                    </div>
+                                    <div id="color-picker-container"></div>
                                 </div>
-                                <div class="colors setting">
+                                <div class="render-info setting">
                                     <div class="title">
-                                        <span class="name">Overlay</span>
+                                        <i class="material-icons">equalizer</i>
+                                        <span class="name">Performance Monitor</span>
                                     </div>
-                                    <div class="opacity">
-                                        <div class="opacity-title">
-                                            Text Opacity
-                                        </div>
-                                        <input type="range" min="0" max="100" step="1" value="0">
-                                    </div>
-                                </div>
-                                <div class="slices setting">
-                                    <div class="title">
-                                        <span class="name">Orientation Axis</span>
-                                    </div>
+                                    <div class="monitor-container"></div>
                                 </div>
                                 <div class="render-info setting">
                                     <div class="title">
