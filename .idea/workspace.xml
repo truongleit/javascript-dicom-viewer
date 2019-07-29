@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae81d243-3f7c-48f0-959a-db44864220b9" name="Default Changelist" comment="" />
+    <list default="true" id="ae81d243-3f7c-48f0-959a-db44864220b9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/home.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/home.ejs" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +42,7 @@
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
@@ -89,6 +95,10 @@
       <workItem from="1564319754499" duration="14536000" />
       <workItem from="1564371067975" duration="5466000" />
       <workItem from="1564382814666" duration="965000" />
+      <workItem from="1564383827945" duration="95000" />
+      <workItem from="1564385522214" duration="124000" />
+      <workItem from="1564385667475" duration="356000" />
+      <workItem from="1564412729350" duration="2160000" />
     </task>
     <servers />
   </component>
