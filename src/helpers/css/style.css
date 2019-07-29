@@ -1123,6 +1123,7 @@ input.valid[type=text]:not(.browser-default)#filename {
     display: flex;
     align-items: center;
     text-transform: uppercase;
+    border-top: 1.5px solid rgba(0, 0, 0, .12);
     border-bottom: 1.5px solid rgba(0, 0, 0, .12);
     box-shadow: none;
     cursor: pointer;
