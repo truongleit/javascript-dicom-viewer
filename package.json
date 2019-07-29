@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "",
-        "start": "nodemon src/index.js",
+        "start": "src/index.js",
         "build": "webpack --progress --colors --mode development",
         "build:release": "webpack --progress --colors --mode production",
         "commit": "git cz",
