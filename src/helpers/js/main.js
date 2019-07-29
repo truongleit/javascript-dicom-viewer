@@ -16,6 +16,19 @@ let screenshot
 $(document).ready(function() {
 
     //
+    //// Remove Sinh's method if Safari
+    //
+    var ua = navigator.userAgent.toLowerCase();
+    var isSafari = false;
+    try {
+        isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+    }
+    catch(err) {}
+    isSafari = (isSafari || ((ua.indexOf('safari') != -1)&& (!(ua.indexOf('chrome')!= -1) && (ua.indexOf('version/')!= -1))));
+
+    if (isSafari) $('.algorithm-button.point-cloud').remove();
+
+    //
     //// Screenshot UI handling (Core capturing feature is moved to marchingCube.js)
     //
     $('.screenshot-option').change(function() {

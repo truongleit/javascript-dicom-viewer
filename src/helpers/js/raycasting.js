@@ -280,7 +280,6 @@ function init() {
     // this function is executed on each animation frame
     function animate() {
         render();
-
         // request new frame
         requestAnimationFrame(function() {
             animate();
