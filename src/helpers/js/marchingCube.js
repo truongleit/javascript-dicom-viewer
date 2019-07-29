@@ -130,6 +130,7 @@ $(document).ready(function() {
     });
     $('.mb-switch').on('click', function() {
         $('.monitor-container').empty();
+        $('.three-dimemsion').addClass('forced-fullwidth');
         renderAlgorithm = 'marchingCube';
         $('.loading-render').removeClass('animated fadeOutDown').css('display', 'block').removeClass('animated fadeInUp');
         setTimeout(function() {
@@ -225,14 +226,9 @@ function marchingCubeRender(files) {
                 theme: 'diRea'
             });
 
-        console.log(renderWindow);
-        console.log(openglRenderWindow);
-        console.log(interactor);
-        console.log(marchingCube);
-
-        // renderer.setResizeCallback(function () {
-        //     meter.tick();
-        // });
+        renderWindow.getInteractor().onAnimation(() => {
+            if ($('.settings').hasClass('moved')) meter.tick();
+        });
 
         $('.loading-render').addClass('animated fadeOutDown');
         $('.rendering-layout').addClass('hidden');

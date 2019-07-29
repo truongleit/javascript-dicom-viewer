@@ -206,7 +206,7 @@ function readMultipleFiles(files) {
 }
 
 function onStart(event) {
-    if (vrHelper && vrHelper.uniforms && !wheel) {
+    if (renderAlgorithm == 'rayCasting' && vrHelper && vrHelper.uniforms && !wheel) {
         renderer.setPixelRatio(0.1 * window.devicePixelRatio);
         renderer.setSize(threeD.offsetWidth, threeD.offsetHeight);
         modified = true;
@@ -214,7 +214,7 @@ function onStart(event) {
 }
 
 function onEnd(event) {
-    if (vrHelper && vrHelper.uniforms && !wheel) {
+    if (renderAlgorithm == 'rayCasting' && vrHelper && vrHelper.uniforms && !wheel) {
         renderer.setPixelRatio(0.5 * window.devicePixelRatio);
         renderer.setSize(threeD.offsetWidth, threeD.offsetHeight);
         modified = true;
@@ -267,7 +267,7 @@ function render() {
     // render
     controls.update();
 
-    if (ready && modified) {
+    if (renderAlgorithm == 'rayCasting' && ready && modified) {
         renderer.render(scene, camera);
         modified = false;
     }

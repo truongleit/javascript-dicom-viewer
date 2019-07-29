@@ -52,7 +52,10 @@ $(document).ready(function() {
         switch (valueSelected) {
             case "rayCasting":
                 $('.monitor-container').empty();
-                if ( oldRenderAlgorithm == 'marchingCube' ) $('.mb-interactor-disable').trigger('click');
+                if ( oldRenderAlgorithm == 'marchingCube' ) {
+                    $('.three-dimemsion').removeClass('forced-fullwidth');
+                    $('.mb-interactor-disable').trigger('click');
+                }
                 renderAlgorithm = 'rayCasting';
                 $('.loading-render').removeClass('animated fadeOutDown').css('display', 'block').removeClass('animated fadeInUp');
                 setTimeout(function() {
@@ -65,7 +68,10 @@ $(document).ready(function() {
                 break;
             case "textureBased":
                 $('.monitor-container').empty();
-                if ( oldRenderAlgorithm == 'marchingCube' ) $('.mb-interactor-disable').trigger('click');
+                if ( oldRenderAlgorithm == 'marchingCube' ) {
+                    $('.three-dimemsion').removeClass('forced-fullwidth');
+                    $('.mb-interactor-disable').trigger('click');
+                }
                 renderAlgorithm = 'textureBased';
                 initTexturebasedRendering();
                 $('.loading-render').removeClass('animated fadeOutDown').css('display', 'block').removeClass('animated fadeInUp');
