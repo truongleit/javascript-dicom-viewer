@@ -1164,6 +1164,10 @@ span.algorithm-name,
     font-weight: 500;
 }
 
+.config.opened {
+    padding-bottom: 25px;
+}
+
 .attribute-title {
     font-weight: 500;
     text-transform: uppercase;
@@ -1435,6 +1439,19 @@ span.algorithm-name,
     margin-bottom: 10px;
 }
 
+.texture-setting .dropdown-content li>span {
+    font-size: 16px;
+    color: #2979ff;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;
+}
+
+.texture-setting input.select-dropdown,
+.texture-setting input.select-dropdown:focus {
+    border-bottom: 1px solid #2979ff;
+}
+
 .marching-cube-setting.hidden {
     display: none;
 }
@@ -1536,9 +1553,9 @@ span.algorithm-name,
     border-bottom: 1px solid #2979ff;
 }
 
-.texture-setting {
-    margin-top: 15px;
-}
+/*.texture-setting {*/
+/*    margin-top: 15px;*/
+/*}*/
 
 .texture-setting.hidden {
     display: none;
