@@ -506,6 +506,7 @@ tbody tr {
     font-size: 15px;
     font-weight: 500;
     text-transform: uppercase;
+    padding-bottom: 10px;
 }
 
 .upload-cancel {

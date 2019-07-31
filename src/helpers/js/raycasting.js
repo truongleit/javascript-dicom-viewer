@@ -215,7 +215,7 @@ function onStart(event) {
 
 function onEnd(event) {
     if (renderAlgorithm == 'rayCasting' && vrHelper && vrHelper.uniforms && !wheel) {
-        renderer.setPixelRatio(0.5 * window.devicePixelRatio);
+        renderer.setPixelRatio(0.1 * window.devicePixelRatio);
         renderer.setSize(threeD.offsetWidth, threeD.offsetHeight);
         modified = true;
 
@@ -237,7 +237,7 @@ function onWheel() {
     if (Date.now() - wheel < 300) {
         clearTimeout(wheelTO);
         wheelTO = setTimeout(function() {
-            renderer.setPixelRatio(0.5 * window.devicePixelRatio);
+            renderer.setPixelRatio(0.1 * window.devicePixelRatio);
             renderer.setSize(threeD.offsetWidth, threeD.offsetHeight);
             modified = true;
 
