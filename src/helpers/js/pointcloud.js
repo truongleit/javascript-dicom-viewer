@@ -54,12 +54,16 @@ $(document).ready(function() {
     });
 
     $('.point-cloud').click(async function() {
+        var boundary_container = '<div class="boundary-container"></div>';
         $('#sliceX, #sliceY, #sliceZ').remove();
         $('.slices.setting').addClass('hidden');
         $('#3d').css({
-            'width': 100 + '%',
+            'width': 75 + '%',
             'height': 100 + '%',
         });
+        $('.twoD-container').css({
+            'width': 25 + '%',
+        }).append(boundary_container);
 
         renderAlgorithm = 'Point Cloud';
 
@@ -90,6 +94,9 @@ $(document).ready(function() {
 
         pcdLoader(points, meshWidth, meshHeight);
 
+        $('.dicom-canvas').css({
+            'width': 100 + '%',
+        });
         $('.loading-render').addClass('animated fadeOutDown');
         $('.slider').slick('unslick');
         $('.switch-algorithm').val(renderAlgorithm);
@@ -264,9 +271,8 @@ async function boundaryExtraction(file, points, index, zCoordinate) {
     //
     //// Read and draw DICOM to canvas
     //
-
     var inputFile = file;
-    $('.viewer').append('<div id="slice-' + index + '" class="dicom-canvas"></div>');
+    $('.boundary-container').append('<div id="slice-' + index + '" class="dicom-canvas"></div>');
 
     var element = $('#slice-' + index).get(0);
     var div = '#slice-' + index;
@@ -283,7 +289,6 @@ async function boundaryExtraction(file, points, index, zCoordinate) {
     //
     var imgElement = $('#slice-' + index + ' canvas').get(0);
     let mat = cv.imread(imgElement);
-    $(div).remove();
     let rows = mat.rows
     let cols = mat.cols
     let flag = new Array(rows * cols);
@@ -323,7 +328,10 @@ async function boundaryExtraction(file, points, index, zCoordinate) {
 
     // Apply canny edge detection to remove all inner pixels
     cv.Canny(mat.clone(), mat, 50, 100, 3, false);
-    // cv.imshow('canvasOutput', mat);
+
+    // Add boundary canvas to container
+    cv.imshow(imgElement, mat);
+    $(div).append('<div class="boundary-info"><p><b>Index:</b> ' + index + '</p><p><b>Size:</b> 140x140 (px)</p><p><b>Type:</b> Canvas</p><p><b>Filename:</b> ' + inputFile.name + '</p></div>');
 
     //
     //// Get all coordinates (only x,y) for slice
@@ -335,7 +343,7 @@ async function boundaryExtraction(file, points, index, zCoordinate) {
             let grayscale = pixel[0];
 
             if (grayscale >= 250) {
-                points.push([row / 400, col / 400, zCoordinate / 1900]);
+                points.push([row / 400, col / 400, zCoordinate / 1000]);
             }
         }
     }

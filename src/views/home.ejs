@@ -84,14 +84,13 @@
                 </a>
             </div>
             <div class="menu-items">
-                <div class="item"><a href="#"><span>DIREA</span></a></div>
-                <div class="item"><a href="#"><span>Support</span></a></div>
-                <div class="item"><a href="#"><span>Resources</span></a></div>
-                <div class="item"><a href="#"><span>About</span></a></div>
+                <div class="item"><a href="/"><span>DIREA</span></a></div>
+                <div class="item"><a class="modal-trigger" href="#resources"><span>Resources</span></a></div>
+                <div class="item"><a class="modal-trigger" href="#about">About</a></div>
             </div>
         </div>
     </div>
-    <div class="main-site">
+    <div class="main-site">about
         <div class="introduction">
             <div class="brand-title">
                 <div class="brand-overlay"></div>
@@ -100,9 +99,7 @@
                 <img style="display: none;" class="brand-devices" src="/asset/devices.png" alt="devices">
             </div>
             <div class="brand-content">
-                With high performance and an intuitive interactive user interface, DiRea is the most widely used DICOM viewer in the world. It is the result of more than 15 years of research and development in digital imaging. It fully supports the DICOM standard for
-                an easy integration in your workflow environment and an open platform for development of processing tools. It offers advanced post-processing techniques in 2D and 3D, exclusive innovative technique for 3D and 4D navigation and a complete
-                integration with any PACS.
+                A research on emerging data management and multiple rendering algorithms in terms of computer graphics. The main goal of this project was to construct a web-based application reading and dis- playing medical images captured from X-ray or CT machines in both 2D and 3D objects. By using this software, the process of medical diagnosis upon patients will be significantly boosted and produce better results. This project was also the bachelor thesis and later selected to be published on Springer.
             </div>
             <div class="browser">
                 <div class="title">Cross-browser compatibility</div>
@@ -119,7 +116,7 @@
                 <div class="upload-button">Upload</div>
                 <input id="file_inp" type="file" multiple />
             </div>
-            <div class="copyright">2019 © Truong Le</div>
+            <div class="copyright">2019 © TRUONG LE</div>
             <div class="slider-overlay"></div>
             <div class="slider">
                 <div class="slider-item" style="background-image:url('/asset/slider-4.jpg')">
@@ -365,19 +362,6 @@
                                         <i class="material-icons drop-down rotated">keyboard_arrow_up</i>
                                     </div>
                                     <div class="config opened">
-<!--                                        <div class="attribute-title texture-setting hidden">-->
-<!--                                            Window-->
-<!--                                        </div>-->
-<!--                                        <div class="attribute-config texture-setting hidden">-->
-<!--                                            <div class="attribute">Window Low</div>-->
-<!--                                            <input class="texture-window-low" type="range" min="0" max="100" step="1" value="0">-->
-<!--                                            <div class="value">0</div>-->
-<!--                                        </div>-->
-<!--                                        <div class="attribute-config texture-setting hidden">-->
-<!--                                            <div class="attribute">Window High</div>-->
-<!--                                            <input class="texture-window-high" type="range" min="0" max="100" step="1" value="0">-->
-<!--                                            <div class="value">0</div>-->
-<!--                                        </div>-->
                                         <div class="attribute-title">
                                             Slices
                                         </div>
@@ -411,26 +395,22 @@
                                         <div class="slider-option">
                                             <p>
                                                 <label>
-                                                                <input class="with-gap" name="upper_slide" type="radio" value="1" checked />
-                                                                <span>1</span>
-                                                            </label>
+                                                    <input class="with-gap" name="upper_slide" type="radio" value="1" checked /><span>1</span>
+                                                </label>
                                             </p>
                                             <p>
                                                 <label>
-                                                                <input class="with-gap" name="upper_slide" type="radio" value="2"/>
-                                                                <span>2</span>
-                                                            </label>
+                                                    <input class="with-gap" name="upper_slide" type="radio" value="2"/><span>2</span>
+                                                </label>
                                             </p>
                                             <p>
                                                 <label>
-                                                                <input class="with-gap" name="upper_slide" type="radio" value="3" />
-                                                                <span>3</span>
-                                                            </label>
+                                                    <input class="with-gap" name="upper_slide" type="radio" value="3" />
+                                                    <span>3</span>
+                                                </label>
                                             </p>
                                         </div>
                                     </div>
-
-
                                     <div>
                                         <div class="divider"></div>
                                     </div>
@@ -440,21 +420,21 @@
                                         <div class="slider-nav-option">
                                             <p>
                                                 <label>
-                                                            <input class="with-gap" name="lower_slide" type="radio" value="5" checked />
-                                                            <span>5</span>
-                                                        </label>
+                                                    <input class="with-gap" name="lower_slide" type="radio" value="5" checked />
+                                                    <span>5</span>
+                                                </label>
                                             </p>
                                             <p>
                                                 <label>
-                                                            <input class="with-gap" name="lower_slide" value="6" type="radio" />
-                                                            <span>6</span>
-                                                        </label>
+                                                    <input class="with-gap" name="lower_slide" value="6" type="radio" />
+                                                    <span>6</span>
+                                                </label>
                                             </p>
                                             <p>
                                                 <label>
-                                                            <input class="with-gap" name="lower_slide" value="7" type="radio"  />
-                                                            <span>7</span>
-                                                        </label>
+                                                    <input class="with-gap" name="lower_slide" value="7" type="radio"  />
+                                                    <span>7</span>
+                                                </label>
                                             </p>
                                         </div>
                                     </div>
@@ -565,6 +545,43 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="about" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h5>About</h5>
+            <p>A research on emerging data management and multiple rendering algorithms in term of computer graphics. The main goal of this project was to construct a web-based application reading and dis- playing medical images captured from X-ray or CT machines in both 2D and 3D objects. By using this software, the process of medical diagnosis upon patients will be significantly boosted and produce better results. This project was also the bachelor thesis and later selected to be published on Springer.</p>
+            <h5>Publication</h5>
+            <p>NGUYEN Van Sinh, TRAN Manh Ha, <b>LE Son Truong</b>. Visualization of Medical Images Data Based on Geometric Modeling. Lecture Note in Computer Science. 11814, ISSN 0302-9743, Pages. 560-576, Springer, 2019. - <a target="_blank" href="https://link.springer.com/chapter/10.1007/978-3-030-35653-8_36">More information</a></p>
+            <p><b>Github</b> - <a target="_blank" href="https://github.com/truongleit/javascript-dicom-viewer/">javascript-dicom-viewer</a></p>
+            <h5>Contributing</h5>
+            <p>I would like to thank <b>Sebastien Jourdain</b>, <b>Nguyen Duy Quang</b>, <b>Matt McCormick</b> and <b>Luong Khanh Vu</b> who passionately supported me in making essential progress. Without their committed assistance and insightful comments, this research might not be eventually conducted. </p>
+            <p>Last but not least, I take this opportunity to express a debt of gratitude to my parents for offering me such a golden opportunity to pursue my passion. Without their unfailing support and continuous encouragement throughout my years of study, this accomplishment would not have been perfectly achievable. Thank you for all.</p>
+            <h5>Credits</h5>
+            <p><b>VTK.js - The Visualization Toolkit for JavaScript</b> - <a target="_blank" href="https://kitware.github.io/vtk-js/">More information</a></p>
+            <p><b>The X Toolkit (XTK)</b> - <a target="_blank" href="https://github.com/xtk/X">More information</a></p>
+            <p><b>three.js – Javascript 3D library</b> - <a target="_blank" href="https://threejs.org">More information</a></p>
+            <p><b>AMI Medical Imaging (AMI) JS Toolkit</b> - <a target="_blank" href="https://github.com/FNNDSC/ami">More information</a></p>
+            <p><b>Cornerstone Core</b> - <a target="_blank" href="https://docs.cornerstonejs.org/">More information</a></p>
+            <p><b>Cornerstone JavaScript Library</b> - <a target="_blank" href="https://github.com/cornerstonejs/cornerstone/">More information</a></p>
+            <p><b>Open Source Computer Vision Library</b> - <a target="_blank" href="https://opencv.org">More information</a></p>
+            <p><b>jQuery - write less do more</b> - <a target="_blank" href="https://jquery.com">More information</a></p>
+            <p><b>Materialize CSS</b> - <a target="_blank" href="https://materializecss.com/">More information</a></p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+    <div id="resources" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h3>Resources</h3>
+            <p>All DICOM datasets which were used for testing during the development process were found and downloaded from the website of <b>University of Iowa Health Care</b> - <a target="_blank" href="https://medicine.uiowa.edu/">More information</a></p>
+            <p>For more specific concerns, please visit <a target="_blank" href="https://medicine.uiowa.edu/mri/facility-resources/images/visible-human-project-ct-datasets">this url</a> in order to download the datasets.</p>
+            <img style="width: 450px;" alt="resources" src="/asset/resources.png" >
+            <h5>And give it a try by using my application.</h5>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
         </div>
     </div>
 </body>

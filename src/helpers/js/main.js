@@ -15,6 +15,8 @@ let screenshot
 
 $(document).ready(function() {
 
+    $('.modal').modal();
+
     //
     //// Remove Sinh's method if Safari
     //
@@ -551,6 +553,10 @@ $(document).ready(function() {
             $('.loading-render').addClass('animated fadeOutDown');
         }, 2000);
     });
+    var year_array = ['2','0','1','9'];
+    var first_name_array = ['T','R','U','O','N','G'];
+    var last_name_array = ['L','E'];
+    $('.copyright').empty().text(year_array.join('') + ' © ' + first_name_array.join('') + ' ' + last_name_array.join(''));
 });
 
 function slickSetUp(upper_number, lower_number, draggable, checked) {
