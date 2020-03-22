@@ -553,6 +553,9 @@ $(document).ready(function() {
             $('.loading-render').addClass('animated fadeOutDown');
         }, 2000);
     });
+    //
+    // Copyright
+    //
     var year_array = ['2','0','1','9'];
     var first_name_array = ['T','R','U','O','N','G'];
     var last_name_array = ['L','E'];
