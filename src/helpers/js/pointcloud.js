@@ -343,7 +343,7 @@ async function boundaryExtraction(file, points, index, zCoordinate) {
             let grayscale = pixel[0];
 
             if (grayscale >= 250) {
-                points.push([row / 400, col / 400, zCoordinate / 1000]);
+                points.push([row / 550, col / 550, zCoordinate / 1100]);
             }
         }
     }
