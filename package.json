@@ -21,7 +21,7 @@
         "image-filter-threshold": "^2.0.1",
         "itk": "^9.3.2",
         "jquery": "^3.5.0",
-        "jsdom": "^13.0.0",
+        "jsdom": "^16.5.0",
         "nodemon": "^2.0.2",
         "reload": "^2.3.1",
         "vtk.js": "^8.3.15"
