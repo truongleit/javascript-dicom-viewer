@@ -24,9 +24,9 @@
         "jsdom": "^13.0.0",
         "nodemon": "^2.0.2",
         "reload": "^2.3.1",
-        "vtk.js": "^8.3.15"
+        "vtk.js": "^8.14.0"
     },
     "devDependencies": {
-        "kw-web-suite": "^8.0.0"
+        "kw-web-suite": "^11.1.0"
     }
 }
